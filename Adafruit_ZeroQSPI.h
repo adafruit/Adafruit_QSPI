@@ -22,11 +22,13 @@ typedef enum {
 } QSPIDataWidth_t;
 
 typedef enum {
+	QSPI_ADDRLEN_NONE = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val,
 	QSPI_ADDRLEN_24_BITS = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val,
 	QSPI_ADDRLEN_32_BITS,
 } QSPIAddrLen_t;
 
 typedef enum {
+	QSPI_OPCODE_LEN_NONE = QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val,
 	QSPI_OPCODE_LEN_1_BITS = QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val,
 	QSPI_OPCODE_LEN_2_BITS,
 	QSPI_OPCODE_LEN_4_BITS,
@@ -56,13 +58,14 @@ typedef enum {
 #define QSPI_OPTION_DATAEN QSPI_INSTRFRAME_DATAEN
 
 typedef struct {
-	bool nContinuousRead = false;
+	uint8_t instruction;
+	bool continuousRead;
 	QSPIAddrLen_t addrLen;
 	QSPIOpcodeLen_t opcodeLen;
 	QSPIIOFormat_t ioFormat;
 	uint8_t options;
 	QSPITransferType_t type;
-	uint8_t instruction;
+	uint8_t dummylen;
 } QSPIInstr;
 
 class QSPIClass
@@ -86,7 +89,7 @@ public:
 	void begin();
 	void end();
 
-	void runInstruction(QSPIInstr *instr);
+	void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
 
 	void setMemoryMode(QSPIMode_t mode);
 	void setClockDivider(uint8_t uc_div);
