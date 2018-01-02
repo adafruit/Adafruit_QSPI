@@ -23,7 +23,7 @@ void QSPIClass::begin() {
 
 	QSPI->CTRLA.bit.SWRST = 1;
 
-	delay(1); //no syncbusy reg.. do we need this?
+	delay(1); //no syncbusy reg.. do we need this? Probably not
 
 	QSPI->CTRLB.reg = QSPI_CTRLB_MODE_MEMORY | QSPI_CTRLB_CSMODE_NORELOAD | QSPI_CTRLB_DATALEN_8BITS | QSPI_CTRLB_CSMODE_LASTXFER;
 

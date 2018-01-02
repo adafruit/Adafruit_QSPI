@@ -1,0 +1,54 @@
+/* Test QSPI read and write functionality. Erase chip, write sequential bytes, verify.
+ */
+
+#include <Arduino.h>
+
+#include "Adafruit_S25FL1.h"
+
+Adafruit_S25FL1 flash;
+
+#define PROGSIZE 512
+
+uint8_t progData[PROGSIZE];
+uint8_t readData[PROGSIZE];
+
+void setup(){
+  Serial.begin(115200);
+  while(!Serial);
+
+  if(!flash.begin()){
+    Serial.println("Could not find flash on QSPI bus!");
+    while(1);
+  }
+
+  for(int i=0; i<PROGSIZE; i++){
+    progData[i] = i;
+  }
+
+  Serial.print("erasing...");
+  flash.chipErase();
+  Serial.println("done!");
+
+  Serial.print("writing...");
+  flash.writeMemory(0, progData, sizeof(progData));
+  Serial.println("done!");
+
+  Serial.print("reading...");
+  flash.readMemory(0, readData, sizeof(readData));
+  Serial.println("done!");
+
+  for(int i=0; i<PROGSIZE; i++){
+    if(readData[i] != progData[i]){
+      Serial.print("ERROR: mismatch found at index ");
+      Serial.println(i);
+      while(1);
+    }
+  }
+
+  Serial.println("Verify successful!");
+}
+
+void loop(){
+  //don't even do anything
+}
+

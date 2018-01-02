@@ -24,11 +24,24 @@ public:
 	void chipErase();
 
 	byte read8(uint32_t addr);
-	bool write8(uint32_t addr, byte data);
 
-	bool readMemory(uint32_t addr, uint32_t *data, uint32_t size);
-	bool writeMemory(uint32_t addr, uint32_t *data, uint32_t size);
+	bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
+	bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 };
+
+enum {
+	FLASH_GENERIC_CMD_DEVID = 0,
+	FLASH_GENERIC_CMD_MFGID,
+	FLASH_GENERIC_READ_STATUS,
+	FLASH_GENERIC_CMD_WRITE_STATUS,
+	FLASH_GENERIC_CMD_WRITE_ENABLE,
+	FLASH_GENERIC_CMD_WRITE_DISABLE,
+	FLASH_GENERIC_CMD_CHIP_ERASE,
+	FLASH_GENERIC_CMD_PAGE_PROGRAM,
+	FLASH_GENERIC_CMD_QUAD_READ,
+};
+
+extern const QSPIInstr cmdSetGeneric[];
 
 
 #endif /* ADAFRUIT_ZEROQSPI_FLASH_GENERIC_H_ */
