@@ -5,8 +5,8 @@
  *      Author: deanm
  */
 
-#ifndef ADAFRUIT_ZEROQSPI_ADAFRUIT_S25FL1_H_
-#define ADAFRUIT_ZEROQSPI_ADAFRUIT_S25FL1_H_
+#ifndef ADAFRUIT_QSPI_ADAFRUIT_S25FL1_H_
+#define ADAFRUIT_QSPI_ADAFRUIT_S25FL1_H_
 
 #include "Flash_Generic.h"
 
@@ -23,4 +23,4 @@ public:
 
 
 
-#endif /* ADAFRUIT_ZEROQSPI_ADAFRUIT_S25FL1_H_ */
+#endif /* ADAFRUIT_QSPI_ADAFRUIT_S25FL1_H_ */

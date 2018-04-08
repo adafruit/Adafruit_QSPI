@@ -5,9 +5,9 @@
  *      Author: deanm
  */
 
-#include "Flash_Generic.h"
+#include "Adafruit_QSPI_Generic.h"
 
-#define FLASH_GENERIC_STATUS_BUSY 0x01
+#define ADAFRUIT_QSPI_FLASH_GENERIC_STATUS_BUSY 0x01
 
 const QSPIInstr cmdSetGeneric[] = {
 		//Device ID
@@ -30,26 +30,26 @@ const QSPIInstr cmdSetGeneric[] = {
 		{ 0x6B, true, QSPI_ADDRLEN_24_BITS, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE_QUAD_DATA, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ_MEMORY, 8 },
 };
 
-bool Adafruit_Flash_Generic::begin(){
+bool Adafruit_QSPI_Generic::begin(){
 	QSPI0.begin();
 	return true;
 }
 
-byte Adafruit_Flash_Generic::readID()
+byte Adafruit_QSPI_Generic::readID()
 {
 	byte r;
 	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_DEVID], 0, NULL, &r, 1);
 	return r;
 }
 
-byte Adafruit_Flash_Generic::readStatus()
+byte Adafruit_QSPI_Generic::readStatus()
 {
 	byte r;
 	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_READ_STATUS], 0, NULL, &r, 1);
 	return r;
 }
 
-void Adafruit_Flash_Generic::chipErase()
+void Adafruit_QSPI_Generic::chipErase()
 {
 	byte r;
 	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
@@ -60,20 +60,20 @@ void Adafruit_Flash_Generic::chipErase()
 	while(readStatus() & FLASH_GENERIC_STATUS_BUSY);
 }
 
-byte Adafruit_Flash_Generic::read8(uint32_t addr)
+byte Adafruit_QSPI_Generic::read8(uint32_t addr)
 {
 	byte ret;
 	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_QUAD_READ], addr, NULL, &ret, 1);
 	return ret;
 }
 
-bool Adafruit_Flash_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
+bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
 	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_QUAD_READ], addr, NULL, data, size);
 	return true;
 }
 
-bool Adafruit_Flash_Generic::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
+bool Adafruit_QSPI_Generic::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
 	byte r;
 	uint16_t toWrite = 0;

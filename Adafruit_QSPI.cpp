@@ -1,14 +1,14 @@
 /*
- * Adafruit_ZeroQSPI.cpp
+ * Adafruit_QSPI.cpp
  *
  *  Created on: Dec 28, 2017
  *      Author: deanm
  */
 
-#include "Adafruit_ZeroQSPI.h"
+#include "Adafruit_QSPI.h"
 #include "wiring_private.h"
 
-void QSPIClass::begin() {
+void Adafruit_QSPI::begin() {
 	MCLK->AHBMASK.reg |= MCLK_AHBMASK_QSPI;
 	MCLK->AHBMASK.reg |= MCLK_AHBMASK_QSPI_2X;
 	MCLK->APBCMASK.reg |= MCLK_APBCMASK_QSPI;
@@ -32,7 +32,7 @@ void QSPIClass::begin() {
 	QSPI->CTRLA.bit.ENABLE = 1;
 }
 
-void QSPIClass::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
+void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
 {
 	uint8_t *qspi_mem = (uint8_t *)QSPI_AHB;
 	if(addr)
@@ -73,7 +73,7 @@ void QSPIClass::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *t
 	QSPI->INTFLAG.bit.INSTREND = 1;
 }
 
-byte QSPIClass::transfer(uint16_t data)
+byte Adafruit_QSPI::transfer(uint16_t data)
 {
 	QSPI->TXDATA.reg = data;
 	while( !QSPI->INTFLAG.bit.TXC );
@@ -81,7 +81,7 @@ byte QSPIClass::transfer(uint16_t data)
 	return QSPI->RXDATA.reg;
 }
 
-void QSPIClass::transfer(void *buf, size_t count)
+void Adafruit_QSPI::transfer(void *buf, size_t count)
 {
 	uint8_t *buffer = reinterpret_cast<uint8_t *>(buf);
 	for (size_t i=0; i<count; i++) {
@@ -90,19 +90,19 @@ void QSPIClass::transfer(void *buf, size_t count)
 	}
 }
 
-void QSPIClass::setMemoryMode(QSPIMode_t mode)
+void Adafruit_QSPI::setMemoryMode(QSPIMode_t mode)
 {
 	QSPI->CTRLB.bit.MODE = mode;
 }
 
-void QSPIClass::setClockDivider(uint8_t uc_div)
+void Adafruit_QSPI::setClockDivider(uint8_t uc_div)
 {
 	QSPI->BAUD.bit.BAUD = uc_div;
 }
 
-void QSPIClass::setDataWidth(QSPIDataWidth_t width)
+void Adafruit_QSPI::setDataWidth(QSPIDataWidth_t width)
 {
 	QSPI->CTRLB.bit.DATALEN = QSPI_CTRLB_DATALEN(width);
 }
 
-QSPIClass QSPI0;
+Adafruit_QSPI QSPI0;

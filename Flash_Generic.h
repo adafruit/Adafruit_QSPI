@@ -5,17 +5,17 @@
  *      Author: deanm
  */
 
-#ifndef ADAFRUIT_ZEROQSPI_FLASH_GENERIC_H_
-#define ADAFRUIT_ZEROQSPI_FLASH_GENERIC_H_
+#ifndef ADAFRUIT_SPI_FLASH_GENERIC_H_
+#define ADAFRUIT_SPI_FLASH_GENERIC_H_
 
 
-#include "Adafruit_ZeroQSPI.h"
+#include "Adafruit_QSPI.h"
 
 class Adafruit_Flash_Generic {
 
 public:
-	Adafruit_Flash_Generic() {}
-	~Adafruit_Flash_Generic() {}
+	Adafruit_QSPI_Generic() {}
+	~Adafruit_QSPI_Generic() {}
 
 	bool begin();
 
@@ -44,4 +44,4 @@ enum {
 extern const QSPIInstr cmdSetGeneric[];
 
 
-#endif /* ADAFRUIT_ZEROQSPI_FLASH_GENERIC_H_ */
+#endif /* ADAFRUIT_QSPI_FLASH_GENERIC_H_ */

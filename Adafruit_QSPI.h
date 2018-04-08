@@ -68,11 +68,11 @@ typedef struct {
 	uint8_t dummylen;
 } QSPIInstr;
 
-class QSPIClass
+class Adafruit_QSPI
 {
 public:
-	QSPIClass() {};
-	~QSPIClass() {};
+	Adafruit_QSPI() {};
+	~Adafruit_QSPI() {};
 
 	byte transfer(uint16_t data);
 	void transfer(void *buf, size_t count);
@@ -99,6 +99,6 @@ public:
 	void config(SPISettings settings);
 };
 
-extern QSPIClass QSPI0;
+extern Adafruit_QSPI QSPI0;
 
 #endif
