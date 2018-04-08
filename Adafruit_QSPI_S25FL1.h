@@ -5,16 +5,16 @@
  *      Author: deanm
  */
 
-#ifndef ADAFRUIT_QSPI_ADAFRUIT_S25FL1_H_
-#define ADAFRUIT_QSPI_ADAFRUIT_S25FL1_H_
+#ifndef ADAFRUIT_QSPI_S25FL1_H_
+#define ADAFRUIT_QSPI_S25FL1_H_
 
-#include "Flash_Generic.h"
+#include "Adafruit_QSPI_Generic.h"
 
-class Adafruit_S25FL1 : public Adafruit_Flash_Generic {
+class Adafruit_QSPI_S25FL1 : public Adafruit_QSPI_Generic {
 
 public:
-	Adafruit_S25FL1() : Adafruit_Flash_Generic() {}
-	~Adafruit_S25FL1() {}
+	Adafruit_QSPI_S25FL1() : Adafruit_QSPI_Generic() {}
+	~Adafruit_QSPI_S25FL1() {}
 
 	bool begin();
 
@@ -23,4 +23,4 @@ public:
 
 
 
-#endif /* ADAFRUIT_QSPI_ADAFRUIT_S25FL1_H_ */
+#endif /* ADAFRUIT_QSPI_S25FL1_H_ */

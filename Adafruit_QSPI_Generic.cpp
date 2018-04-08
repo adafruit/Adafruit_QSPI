@@ -7,7 +7,7 @@
 
 #include "Adafruit_QSPI_Generic.h"
 
-#define ADAFRUIT_QSPI_FLASH_GENERIC_STATUS_BUSY 0x01
+#define ADAFRUIT_QSPI_GENERIC_STATUS_BUSY 0x01
 
 const QSPIInstr cmdSetGeneric[] = {
 		//Device ID
@@ -38,38 +38,38 @@ bool Adafruit_QSPI_Generic::begin(){
 byte Adafruit_QSPI_Generic::readID()
 {
 	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_DEVID], 0, NULL, &r, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_DEVID], 0, NULL, &r, 1);
 	return r;
 }
 
 byte Adafruit_QSPI_Generic::readStatus()
 {
 	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_READ_STATUS], 0, NULL, &r, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_READ_STATUS], 0, NULL, &r, 1);
 	return r;
 }
 
 void Adafruit_QSPI_Generic::chipErase()
 {
 	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
 
-	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_CHIP_ERASE], 0, NULL, &r, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE], 0, NULL, &r, 1);
 
 	//wait for busy
-	while(readStatus() & FLASH_GENERIC_STATUS_BUSY);
+	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
 }
 
 byte Adafruit_QSPI_Generic::read8(uint32_t addr)
 {
 	byte ret;
-	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_QUAD_READ], addr, NULL, &ret, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ], addr, NULL, &ret, 1);
 	return ret;
 }
 
 bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-	QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_QUAD_READ], addr, NULL, data, size);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ], addr, NULL, data, size);
 	return true;
 }
 
@@ -81,18 +81,18 @@ bool Adafruit_QSPI_Generic::writeMemory(uint32_t addr, uint8_t *data, uint32_t s
 	//write one page at a time
 	while(size){
 
-		QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
+		QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
 
 		if(size > 256) toWrite = 256;
 		else toWrite = size;
 		size -= toWrite;
 
-		QSPI0.runInstruction(&cmdSetGeneric[FLASH_GENERIC_CMD_PAGE_PROGRAM], addr, data, NULL, toWrite);
+		QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_PAGE_PROGRAM], addr, data, NULL, toWrite);
 
 		data += toWrite;
 		addr += toWrite;
 
-		while(readStatus() & FLASH_GENERIC_STATUS_BUSY);
+		while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
 	}
 
 	return true;
