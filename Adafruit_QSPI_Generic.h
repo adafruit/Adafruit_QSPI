@@ -19,9 +19,11 @@ public:
 
 	bool begin();
 
-	byte readID();
+	byte readDeviceID();
+	byte readManufacturerID();
 	byte readStatus();
 	void chipErase();
+	void eraseBlock(uint32_t blocknum);
 
 	byte read8(uint32_t addr);
 
@@ -37,6 +39,7 @@ enum {
 	ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE,
 	ADAFRUIT_QSPI_GENERIC_CMD_WRITE_DISABLE,
 	ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE,
+	ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE,
 	ADAFRUIT_QSPI_GENERIC_CMD_PAGE_PROGRAM,
 	ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ,
 };
