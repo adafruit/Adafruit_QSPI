@@ -14,6 +14,11 @@ enum {
 	S25FL1_WRITE_ENABLE_STATUS,
 };
 
+/**************************************************************************/
+/*! 
+    @brief additional commands specific to the S25FL1 flash device
+*/
+/**************************************************************************/
 static const QSPIInstr cmdSetS25FL1[] = {
 		//read status 2
 		{ 0x35, false, QSPI_ADDRLEN_24_BITS, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
@@ -23,6 +28,12 @@ static const QSPIInstr cmdSetS25FL1[] = {
 		{ 0x50, false, QSPI_ADDRLEN_NONE, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
 };
 
+/**************************************************************************/
+/*! 
+    @brief begin the QSPI peripheral and enable quad mode on the flash device.
+    @returns true if the peripheral was initialized and the device could be identified, false otherwise.
+*/
+/**************************************************************************/
 bool Adafruit_QSPI_S25FL1::begin()
 {
 	Adafruit_QSPI_Generic::begin();
@@ -36,6 +47,14 @@ bool Adafruit_QSPI_S25FL1::begin()
 	return (s2 == 0x06);
 }
 
+/**************************************************************************/
+/*! 
+    @brief write to the device-specific status registers s1, s2, s3
+    @param s1 the value to write to the status register s1
+    @param s2 the value to write to the status register s2
+    @param s3 the value to write to the status register s3
+*/
+/**************************************************************************/
 void Adafruit_QSPI_S25FL1::writeStatus(byte s1, byte s2, byte s3)
 {
 	uint8_t c[] = {s1, s2, s3};

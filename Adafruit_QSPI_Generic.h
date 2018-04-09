@@ -11,6 +11,11 @@
 
 #include "Adafruit_QSPI.h"
 
+/**************************************************************************/
+/*! 
+    @brief  a class for interfacing with a generic QSPI flash device.
+*/
+/**************************************************************************/
 class Adafruit_QSPI_Generic {
 
 public:
