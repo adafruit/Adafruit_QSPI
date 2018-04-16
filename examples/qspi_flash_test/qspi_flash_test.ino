@@ -1,8 +1,25 @@
 /* Test QSPI read and write functionality. Erase chip, write sequential bytes, verify.
  */
-#include "Adafruit_QSPI_S25FL1.h"
 
+//Uncomment one of the following lines based on the flash device used
+
+//#define FLASH_DEVICE_S25FL1
+#define FLASH_DEVICE_GD25Q
+//#define FLASH_DEVICE_GENERIC
+
+#ifdef FLASH_DEVICE_GD25Q
+
+#include "Adafruit_QSPI_GD25Q.h"
+Adafruit_QSPI_GD25Q flash;
+#elif defined(FLASH_DEVICE_S25FL1)
+#include "Adafruit_QSPI_S25FL1.h"
 Adafruit_QSPI_S25FL1 flash;
+#elif defined(FLASH_DEVICE_S25FL1)
+#include "Adafruit_QSPI_Generic.h"
+Adafruit_QSPI_Generic flash;
+#else
+#error "Flash Device not supported."
+#endif
 
 #define PROGSIZE 512
 

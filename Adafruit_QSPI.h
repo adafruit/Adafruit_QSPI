@@ -99,6 +99,7 @@ typedef enum {
 	QSPI_WRITE_MEMORY,
 } QSPITransferType_t;
 
+#define QSPI_OPTION_NONE 0 ///< no option
 #define QSPI_OPTION_INSTREN QSPI_INSTRFRAME_INSTREN ///< enable sending of instruction
 #define QSPI_OPTION_ADDREN QSPI_INSTRFRAME_ADDREN ///< enable sending of address
 #define QSPI_OPTION_OPCODEEN QSPI_INSTRFRAME_OPTCODEEN ///< enable sending of opcode
@@ -159,6 +160,7 @@ public:
 	void begin();
 	void end(); ///< de-init the peripheral
 
+	void runInstruction(const QSPIInstr *instr);
 	void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
 
 	void setMemoryMode(QSPIMode_t mode);

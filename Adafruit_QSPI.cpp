@@ -109,6 +109,16 @@ void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_
 
 /**************************************************************************/
 /*! 
+    @brief  Run a single QSPI instruction. This should only be used for single byte instructions that do not read or write data or require an address.
+    @param instr pointer to the struct containing instruction settings
+*/
+/**************************************************************************/
+void Adafruit_QSPI::runInstruction(const QSPIInstr *instr){
+	runInstruction(instr, 0, NULL, NULL, 0);
+}
+
+/**************************************************************************/
+/*! 
     @brief transfer data via QSPI
     @param data the data to be sent
     @returns the data that was read
