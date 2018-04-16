@@ -5,5 +5,5 @@ var searchData=
   ['readmanufacturerid',['readManufacturerID',['../class_adafruit___q_s_p_i___generic.html#a39db0a227e4c976e94267c3c065796cf',1,'Adafruit_QSPI_Generic']]],
   ['readmemory',['readMemory',['../class_adafruit___q_s_p_i___generic.html#a2344facc05934fa0fa2452d4bb16fed1',1,'Adafruit_QSPI_Generic']]],
   ['readstatus',['readStatus',['../class_adafruit___q_s_p_i___generic.html#a74b6bf76166a6fa1d01dcd4cc91c8b57',1,'Adafruit_QSPI_Generic']]],
-  ['runinstruction',['runInstruction',['../class_adafruit___q_s_p_i.html#ad1dbd68acb333732ab185f47806faac6',1,'Adafruit_QSPI']]]
+  ['runinstruction',['runInstruction',['../class_adafruit___q_s_p_i.html#a8507d550552dd791a9eda6eca9a454ad',1,'Adafruit_QSPI::runInstruction(const QSPIInstr *instr)'],['../class_adafruit___q_s_p_i.html#ad1dbd68acb333732ab185f47806faac6',1,'Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)']]]
 ];

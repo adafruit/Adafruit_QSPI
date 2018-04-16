@@ -105,6 +105,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a2e7b41069b690b0ebce18071149839fa">end</a> ()</td></tr>
 <tr class="memdesc:a2e7b41069b690b0ebce18071149839fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">de-init the peripheral <br /></td></tr>
 <tr class="separator:a2e7b41069b690b0ebce18071149839fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8507d550552dd791a9eda6eca9a454ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a8507d550552dd791a9eda6eca9a454ad">runInstruction</a> (const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *instr)</td></tr>
+<tr class="memdesc:a8507d550552dd791a9eda6eca9a454ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a single QSPI instruction. This should only be used for single byte instructions that do not read or write data or require an address.  <a href="#a8507d550552dd791a9eda6eca9a454ad">More...</a><br /></td></tr>
+<tr class="separator:a8507d550552dd791a9eda6eca9a454ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1dbd68acb333732ab185f47806faac6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#ad1dbd68acb333732ab185f47806faac6">runInstruction</a> (const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)</td></tr>
 <tr class="memdesc:ad1dbd68acb333732ab185f47806faac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a single QSPI instruction.  <a href="#ad1dbd68acb333732ab185f47806faac6">More...</a><br /></td></tr>
 <tr class="separator:ad1dbd68acb333732ab185f47806faac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -237,8 +240,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="a8507d550552dd791a9eda6eca9a454ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8507d550552dd791a9eda6eca9a454ad">&#9670;&nbsp;</a></span>runInstruction() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_QSPI::runInstruction </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *&#160;</td>
+          <td class="paramname"><em>instr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run a single QSPI instruction. This should only be used for single byte instructions that do not read or write data or require an address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instr</td><td>pointer to the struct containing instruction settings </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad1dbd68acb333732ab185f47806faac6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1dbd68acb333732ab185f47806faac6">&#9670;&nbsp;</a></span>runInstruction()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1dbd68acb333732ab185f47806faac6">&#9670;&nbsp;</a></span>runInstruction() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
