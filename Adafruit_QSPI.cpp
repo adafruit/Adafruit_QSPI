@@ -68,6 +68,15 @@ void Adafruit_QSPI::begin() {
 /**************************************************************************/
 void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
 {
+	bool needToEnableCache = false;
+	if(instr->type != QSPI_READ_MEMORY && CMCC->SR.bit.CSTS){
+		// clear the cache
+		CMCC->CTRL.bit.CEN = 0; // disable
+		while(CMCC->SR.bit.CSTS);
+		CMCC->MAINT0.bit.INVALL = 1; // invalidate all
+		needToEnableCache = true;
+	}
+
 	uint8_t *qspi_mem = (uint8_t *)QSPI_AHB;
 	if(addr)
 		qspi_mem += addr;
@@ -105,6 +114,9 @@ void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_
 	while( !QSPI->INTFLAG.bit.INSTREND );
 
 	QSPI->INTFLAG.bit.INSTREND = 1;
+
+	if(needToEnableCache) 
+		CMCC->CTRL.bit.CEN = 1; // re-enable
 }
 
 /**************************************************************************/

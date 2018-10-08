@@ -12,6 +12,7 @@ enum {
 	GD25Q_READ_STATUS = 0,
 	GD25Q_READ_STATUS1,
 	GD25Q_WRITE_ENABLE_VOLATILE_STATUS,
+	GD25Q_READ_IDS,
 };
 
 static const QSPIInstr cmdSetGD25Q[] = {
@@ -21,6 +22,8 @@ static const QSPIInstr cmdSetGD25Q[] = {
 		{ 0x35, false, QSPI_ADDRLEN_NONE, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_INSTRFRAME_DATAEN), QSPI_READ, 0 },
 		//write enable volatile status
 		{ 0x50, false, QSPI_ADDRLEN_NONE, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_WRITE, 0 },
+		//read ids
+		{ 0x9F, false, QSPI_ADDRLEN_NONE, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_INSTRFRAME_DATAEN), QSPI_READ, 0 },
 };
 
 /**************************************************************************/
@@ -33,9 +36,12 @@ bool Adafruit_QSPI_GD25Q::begin()
 {
 	Adafruit_QSPI_Generic::begin();
 
-	if (readDeviceID() != 0x14) return false;
-	if (readManufacturerID() != 0xC8) return false;
-
+	// read device ids
+	uint8_t ids[3];
+	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_IDS], 0, NULL, ids, 3);
+	if (ids[0] != 0xC8 || ids[2] != 0x15 )
+		 return false;
+	
 	_status.reg = 0;
 	//_status.bit.HPF = 1; //enable high performance mode
 	_status.bit.QE = 1; //enable quad io

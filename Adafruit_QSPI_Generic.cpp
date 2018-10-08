@@ -29,6 +29,8 @@ const QSPIInstr cmdSetGeneric[] = {
 		{ 0x04, false, QSPI_ADDRLEN_NONE, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
 		//Chip Erase
 		{ 0xC7, false, QSPI_ADDRLEN_NONE, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		// Sector Erase
+		{ 0x20, false, QSPI_ADDRLEN_24_BITS, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
 		// Block Erase 64KB
 		{ 0xD8, false, QSPI_ADDRLEN_24_BITS, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
 		//Page Program
@@ -44,8 +46,43 @@ const QSPIInstr cmdSetGeneric[] = {
 */
 /**************************************************************************/
 bool Adafruit_QSPI_Generic::begin(){
+	currentAddr = 0;
 	QSPI0.begin();
 	return true;
+}
+
+bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
+  type = t;
+
+  if (type == SPIFLASHTYPE_W25Q16BV) {
+    pagesize = 256;
+    addrsize = 24;
+    pages = 8192;
+    totalsize = pages * pagesize; // 2 MBytes
+  } 
+  else if (type == SPIFLASHTYPE_25C02) {
+    pagesize = 32;
+    addrsize = 16;
+    pages = 8;
+    totalsize = pages * pagesize; // 256 bytes
+  } 
+  else if (type == SPIFLASHTYPE_W25X40CL) {
+    pagesize = 256;
+    addrsize = 24;
+    pages = 2048;
+    totalsize =  pages * pagesize; // 512 Kbytes
+  } else if (type == SPIFLASHTYPE_AT25SF041) {
+    pagesize = 256;
+    addrsize = 24;
+    pages = 4096;
+    totalsize = pages * pagesize;  // 1 MBytes
+  }
+  else {
+    pagesize = 0;
+    return false;
+  }
+
+  return true;
 }
 
 /**************************************************************************/
@@ -181,4 +218,32 @@ bool Adafruit_QSPI_Generic::writeMemory(uint32_t addr, uint8_t *data, uint32_t s
 	}
 
 	return true;
+}
+
+
+uint32_t Adafruit_QSPI_Generic::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
+{
+	readMemory(address, buffer, len);
+	return len;	
+}
+
+bool Adafruit_QSPI_Generic::eraseSector (uint32_t sectorNumber)
+{
+	uint32_t address = sectorNumber * W25Q16BV_SECTORSIZE;
+	byte r;
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
+
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_SECTOR_ERASE], address, NULL, &r, 1);
+
+	//wait for busy
+	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
+
+	return true;
+}
+
+// Write an arbitrary-sized buffer
+uint32_t Adafruit_QSPI_Generic::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
+{
+	writeMemory(address, buffer, len);
+	return len;
 }
