@@ -51,6 +51,13 @@ bool Adafruit_QSPI_Generic::begin(){
 	return true;
 }
 
+/**************************************************************************/
+/*! 
+    @brief set the type of flash. Setting the type is necessary for use with a FAT filesystem.
+    @param t the type of flash to set.
+	@returns true if a valid flash type was passed in, false otherwise.
+*/
+/**************************************************************************/
 bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
   type = t;
 
@@ -220,13 +227,29 @@ bool Adafruit_QSPI_Generic::writeMemory(uint32_t addr, uint8_t *data, uint32_t s
 	return true;
 }
 
-
+/**************************************************************************/
+/*! 
+    @brief read a chunk of memory from the device
+    @param address the address to read from
+    @param buffer the pointer to where the read data will be stored
+    @param len the number of bytes to read
+    @returns true
+*/
+/**************************************************************************/
 uint32_t Adafruit_QSPI_Generic::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
 	readMemory(address, buffer, len);
 	return len;	
 }
 
+
+/**************************************************************************/
+/*! 
+    @brief erase a sector of flash
+    @param sectorNumber the sector number to erase. The address erased will be (sectorNumber * W25Q16BV_SECTORSIZE)
+    @returns true
+*/
+/**************************************************************************/
 bool Adafruit_QSPI_Generic::eraseSector (uint32_t sectorNumber)
 {
 	uint32_t address = sectorNumber * W25Q16BV_SECTORSIZE;
@@ -241,7 +264,16 @@ bool Adafruit_QSPI_Generic::eraseSector (uint32_t sectorNumber)
 	return true;
 }
 
-// Write an arbitrary-sized buffer
+
+/**************************************************************************/
+/*! 
+    @brief write a chunk of memory to the device
+    @param address the address to write to
+    @param buffer a pointer to the data to be written
+    @param len the number of bytes to write
+    @returns len
+*/
+/**************************************************************************/
 uint32_t Adafruit_QSPI_Generic::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
 	writeMemory(address, buffer, len);

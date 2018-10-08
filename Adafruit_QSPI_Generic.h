@@ -42,6 +42,14 @@ public:
 	
 	/* These are needed for compatibility with Adafruit_SPIFlash_FatFs */
 	uint32_t readBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
+
+	/**************************************************************************/
+	/*! 
+		@brief erase a sector of flash
+		@param sectorNumber the sector number to erase. The address erased will be (sectorNumber * W25Q16BV_SECTORSIZE)
+		@returns true
+	*/
+	/**************************************************************************/
 	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
 	bool     eraseSector (uint32_t sectorNumber);
 

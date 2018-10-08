@@ -16,7 +16,7 @@ before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
 
 install:
-   - arduino --install-library "Adafruit NeoPixel"
+   - arduino --install-library "Adafruit SPIFlash"
 
 script:
    - build_m4_platforms
