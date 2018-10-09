@@ -76,8 +76,8 @@ Inheritance diagram for Adafruit_QSPI_Generic:</div>
  <div class="center">
   <img src="class_adafruit___q_s_p_i___generic.png" usemap="#Adafruit_5FQSPI_5FGeneric_map" alt=""/>
   <map id="Adafruit_5FQSPI_5FGeneric_map" name="Adafruit_5FQSPI_5FGeneric_map">
-<area href="class_adafruit___q_s_p_i___g_d25_q.html" title="a class for interfacing with a GD25Q QSPI flash device. http://www.elm-tech.com/en/products/spi-flash..." alt="Adafruit_QSPI_GD25Q" shape="rect" coords="0,56,145,80"/>
-<area href="class_adafruit___q_s_p_i___s25_f_l1.html" title="a class for interfacing with a S2FL1 QSPI flash device. http://www.cypress.com/file/196886/download ..." alt="Adafruit_QSPI_S25FL1" shape="rect" coords="155,56,300,80"/>
+<area href="class_adafruit___q_s_p_i___g_d25_q.html" title="a class for interfacing with a GD25Q QSPI flash device. http://www.elm-tech.com/en/products/spi-flash..." alt="Adafruit_QSPI_GD25Q" shape="rect" coords="0,112,145,136"/>
+<area href="class_adafruit___q_s_p_i___s25_f_l1.html" title="a class for interfacing with a S2FL1 QSPI flash device. http://www.cypress.com/file/196886/download ..." alt="Adafruit_QSPI_S25FL1" shape="rect" coords="155,112,300,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -86,6 +86,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab930510e5383fffeee77940bf148c594"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#ab930510e5383fffeee77940bf148c594">begin</a> ()</td></tr>
 <tr class="memdesc:ab930510e5383fffeee77940bf148c594"><td class="mdescLeft">&#160;</td><td class="mdescRight">begin the default QSPI peripheral  <a href="#ab930510e5383fffeee77940bf148c594">More...</a><br /></td></tr>
 <tr class="separator:ab930510e5383fffeee77940bf148c594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1387be92c49993754d6d0e70e5e04528"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#a1387be92c49993754d6d0e70e5e04528">setFlashType</a> (spiflash_type_t t)</td></tr>
+<tr class="memdesc:a1387be92c49993754d6d0e70e5e04528"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the type of flash. Setting the type is necessary for use with a FAT filesystem.  <a href="#a1387be92c49993754d6d0e70e5e04528">More...</a><br /></td></tr>
+<tr class="separator:a1387be92c49993754d6d0e70e5e04528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbe5055b8f55595bbb16972f130ff3b1"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#afbe5055b8f55595bbb16972f130ff3b1">readDeviceID</a> ()</td></tr>
 <tr class="memdesc:afbe5055b8f55595bbb16972f130ff3b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the device id  <a href="#afbe5055b8f55595bbb16972f130ff3b1">More...</a><br /></td></tr>
 <tr class="separator:afbe5055b8f55595bbb16972f130ff3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,6 +114,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aaaa2a6e711ad73be8cee22b16dca35e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#aaaa2a6e711ad73be8cee22b16dca35e3">writeMemory</a> (uint32_t addr, uint8_t *data, uint32_t size)</td></tr>
 <tr class="memdesc:aaaa2a6e711ad73be8cee22b16dca35e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">write a chunk of memory to the device  <a href="#aaaa2a6e711ad73be8cee22b16dca35e3">More...</a><br /></td></tr>
 <tr class="separator:aaaa2a6e711ad73be8cee22b16dca35e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab37ff52f29f6fa5c2a65d60349e8e8d9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#ab37ff52f29f6fa5c2a65d60349e8e8d9">readBuffer</a> (uint32_t address, uint8_t *buffer, uint32_t len)</td></tr>
+<tr class="memdesc:ab37ff52f29f6fa5c2a65d60349e8e8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">read a chunk of memory from the device  <a href="#ab37ff52f29f6fa5c2a65d60349e8e8d9">More...</a><br /></td></tr>
+<tr class="separator:ab37ff52f29f6fa5c2a65d60349e8e8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad66972dcd821c48dec71ec901a76f765"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#ad66972dcd821c48dec71ec901a76f765">EraseSector</a> (uint32_t sectorNumber)</td></tr>
+<tr class="memdesc:ad66972dcd821c48dec71ec901a76f765"><td class="mdescLeft">&#160;</td><td class="mdescRight">erase a sector of flash  <a href="#ad66972dcd821c48dec71ec901a76f765">More...</a><br /></td></tr>
+<tr class="separator:ad66972dcd821c48dec71ec901a76f765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acacc84132d3741cd1a9360e9facef64e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#acacc84132d3741cd1a9360e9facef64e">eraseSector</a> (uint32_t sectorNumber)</td></tr>
+<tr class="memdesc:acacc84132d3741cd1a9360e9facef64e"><td class="mdescLeft">&#160;</td><td class="mdescRight">erase a sector of flash  <a href="#acacc84132d3741cd1a9360e9facef64e">More...</a><br /></td></tr>
+<tr class="separator:acacc84132d3741cd1a9360e9facef64e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a163e9fc450cbf9dd35fdd5c97231e891"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#a163e9fc450cbf9dd35fdd5c97231e891">writeBuffer</a> (uint32_t address, uint8_t *buffer, uint32_t len)</td></tr>
+<tr class="memdesc:a163e9fc450cbf9dd35fdd5c97231e891"><td class="mdescLeft">&#160;</td><td class="mdescRight">write a chunk of memory to the device  <a href="#a163e9fc450cbf9dd35fdd5c97231e891">More...</a><br /></td></tr>
+<tr class="separator:a163e9fc450cbf9dd35fdd5c97231e891"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>a class for interfacing with a generic QSPI flash device. </p>
@@ -132,6 +147,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>begin the default QSPI peripheral </p>
 <dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+</div>
+</div>
+<a id="a1387be92c49993754d6d0e70e5e04528"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1387be92c49993754d6d0e70e5e04528">&#9670;&nbsp;</a></span>setFlashType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_QSPI_Generic::setFlashType </td>
+          <td>(</td>
+          <td class="paramtype">spiflash_type_t&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set the type of flash. Setting the type is necessary for use with a FAT filesystem. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>the type of flash to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if a valid flash type was passed in, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -335,6 +377,158 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+</div>
+</div>
+<a id="ab37ff52f29f6fa5c2a65d60349e8e8d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab37ff52f29f6fa5c2a65d60349e8e8d9">&#9670;&nbsp;</a></span>readBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Adafruit_QSPI_Generic::readBuffer </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>read a chunk of memory from the device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>the address to read from </td></tr>
+    <tr><td class="paramname">buffer</td><td>the pointer to where the read data will be stored </td></tr>
+    <tr><td class="paramname">len</td><td>the number of bytes to read </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+</div>
+</div>
+<a id="ad66972dcd821c48dec71ec901a76f765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad66972dcd821c48dec71ec901a76f765">&#9670;&nbsp;</a></span>EraseSector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_QSPI_Generic::EraseSector </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sectorNumber</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>erase a sector of flash </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sectorNumber</td><td>the sector number to erase. The address erased will be (sectorNumber * W25Q16BV_SECTORSIZE) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+</div>
+</div>
+<a id="acacc84132d3741cd1a9360e9facef64e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acacc84132d3741cd1a9360e9facef64e">&#9670;&nbsp;</a></span>eraseSector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_QSPI_Generic::eraseSector </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sectorNumber</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>erase a sector of flash </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sectorNumber</td><td>the sector number to erase. The address erased will be (sectorNumber * W25Q16BV_SECTORSIZE) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+</div>
+</div>
+<a id="a163e9fc450cbf9dd35fdd5c97231e891"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a163e9fc450cbf9dd35fdd5c97231e891">&#9670;&nbsp;</a></span>writeBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Adafruit_QSPI_Generic::writeBuffer </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>write a chunk of memory to the device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>the address to write to </td></tr>
+    <tr><td class="paramname">buffer</td><td>a pointer to the data to be written </td></tr>
+    <tr><td class="paramname">len</td><td>the number of bytes to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>len </dd></dl>
 
 </div>
 </div>
