@@ -39,7 +39,7 @@ bool Adafruit_QSPI_GD25Q::begin()
 	// read device ids
 	uint8_t ids[3];
 	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_IDS], 0, NULL, ids, 3);
-	if (ids[0] != 0xC8 || ids[2] != 0x15 )
+	if (ids[0] != 0xC8)
 		 return false;
 	
 	_status.reg = 0;
