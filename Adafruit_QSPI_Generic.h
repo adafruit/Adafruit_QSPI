@@ -35,7 +35,7 @@ public:
 
 	byte read8(uint32_t addr);
 
-	bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
+	bool readMemory(uint32_t addr, uint8_t *data, uint32_t size, bool invalidateCache=true);
 	bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 
 	/******** SPI FLASH CLASS METHODS *************/

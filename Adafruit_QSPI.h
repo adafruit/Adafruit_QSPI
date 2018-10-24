@@ -161,7 +161,7 @@ public:
 	void end(); ///< de-init the peripheral
 
 	void runInstruction(const QSPIInstr *instr);
-	void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
+	void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true);
 
 	void setMemoryMode(QSPIMode_t mode);
 	void setClockDivider(uint8_t uc_div);

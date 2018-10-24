@@ -192,9 +192,9 @@ byte Adafruit_QSPI_Generic::read8(uint32_t addr)
     @returns true
 */
 /**************************************************************************/
-bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
+bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size, bool invalidateCache)
 {
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ], addr, NULL, data, size);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ], addr, NULL, data, size, invalidateCache);
 	return true;
 }
 
