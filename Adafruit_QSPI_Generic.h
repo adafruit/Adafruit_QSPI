@@ -39,6 +39,8 @@ public:
 	bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 
 	/******** SPI FLASH CLASS METHODS *************/
+
+	void GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID);
 	
 	/* These are needed for compatibility with Adafruit_SPIFlash_FatFs */
 	uint32_t readBuffer (uint32_t address, uint8_t *buffer, uint32_t len);

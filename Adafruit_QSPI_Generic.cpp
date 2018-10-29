@@ -125,6 +125,19 @@ byte Adafruit_QSPI_Generic::readManufacturerID()
 
 /**************************************************************************/
 /*! 
+    @brief read the manufacturer ID and device ID
+    @param manufID pointer to where to put the manufacturer ID
+	@param deviceID pointer to where to put the device ID
+*/
+/**************************************************************************/
+void Adafruit_QSPI_Generic::GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID)
+{
+	*deviceID = readDeviceID();
+	*manufID = readManufacturerID();
+}
+
+/**************************************************************************/
+/*! 
     @brief read the generic status register.
     @returns the status register reading
 */
