@@ -176,7 +176,7 @@ void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
 	byte r;
 	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
 
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum, NULL, &r, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, &r, 1);
 
 	//wait for busy
 	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
