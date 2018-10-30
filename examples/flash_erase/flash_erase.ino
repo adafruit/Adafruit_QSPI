@@ -1,10 +1,20 @@
 /* Test QSPI read and write functionality. Erase chip, write sequential bytes, verify.
  */
 #include "Adafruit_QSPI_S25FL1.h"
+#include "Adafruit_QSPI_GD25Q.h"
 #include <Adafruit_NeoPixel.h>
 
-#define NEOPIXPIN     40
-Adafruit_QSPI_S25FL1 flash;
+#if defined(ADAFRUIT_FEATHER_M4_EXPRESS)
+  #define NEOPIXPIN     8
+  Adafruit_QSPI_GD25 flash;
+#elif defined(ADAFRUIT_TRELLIS_M4_EXPRESS)
+  #define NEOPIXPIN     10
+  Adafruit_QSPI_GD25Q flash;
+#else
+  #define NEOPIXPIN     40
+  Adafruit_QSPI_GD25 flash;
+#endif
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, NEOPIXPIN, NEO_GRB + NEO_KHZ800);
 
 void setup(){
@@ -13,6 +23,8 @@ void setup(){
   strip.setBrightness(30);
   strip.setPixelColor(0, 20, 20, 20);
   strip.show();
+
+  while (!Serial);
   delay(500);
 
   Serial.println("Adafruit QSPI Eraser!");
