@@ -44,6 +44,17 @@ bool Adafruit_QSPI_GD25Q::begin()
 	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_IDS], 0, NULL, ids, 3);
 	if (ids[0] != 0xC8)
 		 return false;
+
+	switch(ids[2]){
+		case(0x17):
+			setFlashType(SPIFLASHTYPE_W25Q64);
+			break;
+		case(0x15):
+			setFlashType(SPIFLASHTYPE_W25Q16BV);
+			break;
+		default:
+			return false;
+	}
 	
 	_status.reg = 0;
 	//_status.bit.HPF = 1; //enable high performance mode

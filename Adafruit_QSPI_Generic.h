@@ -41,6 +41,7 @@ public:
 	/******** SPI FLASH CLASS METHODS *************/
 
 	void GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID);
+	uint32_t GetJEDECID (void);
 	
 	/* These are needed for compatibility with Adafruit_SPIFlash_FatFs */
 	uint32_t readBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
@@ -73,6 +74,7 @@ enum {
 	ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE,
 	ADAFRUIT_QSPI_GENERIC_CMD_PAGE_PROGRAM,
 	ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ,
+	ADAFRUIT_QSPI_GENERIC_CMD_RDID,
 };
 
 extern const QSPIInstr cmdSetGeneric[];

@@ -37,6 +37,8 @@ const QSPIInstr cmdSetGeneric[] = {
 		{ 0x02, false, QSPI_ADDRLEN_24_BITS, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_WRITE_MEMORY, 0 },
 		//Quad Read
 		{ 0x6B, true, QSPI_ADDRLEN_24_BITS, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE_QUAD_DATA, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ_MEMORY, 8 },
+		//Read ID
+		{ 0x9F, false, QSPI_ADDRLEN_NONE, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 },
 };
 
 /**************************************************************************/
@@ -134,6 +136,19 @@ void Adafruit_QSPI_Generic::GetManufacturerInfo (uint8_t *manufID, uint8_t *devi
 {
 	*deviceID = readDeviceID();
 	*manufID = readManufacturerID();
+}
+
+/**************************************************************************/
+/*! 
+    @brief read JEDEC ID information from the device
+	@returns the read id as a uint32
+*/
+/**************************************************************************/
+uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
+{
+	uint32_t id = 0;
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_RDID], 0, NULL, (uint8_t *)&id, 3);
+	return ((id >> 16) & 0xFF) | (id & 0x00FF00) | ((id & 0xFF) << 16);
 }
 
 /**************************************************************************/
