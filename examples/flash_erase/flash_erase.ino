@@ -12,7 +12,7 @@
   Adafruit_QSPI_GD25Q flash;
 #else
   #define NEOPIXPIN     40
-  Adafruit_QSPI_GD25 flash;
+  Adafruit_QSPI_GD25Q flash;
 #endif
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, NEOPIXPIN, NEO_GRB + NEO_KHZ800);
