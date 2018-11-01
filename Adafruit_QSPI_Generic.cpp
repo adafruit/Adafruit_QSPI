@@ -217,6 +217,7 @@ byte Adafruit_QSPI_Generic::read8(uint32_t addr)
     @param addr the address to read from
     @param data the pointer to where the read data will be stored
     @param size the number of bytes to read
+	@param invalidateCache manual cache management. Only use this parameter if you know what you're doing. Defaults to true.
     @returns true
 */
 /**************************************************************************/

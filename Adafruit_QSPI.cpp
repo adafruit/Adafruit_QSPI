@@ -64,6 +64,7 @@ void Adafruit_QSPI::begin() {
     @param txData pointer to the data to be written.
     @param rxData pointer to where read data should be stored.
     @param size the number of bytes to read.
+	@param invalidateCache manual cache management. Only use this parameter if you know what you're doing. Defaults to true.
 */
 /**************************************************************************/
 void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache)
