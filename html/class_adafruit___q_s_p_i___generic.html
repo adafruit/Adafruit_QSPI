@@ -108,12 +108,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a6ae58af00a3cf22d00c6fc48771cf2ae"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#a6ae58af00a3cf22d00c6fc48771cf2ae">read8</a> (uint32_t addr)</td></tr>
 <tr class="memdesc:a6ae58af00a3cf22d00c6fc48771cf2ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">read one byte of data at the passed address  <a href="#a6ae58af00a3cf22d00c6fc48771cf2ae">More...</a><br /></td></tr>
 <tr class="separator:a6ae58af00a3cf22d00c6fc48771cf2ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2344facc05934fa0fa2452d4bb16fed1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#a2344facc05934fa0fa2452d4bb16fed1">readMemory</a> (uint32_t addr, uint8_t *data, uint32_t size)</td></tr>
-<tr class="memdesc:a2344facc05934fa0fa2452d4bb16fed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">read a chunk of memory from the device  <a href="#a2344facc05934fa0fa2452d4bb16fed1">More...</a><br /></td></tr>
-<tr class="separator:a2344facc05934fa0fa2452d4bb16fed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ec43b1c81287767e8cda94a62a0baa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#a59ec43b1c81287767e8cda94a62a0baa">readMemory</a> (uint32_t addr, uint8_t *data, uint32_t size, bool invalidateCache=true)</td></tr>
+<tr class="memdesc:a59ec43b1c81287767e8cda94a62a0baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">read a chunk of memory from the device  <a href="#a59ec43b1c81287767e8cda94a62a0baa">More...</a><br /></td></tr>
+<tr class="separator:a59ec43b1c81287767e8cda94a62a0baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaa2a6e711ad73be8cee22b16dca35e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#aaaa2a6e711ad73be8cee22b16dca35e3">writeMemory</a> (uint32_t addr, uint8_t *data, uint32_t size)</td></tr>
 <tr class="memdesc:aaaa2a6e711ad73be8cee22b16dca35e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">write a chunk of memory to the device  <a href="#aaaa2a6e711ad73be8cee22b16dca35e3">More...</a><br /></td></tr>
 <tr class="separator:aaaa2a6e711ad73be8cee22b16dca35e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d914cabc393369e1db98e52911dba10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#a5d914cabc393369e1db98e52911dba10">GetManufacturerInfo</a> (uint8_t *manufID, uint8_t *deviceID)</td></tr>
+<tr class="memdesc:a5d914cabc393369e1db98e52911dba10"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the manufacturer ID and device ID  <a href="#a5d914cabc393369e1db98e52911dba10">More...</a><br /></td></tr>
+<tr class="separator:a5d914cabc393369e1db98e52911dba10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a372587bc6e4d26494fd260f63f853afb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#a372587bc6e4d26494fd260f63f853afb">GetJEDECID</a> (void)</td></tr>
+<tr class="memdesc:a372587bc6e4d26494fd260f63f853afb"><td class="mdescLeft">&#160;</td><td class="mdescRight">read JEDEC ID information from the device  <a href="#a372587bc6e4d26494fd260f63f853afb">More...</a><br /></td></tr>
+<tr class="separator:a372587bc6e4d26494fd260f63f853afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab37ff52f29f6fa5c2a65d60349e8e8d9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___generic.html#ab37ff52f29f6fa5c2a65d60349e8e8d9">readBuffer</a> (uint32_t address, uint8_t *buffer, uint32_t len)</td></tr>
 <tr class="memdesc:ab37ff52f29f6fa5c2a65d60349e8e8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">read a chunk of memory from the device  <a href="#ab37ff52f29f6fa5c2a65d60349e8e8d9">More...</a><br /></td></tr>
 <tr class="separator:ab37ff52f29f6fa5c2a65d60349e8e8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -290,8 +296,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a2344facc05934fa0fa2452d4bb16fed1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2344facc05934fa0fa2452d4bb16fed1">&#9670;&nbsp;</a></span>readMemory()</h2>
+<a id="a59ec43b1c81287767e8cda94a62a0baa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59ec43b1c81287767e8cda94a62a0baa">&#9670;&nbsp;</a></span>readMemory()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,7 +318,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>invalidateCache</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -328,6 +340,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
     <tr><td class="paramname">addr</td><td>the address to read from </td></tr>
     <tr><td class="paramname">data</td><td>the pointer to where the read data will be stored </td></tr>
     <tr><td class="paramname">size</td><td>the number of bytes to read </td></tr>
+    <tr><td class="paramname">invalidateCache</td><td>manual cache management. Only use this parameter if you know what you're doing. Defaults to true. </td></tr>
   </table>
   </dd>
 </dl>
@@ -377,6 +390,64 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true </dd></dl>
+
+</div>
+</div>
+<a id="a5d914cabc393369e1db98e52911dba10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d914cabc393369e1db98e52911dba10">&#9670;&nbsp;</a></span>GetManufacturerInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_QSPI_Generic::GetManufacturerInfo </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>manufID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>deviceID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>read the manufacturer ID and device ID </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">manufID</td><td>pointer to where to put the manufacturer ID </td></tr>
+    <tr><td class="paramname">deviceID</td><td>pointer to where to put the device ID </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a372587bc6e4d26494fd260f63f853afb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a372587bc6e4d26494fd260f63f853afb">&#9670;&nbsp;</a></span>GetJEDECID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Adafruit_QSPI_Generic::GetJEDECID </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>read JEDEC ID information from the device </p>
+<dl class="section return"><dt>Returns</dt><dd>the read id as a uint32 </dd></dl>
 
 </div>
 </div>

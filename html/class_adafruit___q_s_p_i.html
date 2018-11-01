@@ -108,9 +108,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a8507d550552dd791a9eda6eca9a454ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a8507d550552dd791a9eda6eca9a454ad">runInstruction</a> (const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *instr)</td></tr>
 <tr class="memdesc:a8507d550552dd791a9eda6eca9a454ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a single QSPI instruction. This should only be used for single byte instructions that do not read or write data or require an address.  <a href="#a8507d550552dd791a9eda6eca9a454ad">More...</a><br /></td></tr>
 <tr class="separator:a8507d550552dd791a9eda6eca9a454ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1dbd68acb333732ab185f47806faac6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#ad1dbd68acb333732ab185f47806faac6">runInstruction</a> (const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)</td></tr>
-<tr class="memdesc:ad1dbd68acb333732ab185f47806faac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a single QSPI instruction.  <a href="#ad1dbd68acb333732ab185f47806faac6">More...</a><br /></td></tr>
-<tr class="separator:ad1dbd68acb333732ab185f47806faac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf4e036d8d54efa3835bbba0fdc5e239"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#acf4e036d8d54efa3835bbba0fdc5e239">runInstruction</a> (const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true)</td></tr>
+<tr class="memdesc:acf4e036d8d54efa3835bbba0fdc5e239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a single QSPI instruction.  <a href="#acf4e036d8d54efa3835bbba0fdc5e239">More...</a><br /></td></tr>
+<tr class="separator:acf4e036d8d54efa3835bbba0fdc5e239"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef37580513c99504c2d837c2e2fcf409"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#aef37580513c99504c2d837c2e2fcf409">setMemoryMode</a> (<a class="el" href="_adafruit___q_s_p_i_8h.html#acfbf4dff93e8e69f992d54371bcdcbe7">QSPIMode_t</a> mode)</td></tr>
 <tr class="memdesc:aef37580513c99504c2d837c2e2fcf409"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the memory mode of the QSPI peripheral  <a href="#aef37580513c99504c2d837c2e2fcf409">More...</a><br /></td></tr>
 <tr class="separator:aef37580513c99504c2d837c2e2fcf409"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -266,8 +266,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="ad1dbd68acb333732ab185f47806faac6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1dbd68acb333732ab185f47806faac6">&#9670;&nbsp;</a></span>runInstruction() <span class="overload">[2/2]</span></h2>
+<a id="acf4e036d8d54efa3835bbba0fdc5e239"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf4e036d8d54efa3835bbba0fdc5e239">&#9670;&nbsp;</a></span>runInstruction() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -300,7 +300,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>invalidateCache</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -318,6 +324,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
     <tr><td class="paramname">txData</td><td>pointer to the data to be written. </td></tr>
     <tr><td class="paramname">rxData</td><td>pointer to where read data should be stored. </td></tr>
     <tr><td class="paramname">size</td><td>the number of bytes to read. </td></tr>
+    <tr><td class="paramname">invalidateCache</td><td>manual cache management. Only use this parameter if you know what you're doing. Defaults to true. </td></tr>
   </table>
   </dd>
 </dl>

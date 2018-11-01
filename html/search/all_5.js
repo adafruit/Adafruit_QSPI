@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['instruction',['instruction',['../struct_q_s_p_i_instr.html#a5ac2437dacb9c5a6d3bd8b0a7c5a70e4',1,'QSPIInstr']]],
-  ['ioformat',['ioFormat',['../struct_q_s_p_i_instr.html#ac43cbce012407f5e4874c828aeba1161',1,'QSPIInstr']]]
+  ['getjedecid',['GetJEDECID',['../class_adafruit___q_s_p_i___generic.html#a372587bc6e4d26494fd260f63f853afb',1,'Adafruit_QSPI_Generic']]],
+  ['getmanufacturerinfo',['GetManufacturerInfo',['../class_adafruit___q_s_p_i___generic.html#a5d914cabc393369e1db98e52911dba10',1,'Adafruit_QSPI_Generic']]]
 ];

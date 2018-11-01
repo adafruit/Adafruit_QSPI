@@ -1,10 +1,16 @@
 var searchData=
 [
-  ['read8',['read8',['../class_adafruit___q_s_p_i___generic.html#a6ae58af00a3cf22d00c6fc48771cf2ae',1,'Adafruit_QSPI_Generic']]],
-  ['readbuffer',['readBuffer',['../class_adafruit___q_s_p_i___generic.html#ab37ff52f29f6fa5c2a65d60349e8e8d9',1,'Adafruit_QSPI_Generic']]],
-  ['readdeviceid',['readDeviceID',['../class_adafruit___q_s_p_i___generic.html#afbe5055b8f55595bbb16972f130ff3b1',1,'Adafruit_QSPI_Generic']]],
-  ['readmanufacturerid',['readManufacturerID',['../class_adafruit___q_s_p_i___generic.html#a39db0a227e4c976e94267c3c065796cf',1,'Adafruit_QSPI_Generic']]],
-  ['readmemory',['readMemory',['../class_adafruit___q_s_p_i___generic.html#a2344facc05934fa0fa2452d4bb16fed1',1,'Adafruit_QSPI_Generic']]],
-  ['readstatus',['readStatus',['../class_adafruit___q_s_p_i___generic.html#a74b6bf76166a6fa1d01dcd4cc91c8b57',1,'Adafruit_QSPI_Generic']]],
-  ['runinstruction',['runInstruction',['../class_adafruit___q_s_p_i.html#a8507d550552dd791a9eda6eca9a454ad',1,'Adafruit_QSPI::runInstruction(const QSPIInstr *instr)'],['../class_adafruit___q_s_p_i.html#ad1dbd68acb333732ab185f47806faac6',1,'Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)']]]
+  ['qspi0',['QSPI0',['../_adafruit___q_s_p_i_8cpp.html#ac4bc8d9c3922a2ac52b96f3b52d242ea',1,'QSPI0():&#160;Adafruit_QSPI.cpp'],['../_adafruit___q_s_p_i_8h.html#ac4bc8d9c3922a2ac52b96f3b52d242ea',1,'QSPI0():&#160;Adafruit_QSPI.cpp']]],
+  ['qspi_5foption_5faddren',['QSPI_OPTION_ADDREN',['../_adafruit___q_s_p_i_8h.html#aff06248ec395b285d8378b55b219f18a',1,'Adafruit_QSPI.h']]],
+  ['qspi_5foption_5fdataen',['QSPI_OPTION_DATAEN',['../_adafruit___q_s_p_i_8h.html#a53c96112a320cb402f1c0434243f151d',1,'Adafruit_QSPI.h']]],
+  ['qspi_5foption_5finstren',['QSPI_OPTION_INSTREN',['../_adafruit___q_s_p_i_8h.html#ac64c08f9eacb34b23ea1c465daf64503',1,'Adafruit_QSPI.h']]],
+  ['qspi_5foption_5fnone',['QSPI_OPTION_NONE',['../_adafruit___q_s_p_i_8h.html#ac9f1a9fa0220f00e483ed4c1ae75c521',1,'Adafruit_QSPI.h']]],
+  ['qspi_5foption_5fopcodeen',['QSPI_OPTION_OPCODEEN',['../_adafruit___q_s_p_i_8h.html#ab53ea122f51655387b11d094c4a106ce',1,'Adafruit_QSPI.h']]],
+  ['qspiaddrlen_5ft',['QSPIAddrLen_t',['../_adafruit___q_s_p_i_8h.html#ad575da805d5e5b750d07732647a6d141',1,'Adafruit_QSPI.h']]],
+  ['qspidatawidth_5ft',['QSPIDataWidth_t',['../_adafruit___q_s_p_i_8h.html#a556626a7ebac2d52b497f6616223cf7b',1,'Adafruit_QSPI.h']]],
+  ['qspiinstr',['QSPIInstr',['../struct_q_s_p_i_instr.html',1,'']]],
+  ['qspiioformat_5ft',['QSPIIOFormat_t',['../_adafruit___q_s_p_i_8h.html#a9d856808bc7a24113a4bfeee2557914e',1,'Adafruit_QSPI.h']]],
+  ['qspimode_5ft',['QSPIMode_t',['../_adafruit___q_s_p_i_8h.html#acfbf4dff93e8e69f992d54371bcdcbe7',1,'Adafruit_QSPI.h']]],
+  ['qspiopcodelen_5ft',['QSPIOpcodeLen_t',['../_adafruit___q_s_p_i_8h.html#a42e7d343aa55e2fe6b0a15d12f726d74',1,'Adafruit_QSPI.h']]],
+  ['qspitransfertype_5ft',['QSPITransferType_t',['../_adafruit___q_s_p_i_8h.html#ab3a58add885778b8edbf6bbc60e7008a',1,'Adafruit_QSPI.h']]]
 ];
