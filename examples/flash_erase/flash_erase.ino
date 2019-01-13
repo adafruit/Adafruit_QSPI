@@ -10,12 +10,15 @@
 #elif defined(ADAFRUIT_TRELLIS_M4_EXPRESS)
   #define NEOPIXPIN     10
   Adafruit_QSPI_GD25Q flash;
+#elif defined(ADAFRUIT_GRAND_CENTRAL_M4)
+  #define NEOPIXPIN     88
+  Adafruit_QSPI_GD25Q flash;
 #else
   #define NEOPIXPIN     40
   Adafruit_QSPI_GD25Q flash;
 #endif
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, NEOPIXPIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(32, NEOPIXPIN, NEO_GRB + NEO_KHZ800);
 
 void setup(){
   Serial.begin(115200);
@@ -24,7 +27,7 @@ void setup(){
   strip.setPixelColor(0, 20, 20, 20);
   strip.show();
 
-  while (!Serial);
+ //while (!Serial);
   delay(500);
 
   Serial.println("Adafruit QSPI Eraser!");
@@ -49,4 +52,3 @@ void setup(){
 void loop(){
   //don't even do anything
 }
-
