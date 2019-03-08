@@ -8,17 +8,16 @@
 //#define FLASH_DEVICE_GENERIC
 
 #ifdef FLASH_DEVICE_GD25Q
-
-#include "Adafruit_QSPI_GD25Q.h"
-Adafruit_QSPI_GD25Q flash;
+  #include "Adafruit_QSPI_GD25Q.h"
+  Adafruit_QSPI_GD25Q flash;
 #elif defined(FLASH_DEVICE_S25FL1)
-#include "Adafruit_QSPI_S25FL1.h"
-Adafruit_QSPI_S25FL1 flash;
+  #include "Adafruit_QSPI_S25FL1.h"
+  Adafruit_QSPI_S25FL1 flash;
 #elif defined(FLASH_DEVICE_S25FL1)
-#include "Adafruit_QSPI_Generic.h"
-Adafruit_QSPI_Generic flash;
+  #include "Adafruit_QSPI_Generic.h"
+  Adafruit_QSPI_Generic flash;
 #else
-#error "Flash Device not supported."
+  #error "Flash Device not supported."
 #endif
 
 #define PROGSIZE 512
@@ -70,4 +69,3 @@ void setup(){
 void loop(){
   //don't even do anything
 }
-

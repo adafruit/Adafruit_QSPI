@@ -3,31 +3,39 @@
 #include "Adafruit_QSPI_S25FL1.h"
 #include "Adafruit_QSPI_GD25Q.h"
 #include <Adafruit_NeoPixel.h>
+#include <Adafruit_DotStar.h>
 
 #if defined(ADAFRUIT_FEATHER_M4_EXPRESS)
   #define NEOPIXPIN     8
-  Adafruit_QSPI_GD25 flash;
+  Adafruit_QSPI_GD25Q flash;
 #elif defined(ADAFRUIT_TRELLIS_M4_EXPRESS)
   #define NEOPIXPIN     10
   Adafruit_QSPI_GD25Q flash;
 #elif defined(ADAFRUIT_GRAND_CENTRAL_M4)
   #define NEOPIXPIN     88
   Adafruit_QSPI_GD25Q flash;
+#elif defined(ADAFRUIT_ITSYBITSY_M4_EXPRESS)
+  Adafruit_DotStar strip = Adafruit_DotStar(1, 8, 6, DOTSTAR_BGR);
+  Adafruit_QSPI_GD25Q flash;
 #else
   #define NEOPIXPIN     40
   Adafruit_QSPI_GD25Q flash;
 #endif
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(32, NEOPIXPIN, NEO_GRB + NEO_KHZ800);
+#if defined(NEOPIXPIN)
+  Adafruit_NeoPixel strip = Adafruit_NeoPixel(32, NEOPIXPIN, NEO_GRB + NEO_KHZ800);
+#endif
 
 void setup(){
   Serial.begin(115200);
   strip.begin();
+#if defined(NEOPIXPIN)
   strip.setBrightness(30);
+#endif
   strip.setPixelColor(0, 20, 20, 20);
   strip.show();
 
- //while (!Serial);
+  //while (!Serial);
   delay(500);
 
   Serial.println("Adafruit QSPI Eraser!");
