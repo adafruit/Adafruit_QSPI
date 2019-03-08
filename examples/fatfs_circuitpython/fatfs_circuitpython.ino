@@ -28,7 +28,7 @@
 #include <Adafruit_SPIFlash_FatFs.h>
 #include "Adafruit_QSPI_GD25Q.h"
 
-#define FLASH_TYPE     SPIFLASHTYPE_W25Q16BV  // Flash chip type.
+#define FLASH_TYPE     SPIFLASHTYPE_W25Q64 // Flash chip type.
 
 Adafruit_QSPI_GD25Q flash;
 
@@ -44,7 +44,7 @@ void setup() {
   while (!Serial) {
     delay(100);
   }
-  Serial.println("Adafruit M0 Express CircuitPython Flash Example");
+  Serial.println("QSPI CircuitPython Flash Example");
 
   // Initialize flash library and check its chip ID.
   if (!flash.begin()) {
