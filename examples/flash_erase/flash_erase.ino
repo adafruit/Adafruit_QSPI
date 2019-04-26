@@ -17,6 +17,9 @@
 #elif defined(ADAFRUIT_ITSYBITSY_M4_EXPRESS)
   Adafruit_DotStar strip = Adafruit_DotStar(1, 8, 6, DOTSTAR_BGR);
   Adafruit_QSPI_GD25Q flash;
+#elif defined(ADAFRUIT_PYGAMER_M4_EXPRESS) || defined(ADAFRUIT_PYBADGE_M4_EXPRESS)
+  #define NEOPIXPIN     8
+  Adafruit_QSPI_GD25Q flash;
 #else
   #define NEOPIXPIN     40
   Adafruit_QSPI_GD25Q flash;
