@@ -9,16 +9,13 @@ git:
   quiet: true
 env:
   global:
-     - ARDUINO_IDE_VERSION="1.8.7"
      - PRETTYNAME="Adafruit QSPI Library"
-# Optional, will default to "$TRAVIS_BUILD_DIR/Doxyfile"
-#    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
 
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
 
 install:
-   - arduino --install-library "Adafruit SPIFlash","Adafruit NeoPixel"
+   - arduino --install-library "Adafruit SPIFlash","Adafruit NeoPixel","Adafruit DotStar"
 
 script:
    - build_m4_platforms
