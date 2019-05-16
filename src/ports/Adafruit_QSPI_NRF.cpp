@@ -21,9 +21,38 @@
  * BSD license, all text here must be included in any redistribution.
  *
  */
-//--------------------------------------------------------------------+
-// MACRO TYPEDEF CONSTANT ENUM DECLARATION
-//--------------------------------------------------------------------+
 
+#ifdef NRF52840_XXAA
 
-//------------- IMPLEMENTATION -------------//
+#include "Adafruit_QSPI.h"
+
+Adafruit_QSPI_NRF QSPI0;
+
+void Adafruit_QSPI_NRF::begin(void)
+{
+
+}
+
+void Adafruit_QSPI_NRF::setClockDivider (uint8_t uc_div)
+{
+
+}
+void Adafruit_QSPI_NRF::setAddressLength (uint8_t width_bit)
+{
+}
+
+void Adafruit_QSPI_NRF::runInstruction (const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size,
+                     bool invalidateCache = true)
+{
+}
+void Adafruit_QSPI_NRF::eraseSector (uint32_t sectorAddr)
+{
+}
+bool Adafruit_QSPI_NRF::readMemory (uint32_t addr, uint8_t *data, uint32_t size)
+{
+}
+bool Adafruit_QSPI_NRF::writeMemory (uint32_t addr, uint8_t *data, uint32_t size)
+{
+}
+
+#endif

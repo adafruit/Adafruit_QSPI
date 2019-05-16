@@ -16,29 +16,29 @@
 /**************************************************************************/
 const QSPIInstr cmdSetGeneric[] = {
 		//Device ID
-		{ 0xAB, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0xAB, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
 		//Manufacturer ID
-		{ 0x90, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0x90, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
 		//read status register
-		{ 0x05, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 },
+		{ 0x05, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 },
 		//write status
-		{ 0x01, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_WRITE, 0 },
+		{ 0x01, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_WRITE, 0 },
 		//Write Enable
-		{ 0x06, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		{ 0x06, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
 		//Write Disable
-		{ 0x04, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		{ 0x04, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
 		//Chip Erase
-		{ 0xC7, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		{ 0xC7, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
 		// Sector Erase
-		{ 0x20, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0x20, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
 		// Block Erase 64KB
-		{ 0xD8, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0xD8, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
 		//Page Program
-		{ 0x02, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_WRITE_MEMORY, 0 },
+		{ 0x02, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_WRITE_MEMORY, 0 },
 		//Quad Read
-		{ 0x6B, true, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE_QUAD_DATA, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ_MEMORY, 8 },
+		{ 0x6B, true, QSPI_IO_FORMAT_SINGLE_QUAD_DATA, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ_MEMORY, 8 },
 		//Read ID
-		{ 0x9F, false, QSPI_OPCODE_LEN_NONE, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 },
+		{ 0x9F, false, QSPI_IO_FORMAT_SINGLE, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 },
 };
 
 /**************************************************************************/
@@ -207,9 +207,21 @@ void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
 byte Adafruit_QSPI_Generic::read8(uint32_t addr)
 {
 	byte ret;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ], addr, NULL, &ret, 1);
-	return ret;
+	return readMemory(addr, &ret, sizeof(ret)) ? 0xff : ret;
 }
+
+uint16_t Adafruit_QSPI_Generic::read16(uint32_t addr)
+{
+	uint16_t ret;
+	return readMemory(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffff : ret;
+}
+
+uint32_t Adafruit_QSPI_Generic::read32(uint32_t addr)
+{
+	uint32_t ret;
+	return readMemory(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffffffff : ret;
+}
+
 
 /**************************************************************************/
 /*! 
@@ -217,14 +229,12 @@ byte Adafruit_QSPI_Generic::read8(uint32_t addr)
     @param addr the address to read from
     @param data the pointer to where the read data will be stored
     @param size the number of bytes to read
-	@param invalidateCache manual cache management. Only use this parameter if you know what you're doing. Defaults to true.
     @returns true
 */
 /**************************************************************************/
-bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size, bool invalidateCache)
+bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ], addr, NULL, data, size, invalidateCache);
-	return true;
+	return QSPI0.readMemory(addr, data, size);
 }
 
 /**************************************************************************/
@@ -238,27 +248,7 @@ bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t si
 /**************************************************************************/
 bool Adafruit_QSPI_Generic::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-	byte r;
-	uint16_t toWrite = 0;
-
-	//write one page at a time
-	while(size){
-
-		QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
-
-		if(size > 256) toWrite = 256;
-		else toWrite = size;
-		size -= toWrite;
-
-		QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_PAGE_PROGRAM], addr, data, NULL, toWrite);
-
-		data += toWrite;
-		addr += toWrite;
-
-		while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
-	}
-
-	return true;
+	return QSPI0.writeMemory(addr, data, size);
 }
 
 /**************************************************************************/
@@ -287,14 +277,7 @@ uint32_t Adafruit_QSPI_Generic::readBuffer (uint32_t address, uint8_t *buffer, u
 bool Adafruit_QSPI_Generic::eraseSector (uint32_t sectorNumber)
 {
 	uint32_t address = sectorNumber * W25Q16BV_SECTORSIZE;
-	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
-
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_SECTOR_ERASE], address, NULL, &r, 1);
-
-	//wait for busy
-	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
-
+	QSPI0.eraseSector(address);
 	return true;
 }
 

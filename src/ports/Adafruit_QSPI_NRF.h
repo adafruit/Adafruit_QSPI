@@ -28,7 +28,15 @@
 class Adafruit_QSPI_NRF : Adafruit_QSPI
 {
   public:
-    	virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true);
+    virtual void begin(void);
+
+    virtual void setClockDivider(uint8_t uc_div);
+    virtual void setAddressLength(uint8_t width_bit); // either 24 or 32 bit address
+
+    virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true);
+    virtual void eraseSector(uint32_t sectorAddr);
+    virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
+    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 };
 
 extern Adafruit_QSPI_NRF QSPI0;

@@ -27,19 +27,6 @@
 
 /**************************************************************************/
 /*!
-    @brief  The opcode length. Use QSPI_OPCODE_LEN_NONE if no opcode needed.
-*/
-/**************************************************************************/
-typedef enum {
-	QSPI_OPCODE_LEN_NONE = QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val,
-	QSPI_OPCODE_LEN_1_BITS = QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val,
-	QSPI_OPCODE_LEN_2_BITS,
-	QSPI_OPCODE_LEN_4_BITS,
-	QSPI_OPCODE_LEN_8_BITS,
-} QSPIOpcodeLen_t;
-
-/**************************************************************************/
-/*!
     @brief  the transfer format to use
 */
 /**************************************************************************/
@@ -71,13 +58,12 @@ typedef enum {
 */
 /**************************************************************************/
 typedef struct {
-	uint8_t instruction; ///< the instruction byte
-	bool continuousRead; ///< whether or not to use continuous read mode
-	QSPIOpcodeLen_t opcodeLen; ///< the opcode length if an opcode is required
-	QSPIIOFormat_t ioFormat; ///< the data format to use
-	uint8_t options; ///< additional option flags
-	QSPITransferType_t type; ///< the transfer type
-	uint8_t dummylen; ///< the number of dummy cycles that should preceed data transfer
+	uint8_t instruction;       ///< the instruction byte
+	bool continuousRead;       ///< whether or not to use continuous read mode
+	QSPIIOFormat_t ioFormat;   ///< the data format to use
+	uint8_t options;           ///< additional option flags
+	QSPITransferType_t type;   ///< the transfer type
+	uint8_t dummylen;          ///< the number of dummy cycles that should preceed data transfer
 } QSPIInstr;
 
 
@@ -85,9 +71,14 @@ typedef struct {
 class Adafruit_QSPI
 {
   public:
+    virtual void begin(void) = 0;
     virtual void setClockDivider(uint8_t uc_div) = 0;
     virtual void setAddressLength(uint8_t width_bit); // either 24 or 32 bit address
+
     virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true) = 0;
+    virtual void eraseSector(uint32_t sectorAddr);
+    virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
+    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 };
 
 #if defined __SAMD51__
