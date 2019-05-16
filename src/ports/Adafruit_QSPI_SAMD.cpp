@@ -33,6 +33,7 @@ Adafruit_QSPI_SAMD QSPI0;
 Adafruit_QSPI_SAMD::Adafruit_QSPI_SAMD(void)
 {
   _addr_len = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val;
+  _cont_read = 0;
 }
 
 /**************************************************************************/
@@ -98,7 +99,7 @@ void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, u
 
 	iframe = QSPI_INSTRFRAME_WIDTH(instr->ioFormat) | instr->options |
 			QSPI_INSTRFRAME_OPTCODELEN(QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val) | (_addr_len << QSPI_INSTRFRAME_ADDRLEN_Pos) |
-			( instr->continuousRead << QSPI_INSTRFRAME_CRMODE_Pos) | QSPI_INSTRFRAME_TFRTYPE(instr->type) | QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen);
+			( _cont_read << QSPI_INSTRFRAME_CRMODE_Pos) | QSPI_INSTRFRAME_TFRTYPE(instr->type) | QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen);
 
 	QSPI->INSTRFRAME.reg = iframe;
 
@@ -160,7 +161,9 @@ bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
   //Quad Read
   const QSPIInstr cmd_read = { 0x6B, true, QSPI_IO_FORMAT_SINGLE_QUAD_DATA, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ_MEMORY, 8 };
 
+  _cont_read = 1; // only command that use Continuous Read Mode
   runInstruction(&cmd_read, addr, NULL, data, size, true);
+  _cont_read = 0;
 
   return true;
 }

@@ -59,7 +59,6 @@ typedef enum {
 /**************************************************************************/
 typedef struct {
 	uint8_t instruction;       ///< the instruction byte
-	bool continuousRead;       ///< whether or not to use continuous read mode
 	QSPIIOFormat_t ioFormat;   ///< the data format to use
 	uint8_t options;           ///< additional option flags
 	QSPITransferType_t type;   ///< the transfer type

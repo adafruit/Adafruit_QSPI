@@ -66,6 +66,7 @@ public:
 
 private:
 	uint8_t _addr_len;
+	uint8_t _cont_read;
 };
 
 extern Adafruit_QSPI_SAMD QSPI0; ///< default QSPI instance
