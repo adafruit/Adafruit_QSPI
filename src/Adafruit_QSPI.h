@@ -27,21 +27,6 @@
 
 /**************************************************************************/
 /*!
-    @brief  the transfer format to use
-*/
-/**************************************************************************/
-typedef enum {
-	QSPI_IO_FORMAT_SINGLE = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI_Val,
-	QSPI_IO_FORMAT_SINGLE_DUAL_DATA,
-	QSPI_IO_FORMAT_SINGLE_QUAD_DATA,
-	QSPI_IO_FORMAT_SINGLE_INSTR_DUAL_ADDR_DUAL_DATA,
-	QSPI_IO_FORMAT_SINGLE_INSTR_QUAD_ADDR_QUAD_DATA,
-	QSPI_IO_FORMAT_DUAL,
-	QSPI_IO_FORMAT_QUAD,
-} QSPIIOFormat_t;
-
-/**************************************************************************/
-/*!
     @brief  the type of transfer
 */
 /**************************************************************************/
@@ -59,7 +44,6 @@ typedef enum {
 /**************************************************************************/
 typedef struct {
 	uint8_t instruction;       ///< the instruction byte
-	QSPIIOFormat_t ioFormat;   ///< the data format to use
 	uint8_t options;           ///< additional option flags
 	QSPITransferType_t type;   ///< the transfer type
 	uint8_t dummylen;          ///< the number of dummy cycles that should preceed data transfer
