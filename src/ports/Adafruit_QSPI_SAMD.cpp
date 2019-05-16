@@ -23,16 +23,24 @@
  * BSD license, all text here must be included in any redistribution.
  *
  */
+#ifdef __SAMD51__
 
 #include "Adafruit_QSPI.h"
 #include "wiring_private.h"
+
+Adafruit_QSPI_SAMD QSPI0;
+
+Adafruit_QSPI_SAMD::Adafruit_QSPI_SAMD(void)
+{
+  _addr_len = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val;
+}
 
 /**************************************************************************/
 /*! 
     @brief  Enable necessary clocks and configure QSPI peripheral.
 */
 /**************************************************************************/
-void Adafruit_QSPI::begin() {
+void Adafruit_QSPI_SAMD::begin() {
 	MCLK->AHBMASK.reg |= MCLK_AHBMASK_QSPI;
 	MCLK->AHBMASK.reg |= MCLK_AHBMASK_QSPI_2X;
 	MCLK->APBCMASK.reg |= MCLK_APBCMASK_QSPI;
@@ -67,7 +75,7 @@ void Adafruit_QSPI::begin() {
 	@param invalidateCache manual cache management. Only use this parameter if you know what you're doing. Defaults to true.
 */
 /**************************************************************************/
-void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache)
+void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache)
 {
 	bool needToEnableCache = false;
 	if(invalidateCache && CMCC->SR.bit.CSTS){
@@ -89,7 +97,7 @@ void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_
 	uint32_t iframe = QSPI->INSTRFRAME.reg;
 
 	iframe = QSPI_INSTRFRAME_WIDTH(instr->ioFormat) | instr->options |
-			QSPI_INSTRFRAME_OPTCODELEN(instr->opcodeLen) | (instr->addrLen << QSPI_INSTRFRAME_ADDRLEN_Pos) |
+			QSPI_INSTRFRAME_OPTCODELEN(instr->opcodeLen) | (_addr_len << QSPI_INSTRFRAME_ADDRLEN_Pos) |
 			( instr->continuousRead << QSPI_INSTRFRAME_CRMODE_Pos) | QSPI_INSTRFRAME_TFRTYPE(instr->type) | QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen);
 
 	QSPI->INSTRFRAME.reg = iframe;
@@ -126,18 +134,40 @@ void Adafruit_QSPI::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_
     @param instr pointer to the struct containing instruction settings
 */
 /**************************************************************************/
-void Adafruit_QSPI::runInstruction(const QSPIInstr *instr){
+void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr){
 	runInstruction(instr, 0, NULL, NULL, 0);
 }
 
 /**************************************************************************/
 /*! 
+    @brief  set the clock divider
+    @param uc_div the divider to set. Must be a value between 0 and 255. Note that QSPI uses GCLK0.
+*/
+/**************************************************************************/
+void Adafruit_QSPI_SAMD::setClockDivider(uint8_t uc_div)
+{
+	QSPI->BAUD.bit.BAUD = uc_div;
+}
+
+void Adafruit_QSPI_SAMD::setAddressLength(uint8_t width_bit)
+{
+  if ( width_bit == 32 )
+  {
+    _addr_len = QSPI_INSTRFRAME_ADDRLEN_32BITS_Val;
+  }else
+  {
+    _addr_len = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val;
+  }
+}
+
+/**************************************************************************/
+/*!
     @brief transfer data via QSPI
     @param data the data to be sent
     @returns the data that was read
 */
 /**************************************************************************/
-byte Adafruit_QSPI::transfer(uint16_t data)
+byte Adafruit_QSPI_SAMD::transfer(uint16_t data)
 {
 	QSPI->TXDATA.reg = data;
 	while( !QSPI->INTFLAG.bit.TXC );
@@ -152,7 +182,7 @@ byte Adafruit_QSPI::transfer(uint16_t data)
     @param count the number of bytes to transfer.
 */
 /**************************************************************************/
-void Adafruit_QSPI::transfer(void *buf, size_t count)
+void Adafruit_QSPI_SAMD::transfer(void *buf, size_t count)
 {
 	uint8_t *buffer = reinterpret_cast<uint8_t *>(buf);
 	for (size_t i=0; i<count; i++) {
@@ -167,20 +197,9 @@ void Adafruit_QSPI::transfer(void *buf, size_t count)
     @param mode the mode to set to
 */
 /**************************************************************************/
-void Adafruit_QSPI::setMemoryMode(QSPIMode_t mode)
+void Adafruit_QSPI_SAMD::setMemoryMode(QSPIMode_t mode)
 {
 	QSPI->CTRLB.bit.MODE = mode;
-}
-
-/**************************************************************************/
-/*! 
-    @brief  set the clock divider
-    @param uc_div the divider to set. Must be a value between 0 and 255. Note that QSPI uses GCLK0.
-*/
-/**************************************************************************/
-void Adafruit_QSPI::setClockDivider(uint8_t uc_div)
-{
-	QSPI->BAUD.bit.BAUD = uc_div;
 }
 
 /**************************************************************************/
@@ -189,9 +208,9 @@ void Adafruit_QSPI::setClockDivider(uint8_t uc_div)
     @param width the data width to set.
 */
 /**************************************************************************/
-void Adafruit_QSPI::setDataWidth(QSPIDataWidth_t width)
+void Adafruit_QSPI_SAMD::setDataWidth(uint8_t width_bit)
 {
-	QSPI->CTRLB.bit.DATALEN = QSPI_CTRLB_DATALEN(width);
+	QSPI->CTRLB.bit.DATALEN = QSPI_CTRLB_DATALEN(width_bit-8);
 }
 
-Adafruit_QSPI QSPI0;
+#endif
