@@ -18,15 +18,15 @@ enum {
 
 static const QSPIInstr cmdSetGD25Q[] = {
 		//read status
-		{ 0x05, (QSPI_OPTION_INSTREN | QSPI_INSTRFRAME_DATAEN), QSPI_READ, 0 },
+		{ 0x05, QSPI_READ, 0, false, true },
 		//read status2
-		{ 0x35, (QSPI_OPTION_INSTREN | QSPI_INSTRFRAME_DATAEN), QSPI_READ, 0 },
+		{ 0x35, QSPI_READ, 0, false, true },
 		//write enable volatile status
-		{ 0x50, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		{ 0x50, QSPI_READ, 0, false, false },
 		//read ids
-		{ 0x9F, (QSPI_OPTION_INSTREN | QSPI_INSTRFRAME_DATAEN), QSPI_READ, 0 },
+		{ 0x9F, QSPI_READ, 0, false, true },
 		//write status2
-		{ 0x31, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_WRITE, 0 },
+		{ 0x31, QSPI_WRITE, 0, false, true },
 };
 
 /**************************************************************************/

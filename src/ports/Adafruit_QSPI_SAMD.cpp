@@ -99,9 +99,11 @@ void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, u
 	//read to synchronize
 	uint32_t iframe = QSPI->INSTRFRAME.reg;
 
-	iframe = QSPI_INSTRFRAME_WIDTH(_io_format) | instr->options |
+	iframe = QSPI_INSTRFRAME_WIDTH(_io_format) |
 			QSPI_INSTRFRAME_OPTCODELEN(QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val) | (_addr_len << QSPI_INSTRFRAME_ADDRLEN_Pos) |
 			( _cont_read << QSPI_INSTRFRAME_CRMODE_Pos) | QSPI_INSTRFRAME_TFRTYPE(instr->type) | QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen);
+
+	iframe |= QSPI_INSTRFRAME_INSTREN | (instr->has_addr ? QSPI_INSTRFRAME_ADDREN : 0 ) | (instr->has_data ? QSPI_INSTRFRAME_DATAEN : 0);
 
 	QSPI->INSTRFRAME.reg = iframe;
 
@@ -145,11 +147,11 @@ void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr)
 void Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
 {
 	//Write Enable
-  const QSPIInstr cmd_wren = { 0x06, (QSPI_OPTION_INSTREN), QSPI_READ, 0 };
+  const QSPIInstr cmd_wren = { 0x06, QSPI_READ, 0, false, false };
 	runInstruction(&cmd_wren);
 
 	// Sector Erase
-  const QSPIInstr cmd_erase_sector = { 0x20, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 };
+  const QSPIInstr cmd_erase_sector = { 0x20, QSPI_READ, 0, true, false};
 	runInstruction(&cmd_erase_sector, sectorAddr, NULL, NULL, 0);
 
 	//wait for busy
@@ -158,7 +160,7 @@ void Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
 
 bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-  const QSPIInstr cmd_read = { 0x6B, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ_MEMORY, 8 };
+  const QSPIInstr cmd_read = { 0x6B, QSPI_READ_MEMORY, 8, true, true };
 
   // Quad Read
   // with Continuous Read Mode and Quad IO mode
@@ -177,10 +179,10 @@ bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
   //Write Enable
-  const QSPIInstr cmd_wren = { 0x06, (QSPI_OPTION_INSTREN), QSPI_READ, 0 };
+  const QSPIInstr cmd_wren = { 0x06, QSPI_READ, 0, false, false };
 
   //Page Program
-	const QSPIInstr cmd_pageprog = { 0x02, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_WRITE_MEMORY, 0 };
+	const QSPIInstr cmd_pageprog = { 0x02, QSPI_WRITE_MEMORY, 0, true, true };
 
 	uint16_t toWrite = 0;
 
@@ -206,7 +208,7 @@ bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size
 byte Adafruit_QSPI_SAMD::readStatus()
 {
   //read status register
-	const QSPIInstr cmd_read_status =	{ 0x05, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 };
+	const QSPIInstr cmd_read_status =	{ 0x05, QSPI_READ, 0, false, true };
 
 	byte r;
 	runInstruction(&cmd_read_status, 0, NULL, &r, 1);

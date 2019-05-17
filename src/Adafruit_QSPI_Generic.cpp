@@ -16,29 +16,29 @@
 /**************************************************************************/
 const QSPIInstr cmdSetGeneric[] = {
 		//Device ID
-		{ 0xAB, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0xAB, QSPI_READ, 0, true, true },
 		//Manufacturer ID
-		{ 0x90, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0x90, QSPI_READ, 0, true, true },
 		//read status register
-		{ 0x05, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 },
+		{ 0x05, QSPI_READ, 0, false, true },
 		//write status
-		{ 0x01, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_WRITE, 0 },
+		{ 0x01, QSPI_WRITE, 0, false, true },
 		//Write Enable
-		{ 0x06, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		{ 0x06, QSPI_READ, 0, false, false },
 		//Write Disable
-		{ 0x04, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		{ 0x04, QSPI_READ, 0, false, false },
 		//Chip Erase
-		{ 0xC7, (QSPI_OPTION_INSTREN), QSPI_READ, 0 },
+		{ 0xC7, QSPI_READ, 0, false, false},
 		// Sector Erase
-		{ 0x20, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0x20, QSPI_READ, true, false },
 		// Block Erase 64KB
-		{ 0xD8, (QSPI_OPTION_INSTREN | QSPI_OPTION_ADDREN), QSPI_READ, 0 },
+		{ 0xD8, QSPI_READ, 0, true, false },
 		//Page Program
-		{ 0x02, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_WRITE_MEMORY, 0 },
+		{ 0x02, QSPI_WRITE_MEMORY, 0, true, true },
 		//Quad Read
-		{ 0x6B, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN | QSPI_OPTION_ADDREN), QSPI_READ_MEMORY, 8 },
+		{ 0x6B, QSPI_READ_MEMORY, 8, true, true },
 		//Read ID
-		{ 0x9F, (QSPI_OPTION_INSTREN | QSPI_OPTION_DATAEN), QSPI_READ, 0 },
+		{ 0x9F, QSPI_READ, 0, false, true },
 };
 
 /**************************************************************************/

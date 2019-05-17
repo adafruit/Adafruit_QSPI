@@ -19,12 +19,6 @@
 
 #include <Arduino.h>
 
-#define QSPI_OPTION_NONE 0 ///< no option
-#define QSPI_OPTION_INSTREN QSPI_INSTRFRAME_INSTREN ///< enable sending of instruction
-#define QSPI_OPTION_ADDREN QSPI_INSTRFRAME_ADDREN ///< enable sending of address
-#define QSPI_OPTION_OPCODEEN QSPI_INSTRFRAME_OPTCODEEN ///< enable sending of opcode
-#define QSPI_OPTION_DATAEN QSPI_INSTRFRAME_DATAEN ///< enable sending of data
-
 /**************************************************************************/
 /*!
     @brief  the type of transfer
@@ -44,9 +38,11 @@ typedef enum {
 /**************************************************************************/
 typedef struct {
 	uint8_t instruction;       ///< the instruction byte
-	uint8_t options;           ///< additional option flags
 	QSPITransferType_t type;   ///< the transfer type
 	uint8_t dummylen;          ///< the number of dummy cycles that should preceed data transfer
+
+	bool has_addr;
+	bool has_data;
 } QSPIInstr;
 
 
