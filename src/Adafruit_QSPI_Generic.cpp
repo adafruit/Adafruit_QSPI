@@ -16,29 +16,29 @@
 /**************************************************************************/
 const QSPIInstr cmdSetGeneric[] = {
 		//Device ID
-		{ 0xAB, QSPI_READ, 0, true, true },
+		{ 0xAB, 0, true, true },
 		//Manufacturer ID
-		{ 0x90, QSPI_READ, 0, true, true },
+		{ 0x90, 0, true, true },
 		//read status register
-		{ 0x05, QSPI_READ, 0, false, true },
+		{ 0x05, 0, false, true },
 		//write status
-		{ 0x01, QSPI_WRITE, 0, false, true },
+		{ 0x01, 0, false, true },
 		//Write Enable
-		{ 0x06, QSPI_READ, 0, false, false },
+		{ 0x06, 0, false, false },
 		//Write Disable
-		{ 0x04, QSPI_READ, 0, false, false },
+		{ 0x04, 0, false, false },
 		//Chip Erase
-		{ 0xC7, QSPI_READ, 0, false, false},
+		{ 0xC7, 0, false, false},
 		// Sector Erase
-		{ 0x20, QSPI_READ, true, false },
+		{ 0x20, 0, true, false },
 		// Block Erase 64KB
-		{ 0xD8, QSPI_READ, 0, true, false },
+		{ 0xD8, 0, true, false },
 		//Page Program
-		{ 0x02, QSPI_WRITE_MEMORY, 0, true, true },
+		{ 0x02, 0, true, true },
 		//Quad Read
-		{ 0x6B, QSPI_READ_MEMORY, 8, true, true },
+		{ 0x6B, 8, true, true },
 		//Read ID
-		{ 0x9F, QSPI_READ, 0, false, true },
+		{ 0x9F, 0, false, true },
 };
 
 /**************************************************************************/
@@ -171,10 +171,8 @@ byte Adafruit_QSPI_Generic::readStatus()
 /**************************************************************************/
 void Adafruit_QSPI_Generic::chipErase()
 {
-	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
-
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE], 0, NULL, &r, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, NULL, 0);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE], 0, NULL, NULL, 0);
 
 	//wait for busy
 	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
@@ -188,10 +186,8 @@ void Adafruit_QSPI_Generic::chipErase()
 /**************************************************************************/
 void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
 {
-	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &r, 1);
-
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, &r, 1);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, NULL, 0);
+	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, NULL, 0);
 
 	//wait for busy
 	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);

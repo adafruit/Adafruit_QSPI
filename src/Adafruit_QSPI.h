@@ -21,24 +21,11 @@
 
 /**************************************************************************/
 /*!
-    @brief  the type of transfer
-*/
-/**************************************************************************/
-typedef enum {
-	QSPI_READ = QSPI_INSTRFRAME_TFRTYPE_READ_Val,
-	QSPI_READ_MEMORY,
-	QSPI_WRITE,
-	QSPI_WRITE_MEMORY,
-} QSPITransferType_t;
-
-/**************************************************************************/
-/*!
     @brief  QSPI instruction struct
 */
 /**************************************************************************/
 typedef struct {
 	uint8_t instruction;       ///< the instruction byte
-	QSPITransferType_t type;   ///< the transfer type
 	uint8_t dummylen;          ///< the number of dummy cycles that should preceed data transfer
 
 	bool has_addr;

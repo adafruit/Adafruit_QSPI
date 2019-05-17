@@ -21,11 +21,11 @@ enum {
 /**************************************************************************/
 static const QSPIInstr cmdSetS25FL1[] = {
 		//read status 2
-		{ 0x35, QSPI_READ, 0, false, true  },
+		{ 0x35, 0, false, true  },
 		//read status 3
-		{ 0x33, QSPI_READ, 0, false, true },
+		{ 0x33, 0, false, true },
 		//write enable status
-		{ 0x50, QSPI_READ, 0, false, false },
+		{ 0x50, 0, false, false },
 };
 
 /**************************************************************************/
