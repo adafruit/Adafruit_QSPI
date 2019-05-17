@@ -48,7 +48,7 @@ public:
 	virtual void setClockDivider(uint8_t uc_div);
 	virtual void setAddressLength(uint8_t width_bit);
 
-	virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true);
+	virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
 	using Adafruit_QSPI::runInstruction;
 
 	virtual void eraseSector(uint32_t sectorAddr);

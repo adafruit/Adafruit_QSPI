@@ -75,8 +75,7 @@ void Adafruit_QSPI_NRF::setAddressLength (uint8_t width_bit)
   // TODO implement
 }
 
-void Adafruit_QSPI_NRF::runInstruction (const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size,
-                     bool invalidateCache)
+void Adafruit_QSPI_NRF::runInstruction (const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
 {
   nrf_qspi_cinstr_conf_t cfg =
   {

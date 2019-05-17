@@ -78,9 +78,10 @@ void Adafruit_QSPI_SAMD::begin() {
 	@param invalidateCache manual cache management. Only use this parameter if you know what you're doing. Defaults to true.
 */
 /**************************************************************************/
-void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache)
+void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
 {
 	bool needToEnableCache = false;
+	bool invalidateCache = true;
 	if(invalidateCache && CMCC->SR.bit.CSTS){
 		// clear the cache
 		CMCC->CTRL.bit.CEN = 0; // disable
@@ -168,7 +169,7 @@ bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
   _io_format = QSPI_INSTRFRAME_WIDTH_QUAD_OUTPUT_Val;
   _tfr_type = QSPI_INSTRFRAME_TFRTYPE_READMEMORY_Val;
 
-  runInstruction(&cmd_read, addr, NULL, data, size, true);
+  runInstruction(&cmd_read, addr, NULL, data, size);
 
   _cont_read = 0;
   _io_format = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI_Val;
