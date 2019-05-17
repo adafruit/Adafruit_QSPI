@@ -42,6 +42,13 @@ class Adafruit_QSPI
     virtual void setAddressLength(uint8_t width_bit); // either 24 or 32 bit address
 
     virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true) = 0;
+
+    // Run simple single byte instruction e.g Reset
+    void runInstruction(const QSPIInstr *instr)
+    {
+      runInstruction(instr, 0, NULL, NULL, 0);
+    }
+
     virtual void eraseSector(uint32_t sectorAddr);
     virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
     virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);

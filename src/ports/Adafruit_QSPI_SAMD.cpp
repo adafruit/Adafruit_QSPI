@@ -143,17 +143,6 @@ void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, u
 		CMCC->CTRL.bit.CEN = 1; // re-enable
 }
 
-/**************************************************************************/
-/*! 
-    @brief  Run a single QSPI instruction. This should only be used for single byte instructions that do not read or write data or require an address.
-    @param instr pointer to the struct containing instruction settings
-*/
-/**************************************************************************/
-void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr)
-{
-	runInstruction(instr, 0, NULL, NULL, 0);
-}
-
 void Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
 {
 	//Write Enable
