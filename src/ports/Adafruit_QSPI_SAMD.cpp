@@ -32,7 +32,6 @@ Adafruit_QSPI_SAMD QSPI0;
 
 Adafruit_QSPI_SAMD::Adafruit_QSPI_SAMD(void)
 {
-  _addr_len = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val;
   _cont_read = 0;
   _io_format = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI_Val;
   _tfr_type = QSPI_INSTRFRAME_TFRTYPE_READ_Val;
@@ -101,7 +100,7 @@ void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, u
 	uint32_t iframe = QSPI->INSTRFRAME.reg;
 
 	iframe = QSPI_INSTRFRAME_WIDTH(_io_format) |
-			QSPI_INSTRFRAME_OPTCODELEN(QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val) | (_addr_len << QSPI_INSTRFRAME_ADDRLEN_Pos) |
+			QSPI_INSTRFRAME_OPTCODELEN(QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val) | QSPI_INSTRFRAME_ADDRLEN_24BITS |
 			( _cont_read << QSPI_INSTRFRAME_CRMODE_Pos) | QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen);
 
 	// option
@@ -231,17 +230,6 @@ void Adafruit_QSPI_SAMD::setClockDivider(uint8_t uc_div)
 	QSPI->BAUD.bit.BAUD = uc_div;
 }
 
-void Adafruit_QSPI_SAMD::setAddressLength(uint8_t width_bit)
-{
-  if ( width_bit == 32 )
-  {
-    _addr_len = QSPI_INSTRFRAME_ADDRLEN_32BITS_Val;
-  }else
-  {
-    _addr_len = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val;
-  }
-}
-
 /**************************************************************************/
 /*!
     @brief transfer data via QSPI
@@ -282,17 +270,6 @@ void Adafruit_QSPI_SAMD::transfer(void *buf, size_t count)
 void Adafruit_QSPI_SAMD::setMemoryMode(QSPIMode_t mode)
 {
 	QSPI->CTRLB.bit.MODE = mode;
-}
-
-/**************************************************************************/
-/*! 
-    @brief set the data width
-    @param width the data width to set.
-*/
-/**************************************************************************/
-void Adafruit_QSPI_SAMD::setDataWidth(uint8_t width_bit)
-{
-	QSPI->CTRLB.bit.DATALEN = QSPI_CTRLB_DATALEN(width_bit-8);
 }
 
 #endif

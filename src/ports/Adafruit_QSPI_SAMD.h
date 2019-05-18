@@ -46,7 +46,6 @@ public:
 	void end(); ///< de-init the peripheral
 
 	virtual void setClockDivider(uint8_t uc_div);
-	virtual void setAddressLength(uint8_t width_bit);
 
 	virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
 	using Adafruit_QSPI::runInstruction;
@@ -59,7 +58,6 @@ public:
 	void transfer(void *buf, size_t count);
 
 	void setMemoryMode(QSPIMode_t mode);
-	void setDataWidth(uint8_t width_bit);
 
 	byte readStatus();
 
