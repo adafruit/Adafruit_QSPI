@@ -19,6 +19,12 @@
 
 #include <Arduino.h>
 
+enum
+{
+  QSPI_CMD_READ_4O = 0x6B, // 1 line input (address), 4 line output (data)
+
+};
+
 /**************************************************************************/
 /*!
     @brief  QSPI instruction struct
@@ -37,7 +43,7 @@ typedef struct {
 class Adafruit_QSPI
 {
   public:
-    virtual void begin(void) = 0;
+    virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3);
     virtual void setClockDivider(uint8_t uc_div) = 0;
 //    virtual void setClockSpeed(uint32_t clock_hz);
 
@@ -47,6 +53,11 @@ class Adafruit_QSPI
     void runInstruction(const QSPIInstr *instr)
     {
       runInstruction(instr, 0, NULL, NULL, 0);
+    }
+
+    void begin(void)
+    {
+      begin(PIN_QSPI_SCK, PIN_QSPI_CS, PIN_QSPI_IO0, PIN_QSPI_IO1, PIN_QSPI_IO2, PIN_QSPI_IO3);
     }
 
     virtual void eraseSector(uint32_t sectorAddr);

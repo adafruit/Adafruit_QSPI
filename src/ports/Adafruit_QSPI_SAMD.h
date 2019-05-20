@@ -42,13 +42,14 @@ public:
 	Adafruit_QSPI_SAMD(void);
 	~Adafruit_QSPI_SAMD() {};
 
-	virtual void begin(void);
+	virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3);
 	void end(); ///< de-init the peripheral
 
 	virtual void setClockDivider(uint8_t uc_div);
 
 	virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
 	using Adafruit_QSPI::runInstruction;
+	using Adafruit_QSPI::begin;
 
 	virtual void eraseSector(uint32_t sectorAddr);
 	virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);

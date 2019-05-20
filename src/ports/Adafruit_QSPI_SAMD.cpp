@@ -37,23 +37,19 @@ Adafruit_QSPI_SAMD::Adafruit_QSPI_SAMD(void)
   _tfr_type = QSPI_INSTRFRAME_TFRTYPE_READ_Val;
 }
 
-/**************************************************************************/
-/*! 
-    @brief  Enable necessary clocks and configure QSPI peripheral.
-*/
-/**************************************************************************/
-void Adafruit_QSPI_SAMD::begin() {
+void Adafruit_QSPI_SAMD::begin(int sck, int cs, int io0, int io1, int io2, int io3)
+{
 	MCLK->AHBMASK.reg |= MCLK_AHBMASK_QSPI;
 	MCLK->AHBMASK.reg |= MCLK_AHBMASK_QSPI_2X;
 	MCLK->APBCMASK.reg |= MCLK_APBCMASK_QSPI;
 
 	//set all pins to QSPI periph
-	pinPeripheral(PIN_QSPI_SCK, PIO_COM);
-	pinPeripheral(PIN_QSPI_CS, PIO_COM);
-	pinPeripheral(PIN_QSPI_IO0, PIO_COM);
-	pinPeripheral(PIN_QSPI_IO1, PIO_COM);
-	pinPeripheral(PIN_QSPI_IO2, PIO_COM);
-	pinPeripheral(PIN_QSPI_IO3, PIO_COM);
+	pinPeripheral(sck, PIO_COM);
+	pinPeripheral(cs, PIO_COM);
+	pinPeripheral(io0, PIO_COM);
+	pinPeripheral(io1, PIO_COM);
+	pinPeripheral(io2, PIO_COM);
+	pinPeripheral(io3, PIO_COM);
 
 	QSPI->CTRLA.bit.SWRST = 1;
 

@@ -34,18 +34,18 @@ Adafruit_QSPI_NRF::Adafruit_QSPI_NRF(void)
 
 }
 
-void Adafruit_QSPI_NRF::begin(void)
+void Adafruit_QSPI_NRF::begin(int sck, int cs, int io0, int io1, int io2, int io3)
 {
   // Init QSPI flash
   nrfx_qspi_config_t qspi_cfg = {
     .xip_offset = 0,
     .pins = {
-      .sck_pin = g_ADigitalPinMap[PIN_QSPI_SCK],
-      .csn_pin = g_ADigitalPinMap[PIN_QSPI_CS],
-      .io0_pin = g_ADigitalPinMap[PIN_QSPI_IO0],
-      .io1_pin = g_ADigitalPinMap[PIN_QSPI_IO1],
-      .io2_pin = g_ADigitalPinMap[PIN_QSPI_IO2],
-      .io3_pin = g_ADigitalPinMap[PIN_QSPI_IO3],
+      .sck_pin = g_ADigitalPinMap[sck],
+      .csn_pin = g_ADigitalPinMap[cs],
+      .io0_pin = g_ADigitalPinMap[io0],
+      .io1_pin = g_ADigitalPinMap[io1],
+      .io2_pin = g_ADigitalPinMap[io2],
+      .io3_pin = g_ADigitalPinMap[io3],
     },
     .prot_if = {
       .readoc = NRF_QSPI_READOC_READ4IO,
@@ -112,17 +112,17 @@ void Adafruit_QSPI_NRF::runInstruction (const QSPIInstr *instr, uint32_t addr, u
 
 void Adafruit_QSPI_NRF::eraseSector (uint32_t sectorAddr)
 {
-  // TODO implement
+  nrfx_qspi_erase(NRF_QSPI_ERASE_LEN_4KB, sectorAddr);
 }
 
 bool Adafruit_QSPI_NRF::readMemory (uint32_t addr, uint8_t *data, uint32_t size)
 {
-  // TODO implement
+  return NRFX_SUCCESS == nrfx_qspi_read(data, size, addr);
 }
 
 bool Adafruit_QSPI_NRF::writeMemory (uint32_t addr, uint8_t *data, uint32_t size)
 {
-  // TODO implement
+  return NRFX_SUCCESS == nrfx_qspi_write(data, size, addr);
 }
 
 #endif
