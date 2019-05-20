@@ -47,7 +47,7 @@ const QSPIInstr cmdSetGeneric[] = {
     @returns true
 */
 /**************************************************************************/
-bool Adafruit_QSPI_Generic::begin(){
+bool Adafruit_QSPI_Generic::begin(void){
 	currentAddr = 0;
 	QSPI0.begin();
 	return true;
@@ -105,7 +105,7 @@ bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
     @returns the read device ID
 */
 /**************************************************************************/
-byte Adafruit_QSPI_Generic::readDeviceID()
+byte Adafruit_QSPI_Generic::readDeviceID(void)
 {
 	byte r;
 	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_DEVID], 0, NULL, &r, 1);
@@ -118,7 +118,7 @@ byte Adafruit_QSPI_Generic::readDeviceID()
     @returns the read manufacturer ID
 */
 /**************************************************************************/
-byte Adafruit_QSPI_Generic::readManufacturerID()
+byte Adafruit_QSPI_Generic::readManufacturerID(void)
 {
 	byte r;
 	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_MFGID], 0, NULL, &r, 1);
@@ -157,7 +157,7 @@ uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
     @returns the status register reading
 */
 /**************************************************************************/
-byte Adafruit_QSPI_Generic::readStatus()
+byte Adafruit_QSPI_Generic::readStatus(void)
 {
 	byte r;
 	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_READ_STATUS], 0, NULL, &r, 1);
@@ -169,13 +169,22 @@ byte Adafruit_QSPI_Generic::readStatus()
     @brief perform a chip erase. All data on the device will be erased.
 */
 /**************************************************************************/
-void Adafruit_QSPI_Generic::chipErase()
+void Adafruit_QSPI_Generic::chipErase(void)
 {
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, NULL, 0);
+	writeEnable();
 	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE], 0, NULL, NULL, 0);
 
 	//wait for busy
 	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
+}
+
+
+bool Adafruit_QSPI_Generic::writeEnable(void)
+{
+  const QSPIInstr cmd_wren = { 0x06, 0, false, false };
+  QSPI0.runInstruction(&cmd_wren);
+
+  return true;
 }
 
 /**************************************************************************/
@@ -186,7 +195,7 @@ void Adafruit_QSPI_Generic::chipErase()
 /**************************************************************************/
 void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
 {
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, NULL, 0);
+	writeEnable();
 	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, NULL, 0);
 
 	//wait for busy

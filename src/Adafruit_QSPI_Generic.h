@@ -23,15 +23,18 @@ public:
 	Adafruit_QSPI_Generic() : Adafruit_SPIFlash(0) {}
 	~Adafruit_QSPI_Generic() {}
 
-	bool begin();
+	bool begin(void);
 
 	bool setFlashType(spiflash_type_t t);
 
-	byte readDeviceID();
-	byte readManufacturerID();
-	byte readStatus();
-	void chipErase();
+	byte readDeviceID(void);
+	byte readManufacturerID(void);
+	byte readStatus(void);
+	void chipErase(void);
 	void eraseBlock(uint32_t blocknum);
+
+	bool writeEnable(void);
+
 
 	byte read8(uint32_t addr);
 	uint16_t read16(uint32_t addr);
@@ -39,6 +42,8 @@ public:
 
 	bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
 	bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
+
+
 
 	/******** SPI FLASH CLASS METHODS *************/
 
