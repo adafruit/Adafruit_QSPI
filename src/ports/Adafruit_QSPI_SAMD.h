@@ -63,10 +63,7 @@ public:
 	byte readStatus();
 
 private:
-	uint8_t _addr_len;
-	uint8_t _cont_read;
-	uint8_t _io_format;
-	uint8_t _tfr_type;
+	uint32_t _iframe;
 };
 
 extern Adafruit_QSPI_SAMD QSPI0; ///< default QSPI instance

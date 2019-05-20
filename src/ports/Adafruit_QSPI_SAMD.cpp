@@ -30,11 +30,15 @@
 
 Adafruit_QSPI_SAMD QSPI0;
 
+// dummy: 0, ddren: 0, crmode: 0, tfrtype: 0
+// addrlen: 24 bit, optcodelen: 1 bit
+// dataen: 0, optcodeen: 0, addren: 0, instren: 1
+// wdith: single bit spi
+#define IFRAME_DEFAULT  (QSPI_INSTRFRAME_ADDRLEN_24BITS | QSPI_INSTRFRAME_OPTCODELEN_1BIT | QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI)
+
 Adafruit_QSPI_SAMD::Adafruit_QSPI_SAMD(void)
 {
-  _cont_read = 0;
-  _io_format = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI_Val;
-  _tfr_type = QSPI_INSTRFRAME_TFRTYPE_READ_Val;
+  _iframe = IFRAME_DEFAULT;
 }
 
 void Adafruit_QSPI_SAMD::begin(int sck, int cs, int io0, int io1, int io2, int io3)
@@ -95,20 +99,14 @@ void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, u
 	//read to synchronize
 	uint32_t iframe = QSPI->INSTRFRAME.reg;
 
-	iframe = QSPI_INSTRFRAME_WIDTH(_io_format) |
-			QSPI_INSTRFRAME_OPTCODELEN(QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val) | QSPI_INSTRFRAME_ADDRLEN_24BITS |
-			( _cont_read << QSPI_INSTRFRAME_CRMODE_Pos) | QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen);
-
-	// option
-	iframe |= QSPI_INSTRFRAME_INSTREN | (instr->has_addr ? QSPI_INSTRFRAME_ADDREN : 0 ) | (instr->has_data ? QSPI_INSTRFRAME_DATAEN : 0);
+	iframe = _iframe;
+	iframe |= QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen) | QSPI_INSTRFRAME_INSTREN |
+	          (instr->has_addr ? QSPI_INSTRFRAME_ADDREN : 0 ) | (instr->has_data ? QSPI_INSTRFRAME_DATAEN : 0);
 
 	// Set to Write if not read/write memory but sending out data
-	if ( (_tfr_type == QSPI_INSTRFRAME_TFRTYPE_READ_Val) && txData && size )
+	if ( !(_iframe & QSPI_INSTRFRAME_TFRTYPE_Msk) && txData && size )
 	{
 	  iframe |= QSPI_INSTRFRAME_TFRTYPE_WRITE;
-	}else
-	{
-	  iframe |= QSPI_INSTRFRAME_TFRTYPE(_tfr_type);
 	}
 
 	QSPI->INSTRFRAME.reg = iframe;
@@ -155,20 +153,13 @@ void Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
 
 bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
+  // Command 0x6B 1 line address, 4 line Data
+  // with Continuous Read Mode and Quad output mode, read memory type
   const QSPIInstr cmd_read = { 0x6B, 8, true, true };
 
-  // Quad Read
-  // with Continuous Read Mode and Quad IO mode
-
-  _cont_read = 1;
-  _io_format = QSPI_INSTRFRAME_WIDTH_QUAD_OUTPUT_Val;
-  _tfr_type = QSPI_INSTRFRAME_TFRTYPE_READMEMORY_Val;
-
+  _iframe = QSPI_INSTRFRAME_WIDTH_QUAD_OUTPUT | QSPI_INSTRFRAME_TFRTYPE_READMEMORY | QSPI_INSTRFRAME_CRMODE;
   runInstruction(&cmd_read, addr, NULL, data, size);
-
-  _cont_read = 0;
-  _io_format = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI_Val;
-  _tfr_type = QSPI_INSTRFRAME_TFRTYPE_READ_Val;
+  _iframe = IFRAME_DEFAULT;
 
   return true;
 }
@@ -191,9 +182,9 @@ bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size
 		else toWrite = size;
 		size -= toWrite;
 
-		_tfr_type = QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY_Val;
+		_iframe = QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY;
 		runInstruction(&cmd_pageprog, addr, data, NULL, toWrite);
-		_tfr_type = QSPI_INSTRFRAME_TFRTYPE_READ_Val;
+		_iframe = IFRAME_DEFAULT;
 
 		data += toWrite;
 		addr += toWrite;

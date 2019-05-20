@@ -19,10 +19,11 @@
 
 #include <Arduino.h>
 
+// Default Read & Write command for read/write flash memory
 enum
 {
-  QSPI_CMD_READ_4O = 0x6B, // 1 line input (address), 4 line output (data)
-
+  QSPI_CMD_READ_4OUT  = 0x6B, // 1 line address, 4 line data
+  QSPI_CMD_WRITE_4OUT = 0x32, // 1 line address, 4 line data
 };
 
 /**************************************************************************/

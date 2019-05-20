@@ -48,8 +48,8 @@ void Adafruit_QSPI_NRF::begin(int sck, int cs, int io0, int io1, int io2, int io
       .io3_pin = g_ADigitalPinMap[io3],
     },
     .prot_if = {
-      .readoc = NRF_QSPI_READOC_READ4IO,
-      .writeoc = NRF_QSPI_WRITEOC_PP4O,
+      .readoc = NRF_QSPI_READOC_READ4O, // 0x6B read command
+      .writeoc = NRF_QSPI_WRITEOC_PP4O, // 0x32 write command
       .addrmode = NRF_QSPI_ADDRMODE_24BIT,
       .dpmconfig = false
     },
