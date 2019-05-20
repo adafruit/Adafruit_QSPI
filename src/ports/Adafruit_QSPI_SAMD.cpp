@@ -217,6 +217,11 @@ void Adafruit_QSPI_SAMD::setClockDivider(uint8_t uc_div)
 	QSPI->BAUD.bit.BAUD = uc_div;
 }
 
+void Adafruit_QSPI_SAMD::setClockSpeed(uint32_t clock_hz)
+{
+  QSPI->BAUD.bit.BAUD = VARIANT_MCK/clock_hz;
+}
+
 /**************************************************************************/
 /*!
     @brief transfer data via QSPI

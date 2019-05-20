@@ -45,15 +45,22 @@ class Adafruit_QSPI
 {
   public:
     virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3);
+
     virtual void setClockDivider(uint8_t uc_div) = 0;
-//    virtual void setClockSpeed(uint32_t clock_hz);
+    virtual void setClockSpeed(uint32_t clock_hz) = 0;
 
     virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size) = 0;
 
-    // Run simple single byte instruction e.g Reset
     void runInstruction(const QSPIInstr *instr)
     {
       runInstruction(instr, 0, NULL, NULL, 0);
+    }
+
+    // Run simple single byte instruction e.g Reset
+    void runInstruction(uint8_t instrop)
+    {
+      const QSPIInstr instr = { .instruction = instrop };
+      runInstruction(&instr, 0, NULL, NULL, 0);
     }
 
     void begin(void)
@@ -62,8 +69,8 @@ class Adafruit_QSPI
     }
 
     virtual void eraseSector(uint32_t sectorAddr);
-    virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
-    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
+    virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
+    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
 };
 
 #if defined __SAMD51__

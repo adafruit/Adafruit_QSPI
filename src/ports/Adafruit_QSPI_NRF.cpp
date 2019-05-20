@@ -68,7 +68,19 @@ void Adafruit_QSPI_NRF::begin(int sck, int cs, int io0, int io1, int io2, int io
 
 void Adafruit_QSPI_NRF::setClockDivider (uint8_t uc_div)
 {
-  // TODO implement
+  NRF_QSPI->IFCONFIG1 &= ~QSPI_IFCONFIG1_SCKFREQ_Msk;
+  NRF_QSPI->IFCONFIG1 |=  uc_div << QSPI_IFCONFIG1_SCKFREQ_Pos;
+}
+
+void Adafruit_QSPI_NRF::setClockSpeed(uint32_t clock_hz)
+{
+  uint8_t sckfreq = 0;
+  while ( (32000000UL / (sckfreq + 1) > clock_hz) && (sckfreq < 16) ) {
+    sckfreq++;
+  }
+
+  NRF_QSPI->IFCONFIG1 &= ~QSPI_IFCONFIG1_SCKFREQ_Msk;
+  NRF_QSPI->IFCONFIG1 |=  sckfreq << QSPI_IFCONFIG1_SCKFREQ_Pos;
 }
 
 void Adafruit_QSPI_NRF::runInstruction (const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)

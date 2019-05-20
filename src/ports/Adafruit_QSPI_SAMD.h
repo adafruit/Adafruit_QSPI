@@ -35,6 +35,7 @@ public:
 	void end(); ///< de-init the peripheral
 
 	virtual void setClockDivider(uint8_t uc_div);
+	virtual void setClockSpeed(uint32_t clock_hz);
 
 	virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
 	using Adafruit_QSPI::runInstruction;
