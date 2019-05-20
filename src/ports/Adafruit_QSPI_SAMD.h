@@ -21,17 +21,6 @@
 #include <Arduino.h>
 
 /**************************************************************************/
-/*!
-    @brief  The transfer mode
-*/
-/**************************************************************************/
-typedef enum {
-	QSPI_SPI_MODE = 0,
-	QSPI_MEMORY_MODE,
-} QSPIMode_t;
-
-
-/**************************************************************************/
 /*! 
     @brief  Class for interfacing with QSPI hardware
 */
@@ -57,8 +46,6 @@ public:
 
 	byte transfer(uint16_t data);
 	void transfer(void *buf, size_t count);
-
-	void setMemoryMode(QSPIMode_t mode);
 
 	byte readStatus();
 

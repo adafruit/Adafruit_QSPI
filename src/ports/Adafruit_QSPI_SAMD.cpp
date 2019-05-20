@@ -248,15 +248,4 @@ void Adafruit_QSPI_SAMD::transfer(void *buf, size_t count)
 	}
 }
 
-/**************************************************************************/
-/*! 
-    @brief  set the memory mode of the QSPI peripheral
-    @param mode the mode to set to
-*/
-/**************************************************************************/
-void Adafruit_QSPI_SAMD::setMemoryMode(QSPIMode_t mode)
-{
-	QSPI->CTRLB.bit.MODE = mode;
-}
-
 #endif
