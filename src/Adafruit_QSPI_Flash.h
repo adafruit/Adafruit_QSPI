@@ -5,8 +5,8 @@
  *      Author: deanm
  */
 
-#ifndef ADAFRUIT_QSPI_GENERIC_H_
-#define ADAFRUIT_QSPI_GENERIC_H_
+#ifndef ADAFRUIT_QSPI_FLASH_H_
+#define ADAFRUIT_QSPI_FLASH_H_
 
 
 #include "Adafruit_QSPI.h"
@@ -67,4 +67,4 @@ private:
 	external_flash_device const * _flash_dev;
 };
 
-#endif /* ADAFRUIT_QSPI_GENERIC_H_ */
+#endif /* ADAFRUIT_QSPI_FLASH_H_ */
