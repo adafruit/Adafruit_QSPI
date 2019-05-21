@@ -11,6 +11,7 @@
 
 #include "Adafruit_QSPI.h"
 #include "Adafruit_SPIFlash.h"
+#include "external_flash_device.h"
 
 /**************************************************************************/
 /*! 
@@ -20,7 +21,7 @@
 class Adafruit_QSPI_Generic : public Adafruit_SPIFlash {
 
 public:
-	Adafruit_QSPI_Generic() : Adafruit_SPIFlash(0) {}
+	Adafruit_QSPI_Generic(void);
 	~Adafruit_QSPI_Generic() {}
 
 	bool begin(void);
@@ -28,6 +29,11 @@ public:
 	bool setFlashType(spiflash_type_t t);
 
 	uint8_t readStatus(void);
+	uint8_t readStatus2(void);
+
+	bool writeEnable(void);
+
+
 	void chipErase(void);
 	void eraseBlock(uint32_t blocknum);
 
@@ -56,6 +62,9 @@ public:
 
 
 	/******** END SPI FLASH CLASS METHODS *************/
+
+private:
+	external_flash_device const * _flash_dev;
 };
 
 #endif /* ADAFRUIT_QSPI_GENERIC_H_ */

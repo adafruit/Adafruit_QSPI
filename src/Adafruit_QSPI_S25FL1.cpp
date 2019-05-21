@@ -63,7 +63,7 @@ void Adafruit_QSPI_S25FL1::writeStatus(byte s1, byte s2, byte s3)
 	uint8_t dummy;
 //	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE], 0, NULL, &dummy, 1);
 //	QSPI0.runInstruction(&cmdSetS25FL1[S25FL1_WRITE_ENABLE_STATUS], 0, NULL, &dummy, 1);
-	QSPI0.runCommand(QSPI_CMD_ENABLE_WRITE);
+	QSPI0.runCommand(QSPI_CMD_WRITE_ENABLE);
 	QSPI0.runCommand(0x50);
 //
 //	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_STATUS], 0, c, NULL, 3);

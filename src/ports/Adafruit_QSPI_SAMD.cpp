@@ -154,7 +154,7 @@ bool Adafruit_QSPI_SAMD::writeCommand(uint8_t command, uint8_t const* data, uint
 
 void Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
 {
-	runCommand(QSPI_CMD_ENABLE_WRITE);
+	runCommand(QSPI_CMD_WRITE_ENABLE);
 
 	// Sector Erase
 	uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
@@ -178,14 +178,13 @@ bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 
 bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-	uint16_t toWrite = 0;
+  enum { PAGE_SIZE = 256 };
 
 	//write one page at a time
 	while(size){
-	  runCommand(QSPI_CMD_ENABLE_WRITE);
+	  runCommand(QSPI_CMD_WRITE_ENABLE);
 
-		if(size > 256) toWrite = 256;
-		else toWrite = size;
+		uint16_t toWrite = min(size, PAGE_SIZE);
 		size -= toWrite;
 
 		uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
@@ -196,7 +195,7 @@ bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size
 		data += toWrite;
 		addr += toWrite;
 
-		while(readStatus() & 0x01);
+		while(readStatus() & 0x01) {}
 	}
 
 	return true;

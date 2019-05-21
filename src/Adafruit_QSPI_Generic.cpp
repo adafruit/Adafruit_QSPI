@@ -9,6 +9,25 @@
 
 #define ADAFRUIT_QSPI_GENERIC_STATUS_BUSY 0x01
 
+// Include all possible supported flash devices used by Adafruit boards
+const external_flash_device possible_devices[] =
+{
+  GD25Q16C, GD25Q64C,
+  S25FL116K, S25FL216K,
+  W25Q16FW, W25Q32BV, W25Q64JV_IQ,
+  MX25R6435F,
+};
+
+enum
+{
+  EXTERNAL_FLASH_DEVICE_COUNT = sizeof(possible_devices)/sizeof(possible_devices[0])
+};
+
+Adafruit_QSPI_Generic::Adafruit_QSPI_Generic(void) : Adafruit_SPIFlash(0)
+{
+  _flash_dev = NULL;
+}
+
 /**************************************************************************/
 /*! 
     @brief begin the default QSPI peripheral
@@ -16,11 +35,86 @@
 */
 /**************************************************************************/
 bool Adafruit_QSPI_Generic::begin(void){
-	currentAddr = 0;
+
 	QSPI0.begin();
+
+	uint8_t jedec_ids[3];
+	QSPI0.readCommand(QSPI_CMD_READ_JEDEC_ID, jedec_ids, 3);
+
+	for (uint8_t i = 0; i < EXTERNAL_FLASH_DEVICE_COUNT; i++) {
+	  const external_flash_device* possible_device = &possible_devices[i];
+	  if (jedec_ids[0] == possible_device->manufacturer_id &&
+	      jedec_ids[1] == possible_device->memory_type &&
+	      jedec_ids[2] == possible_device->capacity) {
+	    _flash_dev = possible_device;
+	    break;
+	  }
+	}
+
+	if (_flash_dev == NULL) return false;
+
+  // We don't know what state the flash is in so wait for any remaining writes and then reset.
+
+  // The write in progress bit should be low.
+  while ( readStatus() & 0x01 ) {}
+
+  // The suspended write/erase bit should be low.
+  while ( readStatus2() & 0x80 ) {}
+
+  QSPI0.runCommand(QSPI_CMD_ENABLE_RESET);
+  QSPI0.runCommand(QSPI_CMD_RESET);
+
+  // Wait 30us for the reset
+  delayMicroseconds(30);
+
+  // Enable Quad Mode if available
+  if (_flash_dev->quad_enable_bit_mask)
+  {
+    // Verify that QSPI mode is enabled.
+    uint8_t status = _flash_dev->single_status_byte ? readStatus() : readStatus2();
+
+    // Check the quad enable bit.
+    if ((status & _flash_dev->quad_enable_bit_mask) == 0) {
+        writeEnable();
+
+        uint8_t full_status[2] = {0x00, _flash_dev->quad_enable_bit_mask};
+
+        if (_flash_dev->write_status_register_split) {
+            QSPI0.writeCommand(QSPI_CMD_WRITE_STATUS2, full_status + 1, 1);
+        } else if (_flash_dev->single_status_byte) {
+            QSPI0.writeCommand(QSPI_CMD_WRITE_STATUS, full_status + 1, 1);
+        } else {
+            QSPI0.writeCommand(QSPI_CMD_WRITE_STATUS, full_status, 2);
+        }
+    }
+  }
+
+  if (_flash_dev->has_sector_protection)  {
+    writeEnable();
+
+    // Turn off sector protection
+    uint8_t data[1] = {0x00};
+    QSPI0.writeCommand(QSPI_CMD_WRITE_STATUS, data, 1);
+  }
+
+  // Turn off writes in case this is a microcontroller only reset.
+  QSPI0.runCommand(QSPI_CMD_WRITE_DISABLE);
+
+  // wait for flash ready
+  while ( readStatus() & 0x01 ) {}
+
+  // Adafruit_SPIFlash variables
+  currentAddr = 0;
+  totalsize = _flash_dev->total_size;
+
+//  type, addrsize'
+  pagesize = 256;
+  pages = totalsize/256;
+
 	return true;
 }
 
+#if 0
 /**************************************************************************/
 /*! 
     @brief set the type of flash. Setting the type is necessary for use with a FAT filesystem.
@@ -66,6 +160,7 @@ bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
 
   return true;
 }
+#endif
 
 /**************************************************************************/
 /*! 
@@ -109,6 +204,18 @@ uint8_t Adafruit_QSPI_Generic::readStatus(void)
 	return r;
 }
 
+uint8_t Adafruit_QSPI_Generic::readStatus2(void)
+{
+	uint8_t r;
+	QSPI0.readCommand(QSPI_CMD_READ_STATUS2, &r, 1);
+	return r;
+}
+
+bool Adafruit_QSPI_Generic::writeEnable(void)
+{
+  return QSPI0.runCommand(QSPI_CMD_WRITE_ENABLE);
+}
+
 // Read flash contents into buffer
 uint32_t Adafruit_QSPI_Generic::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
@@ -146,7 +253,7 @@ uint32_t Adafruit_QSPI_Generic::read32(uint32_t addr)
 /**************************************************************************/
 void Adafruit_QSPI_Generic::chipErase(void)
 {
-	QSPI0.runCommand(QSPI_CMD_ENABLE_WRITE);
+	writeEnable();
 	QSPI0.runCommand(QSPI_CMD_ERASE_CHIP);
 
 	//wait for busy
@@ -161,7 +268,7 @@ void Adafruit_QSPI_Generic::chipErase(void)
 /**************************************************************************/
 void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
 {
-	QSPI0.runCommand(QSPI_CMD_ENABLE_WRITE);
+	writeEnable();
 
 //	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, NULL, 0);
 //	QSPI0.
