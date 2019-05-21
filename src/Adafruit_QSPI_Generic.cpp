@@ -5,7 +5,7 @@
  *      Author: deanm
  */
 
-#include "Adafruit_QSPI_Generic.h"
+#include "Adafruit_QSPI_Flash.h"
 
 #define ADAFRUIT_QSPI_GENERIC_STATUS_BUSY 0x01
 
@@ -23,7 +23,7 @@ enum
   EXTERNAL_FLASH_DEVICE_COUNT = sizeof(possible_devices)/sizeof(possible_devices[0])
 };
 
-Adafruit_QSPI_Generic::Adafruit_QSPI_Generic(void) : Adafruit_SPIFlash(0)
+Adafruit_QSPI_Flash::Adafruit_QSPI_Flash(void) : Adafruit_SPIFlash(0)
 {
   _flash_dev = NULL;
 }
@@ -34,7 +34,7 @@ Adafruit_QSPI_Generic::Adafruit_QSPI_Generic(void) : Adafruit_SPIFlash(0)
     @returns true
 */
 /**************************************************************************/
-bool Adafruit_QSPI_Generic::begin(void){
+bool Adafruit_QSPI_Flash::begin(void){
 
 	QSPI0.begin();
 
@@ -122,7 +122,7 @@ bool Adafruit_QSPI_Generic::begin(void){
 	@returns true if a valid flash type was passed in, false otherwise.
 */
 /**************************************************************************/
-bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
+bool Adafruit_QSPI_Flash::setFlashType(spiflash_type_t t){
   type = t;
 
   if (type == SPIFLASHTYPE_W25Q16BV) {
@@ -169,7 +169,7 @@ bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
 	@param deviceID pointer to where to put the device ID
 */
 /**************************************************************************/
-void Adafruit_QSPI_Generic::GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID)
+void Adafruit_QSPI_Flash::GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID)
 {
   uint32_t jedec_id = GetJEDECID();
 
@@ -183,7 +183,7 @@ void Adafruit_QSPI_Generic::GetManufacturerInfo (uint8_t *manufID, uint8_t *devi
 	@returns the read id as a uint32
 */
 /**************************************************************************/
-uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
+uint32_t Adafruit_QSPI_Flash::GetJEDECID (void)
 {
 	uint8_t ids[3];
 	QSPI0.readCommand(QSPI_CMD_READ_JEDEC_ID, ids, 3);
@@ -197,50 +197,50 @@ uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
     @returns the status register reading
 */
 /**************************************************************************/
-uint8_t Adafruit_QSPI_Generic::readStatus(void)
+uint8_t Adafruit_QSPI_Flash::readStatus(void)
 {
 	uint8_t r;
 	QSPI0.readCommand(QSPI_CMD_READ_STATUS, &r, 1);
 	return r;
 }
 
-uint8_t Adafruit_QSPI_Generic::readStatus2(void)
+uint8_t Adafruit_QSPI_Flash::readStatus2(void)
 {
 	uint8_t r;
 	QSPI0.readCommand(QSPI_CMD_READ_STATUS2, &r, 1);
 	return r;
 }
 
-bool Adafruit_QSPI_Generic::writeEnable(void)
+bool Adafruit_QSPI_Flash::writeEnable(void)
 {
   return QSPI0.runCommand(QSPI_CMD_WRITE_ENABLE);
 }
 
 // Read flash contents into buffer
-uint32_t Adafruit_QSPI_Generic::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
+uint32_t Adafruit_QSPI_Flash::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
   return QSPI0.readMemory(address, buffer, len) ? len : 0;
 }
 
 // Write buffer into flash
-uint32_t Adafruit_QSPI_Generic::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
+uint32_t Adafruit_QSPI_Flash::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
 	return QSPI0.writeMemory(address, buffer, len) ? len : 0;
 }
 
-uint8_t Adafruit_QSPI_Generic::read8(uint32_t addr)
+uint8_t Adafruit_QSPI_Flash::read8(uint32_t addr)
 {
 	uint8_t ret;
 	return readBuffer(addr, &ret, sizeof(ret)) ? 0xff : ret;
 }
 
-uint16_t Adafruit_QSPI_Generic::read16(uint32_t addr)
+uint16_t Adafruit_QSPI_Flash::read16(uint32_t addr)
 {
 	uint16_t ret;
 	return readBuffer(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffff : ret;
 }
 
-uint32_t Adafruit_QSPI_Generic::read32(uint32_t addr)
+uint32_t Adafruit_QSPI_Flash::read32(uint32_t addr)
 {
 	uint32_t ret;
 	return readBuffer(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffffffff : ret;
@@ -251,7 +251,7 @@ uint32_t Adafruit_QSPI_Generic::read32(uint32_t addr)
     @brief perform a chip erase. All data on the device will be erased.
 */
 /**************************************************************************/
-void Adafruit_QSPI_Generic::chipErase(void)
+void Adafruit_QSPI_Flash::chipErase(void)
 {
 	writeEnable();
 	QSPI0.runCommand(QSPI_CMD_ERASE_CHIP);
@@ -266,7 +266,7 @@ void Adafruit_QSPI_Generic::chipErase(void)
     @param blocknum the number of the block to erase.
 */
 /**************************************************************************/
-void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
+void Adafruit_QSPI_Flash::eraseBlock(uint32_t blocknum)
 {
 	writeEnable();
 
@@ -285,7 +285,7 @@ void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
     @returns true
 */
 /**************************************************************************/
-bool Adafruit_QSPI_Generic::eraseSector (uint32_t sectorNumber)
+bool Adafruit_QSPI_Flash::eraseSector (uint32_t sectorNumber)
 {
 	uint32_t address = sectorNumber * W25Q16BV_SECTORSIZE;
 	QSPI0.eraseSector(address);

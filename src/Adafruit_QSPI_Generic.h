@@ -18,11 +18,11 @@
     @brief  a class for interfacing with a generic QSPI flash device.
 */
 /**************************************************************************/
-class Adafruit_QSPI_Generic : public Adafruit_SPIFlash {
+class Adafruit_QSPI_Flash : public Adafruit_SPIFlash {
 
 public:
-	Adafruit_QSPI_Generic(void);
-	~Adafruit_QSPI_Generic() {}
+	Adafruit_QSPI_Flash(void);
+	~Adafruit_QSPI_Flash() {}
 
 	bool begin(void);
 
