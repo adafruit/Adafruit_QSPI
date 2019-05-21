@@ -101,34 +101,6 @@ bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
 
 /**************************************************************************/
 /*! 
-    @brief read the device id
-    @returns the read device ID
-*/
-/**************************************************************************/
-byte Adafruit_QSPI_Generic::readDeviceID(void)
-{
-	byte r;
-//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_DEVID], 0, NULL, &r, 1);
-	QSPI0.readCommand(0xAB, &r, 1);
-	return r;
-}
-
-/**************************************************************************/
-/*! 
-    @brief read the manufacturer ID
-    @returns the read manufacturer ID
-*/
-/**************************************************************************/
-byte Adafruit_QSPI_Generic::readManufacturerID(void)
-{
-	byte r;
-//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_MFGID], 0, NULL, &r, 1);
-	QSPI0.readCommand(QSPI_CMD_READ_MANFACTURER_ID, &r, 1);
-	return r;
-}
-
-/**************************************************************************/
-/*! 
     @brief read the manufacturer ID and device ID
     @param manufID pointer to where to put the manufacturer ID
 	@param deviceID pointer to where to put the device ID
@@ -136,8 +108,10 @@ byte Adafruit_QSPI_Generic::readManufacturerID(void)
 /**************************************************************************/
 void Adafruit_QSPI_Generic::GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID)
 {
-	*deviceID = readDeviceID();
-	*manufID = readManufacturerID();
+  uint32_t jedec_id = GetJEDECID();
+
+	*deviceID = (uint8_t) (jedec_id & 0xffUL);
+	*manufID  = (uint8_t) (jedec_id >> 16);
 }
 
 /**************************************************************************/
@@ -148,11 +122,10 @@ void Adafruit_QSPI_Generic::GetManufacturerInfo (uint8_t *manufID, uint8_t *devi
 /**************************************************************************/
 uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
 {
-	uint32_t id = 0;
-//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_RDID], 0, NULL, (uint8_t *)&id, 3);
-	QSPI0.readCommand(QSPI_CMD_READ_JEDEC_ID, (uint8_t*) &id, 3);
+	uint8_t ids[3];
+	QSPI0.readCommand(QSPI_CMD_READ_JEDEC_ID, ids, 3);
 
-	return ((id >> 16) & 0xFF) | (id & 0x00FF00) | ((id & 0xFF) << 16);
+	return (ids[0] << 16) | (ids[1] << 8) | ids[2];
 }
 
 /**************************************************************************/
@@ -176,8 +149,6 @@ byte Adafruit_QSPI_Generic::readStatus(void)
 void Adafruit_QSPI_Generic::chipErase(void)
 {
 	QSPI0.runCommand(QSPI_CMD_ENABLE_WRITE);
-
-//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE], 0, NULL, NULL, 0);
 	QSPI0.runCommand(QSPI_CMD_ERASE_CHIP);
 
 	//wait for busy
@@ -209,9 +180,9 @@ void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
     @returns the data byte read
 */
 /**************************************************************************/
-byte Adafruit_QSPI_Generic::read8(uint32_t addr)
+uint8_t Adafruit_QSPI_Generic::read8(uint32_t addr)
 {
-	byte ret;
+	uint8_t ret;
 	return readMemory(addr, &ret, sizeof(ret)) ? 0xff : ret;
 }
 

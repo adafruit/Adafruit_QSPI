@@ -27,13 +27,11 @@ public:
 
 	bool setFlashType(spiflash_type_t t);
 
-	byte readDeviceID(void);
-	byte readManufacturerID(void);
 	byte readStatus(void);
 	void chipErase(void);
 	void eraseBlock(uint32_t blocknum);
 
-	byte read8(uint32_t addr);
+	uint8_t  read8(uint32_t addr);
 	uint16_t read16(uint32_t addr);
 	uint32_t read32(uint32_t addr);
 

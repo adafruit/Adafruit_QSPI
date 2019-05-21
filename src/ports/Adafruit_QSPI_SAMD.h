@@ -43,9 +43,8 @@ public:
 	virtual void setClockSpeed(uint32_t clock_hz);
 
 	virtual bool runCommand(uint8_t command);
-	virtual bool readCommand(uint8_t comamnd, uint8_t* response, uint32_t len);
+	virtual bool readCommand(uint8_t command, uint8_t* response, uint32_t len);
 	virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len);
-
 
 	virtual void eraseSector(uint32_t sectorAddr);
 	virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);

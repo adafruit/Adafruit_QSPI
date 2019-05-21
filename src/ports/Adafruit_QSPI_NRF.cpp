@@ -83,11 +83,11 @@ void Adafruit_QSPI_NRF::setClockSpeed(uint32_t clock_hz)
   NRF_QSPI->IFCONFIG1 |=  sckfreq << QSPI_IFCONFIG1_SCKFREQ_Pos;
 }
 
-void Adafruit_QSPI_NRF::runInstruction (const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
+bool Adafruit_QSPI_NRF::runCommand(uint8_t command)
 {
-  nrf_qspi_cinstr_conf_t cfg =
+  nrf_qspi_cinstr_conf_t cinstr_cfg =
   {
-    .opcode = instr->instruction,
+    .opcode = command,
     .length = NRF_QSPI_CINSTR_LEN_1B,
     .io2_level = true,
     .io3_level = true,
@@ -95,31 +95,35 @@ void Adafruit_QSPI_NRF::runInstruction (const QSPIInstr *instr, uint32_t addr, u
     .wren = false
   };
 
-  // not read/write memory up to 8 bytes data only
-  uint8_t buffer[8] = { 0 };
-  uint8_t len = 0;
+  return nrfx_qspi_cinstr_xfer(&cinstr_cfg, NULL, NULL) == NRFX_SUCCESS;
+}
 
-  if (instr->has_addr)
+bool Adafruit_QSPI_NRF::readCommand(uint8_t command, uint8_t* response, uint32_t len)
+{
+  nrf_qspi_cinstr_conf_t cinstr_cfg =
   {
-    memcpy(buffer, &addr, 3); // 24-bit address
-    len += 3;
-  }
+    .opcode = command,
+    .length = (nrf_qspi_cinstr_len_t) (len + 1),
+    .io2_level = true,
+    .io3_level = true,
+    .wipwait = false,
+    .wren = false
+  };
+  return nrfx_qspi_cinstr_xfer(&cinstr_cfg, NULL, response) == NRFX_SUCCESS;
+}
 
-  if (size)
+bool Adafruit_QSPI_NRF::writeCommand(uint8_t command, uint8_t const* data, uint32_t len)
+{
+  nrf_qspi_cinstr_conf_t cinstr_cfg =
   {
-    if (txData) memcpy(buffer + cfg.length, txData, size);
-    len += size;
-  }
-
-  len++; // including instruction code
-
-  cfg.length = (nrf_qspi_cinstr_len_t) len;
-  nrfx_qspi_cinstr_xfer(&cfg, buffer, buffer);
-
-  if (rxData && size)
-  {
-    memcpy(rxData, buffer+len-size-1, size);
-  }
+      .opcode = command,
+      .length =(nrf_qspi_cinstr_len_t) (len + 1),
+      .io2_level = true,
+      .io3_level = true,
+      .wipwait = false,
+      .wren = false // We do this manually.
+  };
+  return nrfx_qspi_cinstr_xfer(&cinstr_cfg, data, NULL) == NRFX_SUCCESS;
 }
 
 void Adafruit_QSPI_NRF::eraseSector (uint32_t sectorAddr)

@@ -39,8 +39,9 @@ class Adafruit_QSPI_NRF : Adafruit_QSPI
     virtual void setClockDivider(uint8_t uc_div);
     virtual void setClockSpeed(uint32_t clock_hz);
 
-    virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size);
-    using Adafruit_QSPI::runInstruction;
+    virtual bool runCommand(uint8_t command);
+    virtual bool readCommand(uint8_t command, uint8_t* response, uint32_t len);
+    virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len);
 
     virtual void eraseSector(uint32_t sectorAddr);
     virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
