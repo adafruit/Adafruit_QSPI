@@ -226,35 +226,4 @@ void Adafruit_QSPI_SAMD::setClockSpeed(uint32_t clock_hz)
   QSPI->BAUD.bit.BAUD = VARIANT_MCK/clock_hz;
 }
 
-/**************************************************************************/
-/*!
-    @brief transfer data via QSPI
-    @param data the data to be sent
-    @returns the data that was read
-*/
-/**************************************************************************/
-byte Adafruit_QSPI_SAMD::transfer(uint16_t data)
-{
-	QSPI->TXDATA.reg = data;
-	while( !QSPI->INTFLAG.bit.TXC );
-
-	return QSPI->RXDATA.reg;
-}
-
-/**************************************************************************/
-/*! 
-    @brief  transfer multiple bytes via QSPI
-    @param buf the bufer to read from and write to. This buffer will be modified by the function.
-    @param count the number of bytes to transfer.
-*/
-/**************************************************************************/
-void Adafruit_QSPI_SAMD::transfer(void *buf, size_t count)
-{
-	uint8_t *buffer = reinterpret_cast<uint8_t *>(buf);
-	for (size_t i=0; i<count; i++) {
-		*buffer = transfer(*buffer);
-		buffer++;
-	}
-}
-
 #endif

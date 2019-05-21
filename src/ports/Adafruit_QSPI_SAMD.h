@@ -51,9 +51,6 @@ public:
 	virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
 	virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 
-	byte transfer(uint16_t data);
-	void transfer(void *buf, size_t count);
-
 	byte readStatus();
 
 private:
