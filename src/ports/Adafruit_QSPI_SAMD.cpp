@@ -76,16 +76,14 @@ void Adafruit_QSPI_SAMD::begin(int sck, int cs, int io0, int io1, int io2, int i
 
 /**************************************************************************/
 /*! 
-    @brief  Run a single QSPI instruction.
-    @param instr pointer to the struct containing instruction settings
+    @brief Run a single QSPI instruction.
+    @param command instruction code
+    @param iframe iframe register value (configured by caller according to command code)
     @param addr the address to read or write from. If the instruction doesn't require an address, this parameter is meaningless.
-    @param txData pointer to the data to be written.
-    @param rxData pointer to where read data should be stored.
-    @param size the number of bytes to read.
-	@param invalidateCache manual cache management. Only use this parameter if you know what you're doing. Defaults to true.
+    @param buffer pointer to the data to be written or stored depending on the type is Read or Write
+    @param size the number of bytes to read or write.
 */
 /**************************************************************************/
-//void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
 bool Adafruit_QSPI_SAMD::runInstruction(uint8_t command, uint32_t iframe, uint32_t addr, uint8_t *buffer, uint32_t size)
 {
   samd_peripherals_disable_and_clear_cache();
@@ -126,6 +124,8 @@ bool Adafruit_QSPI_SAMD::runInstruction(uint8_t command, uint32_t iframe, uint32
 	QSPI->INTFLAG.bit.INSTREND = 1;
 
 	samd_peripherals_enable_cache();
+
+	return true;
 }
 
 bool Adafruit_QSPI_SAMD::runCommand(uint8_t command)
