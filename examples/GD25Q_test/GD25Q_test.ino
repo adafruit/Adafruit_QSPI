@@ -32,11 +32,11 @@ void setup(){
   Serial.println("done!");
 
   Serial.print("Writing...");
-  flash.writeMemory(0, progData, sizeof(progData));
+  flash.writeBuffer(0, progData, sizeof(progData));
   Serial.println("done!");
 
   Serial.print("Reading...");
-  flash.readMemory(0, readData, sizeof(readData));
+  flash.readBuffer(0, readData, sizeof(readData));
   Serial.println("done!");
 
   for (int i=0; i<PROGSIZE; i++){

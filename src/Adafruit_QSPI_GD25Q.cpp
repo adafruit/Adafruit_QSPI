@@ -63,14 +63,8 @@ bool Adafruit_QSPI_GD25Q::begin()
 
 	writeStatus();
 
-
-//	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS1], 0, NULL, ((uint8_t *)&_status.reg), 1);
-	*((uint8_t *)&_status.reg) = readStatus();
-	while(_status.bit.WIP){
-		delay(1);
-//		QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS1], 0, NULL, ((uint8_t *)&_status.reg), 1);
-		*((uint8_t *)&_status.reg) = readStatus();
-	}
+	// wait while busy
+	while(readStatus() & 0x01) delay(1);
 
 //	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS2], 0, NULL, ((uint8_t *)&_status.reg) + 1, 1);
 	QSPI0.readCommand(0x35, ((uint8_t *)&_status.reg) + 1, 1);

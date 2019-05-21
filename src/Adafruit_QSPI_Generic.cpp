@@ -11,38 +11,6 @@
 
 /**************************************************************************/
 /*! 
-    @brief a command set for a generic QSPI flash device
-*/
-/**************************************************************************/
-const QSPIInstr cmdSetGeneric[] = {
-		//Device ID
-		{ 0xAB, true, true },
-		//Manufacturer ID
-		{ 0x90, true, true },
-		//read status register
-		{ 0x05, false, true },
-		//write status
-		{ 0x01, false, true },
-		//Write Enable
-		{ 0x06, false, false },
-		//Write Disable
-		{ 0x04, false, false },
-		//Chip Erase
-		{ 0xC7, false, false},
-		// Sector Erase
-		{ 0x20, true, false },
-		// Block Erase 64KB
-		{ 0xD8, true, false },
-		//Page Program
-		{ 0x02, true, true },
-		//Quad Read
-		{ 0x6B, true, true },
-		//Read ID
-		{ 0x9F, false, true },
-};
-
-/**************************************************************************/
-/*! 
     @brief begin the default QSPI peripheral
     @returns true
 */
@@ -134,11 +102,41 @@ uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
     @returns the status register reading
 */
 /**************************************************************************/
-byte Adafruit_QSPI_Generic::readStatus(void)
+uint8_t Adafruit_QSPI_Generic::readStatus(void)
 {
-	byte r;
+	uint8_t r;
 	QSPI0.readCommand(QSPI_CMD_READ_STATUS, &r, 1);
 	return r;
+}
+
+// Read flash contents into buffer
+uint32_t Adafruit_QSPI_Generic::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
+{
+  return QSPI0.readMemory(address, buffer, len) ? len : 0;
+}
+
+// Write buffer into flash
+uint32_t Adafruit_QSPI_Generic::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
+{
+	return QSPI0.writeMemory(address, buffer, len) ? len : 0;
+}
+
+uint8_t Adafruit_QSPI_Generic::read8(uint32_t addr)
+{
+	uint8_t ret;
+	return readBuffer(addr, &ret, sizeof(ret)) ? 0xff : ret;
+}
+
+uint16_t Adafruit_QSPI_Generic::read16(uint32_t addr)
+{
+	uint16_t ret;
+	return readBuffer(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffff : ret;
+}
+
+uint32_t Adafruit_QSPI_Generic::read32(uint32_t addr)
+{
+	uint32_t ret;
+	return readBuffer(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffffffff : ret;
 }
 
 /**************************************************************************/
@@ -175,76 +173,6 @@ void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
 
 /**************************************************************************/
 /*! 
-    @brief read one byte of data at the passed address
-    @param addr the address to read from
-    @returns the data byte read
-*/
-/**************************************************************************/
-uint8_t Adafruit_QSPI_Generic::read8(uint32_t addr)
-{
-	uint8_t ret;
-	return readMemory(addr, &ret, sizeof(ret)) ? 0xff : ret;
-}
-
-uint16_t Adafruit_QSPI_Generic::read16(uint32_t addr)
-{
-	uint16_t ret;
-	return readMemory(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffff : ret;
-}
-
-uint32_t Adafruit_QSPI_Generic::read32(uint32_t addr)
-{
-	uint32_t ret;
-	return readMemory(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffffffff : ret;
-}
-
-
-/**************************************************************************/
-/*! 
-    @brief read a chunk of memory from the device
-    @param addr the address to read from
-    @param data the pointer to where the read data will be stored
-    @param size the number of bytes to read
-    @returns true
-*/
-/**************************************************************************/
-bool Adafruit_QSPI_Generic::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
-{
-	return QSPI0.readMemory(addr, data, size);
-}
-
-/**************************************************************************/
-/*! 
-    @brief write a chunk of memory to the device
-    @param addr the address to write to
-    @param data a pointer to the data to be written
-    @param size the number of bytes to write
-    @returns true
-*/
-/**************************************************************************/
-bool Adafruit_QSPI_Generic::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
-{
-	return QSPI0.writeMemory(addr, data, size);
-}
-
-/**************************************************************************/
-/*! 
-    @brief read a chunk of memory from the device
-    @param address the address to read from
-    @param buffer the pointer to where the read data will be stored
-    @param len the number of bytes to read
-    @returns true
-*/
-/**************************************************************************/
-uint32_t Adafruit_QSPI_Generic::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
-{
-	readMemory(address, buffer, len);
-	return len;	
-}
-
-
-/**************************************************************************/
-/*! 
     @brief erase a sector of flash
     @param sectorNumber the sector number to erase. The address erased will be (sectorNumber * W25Q16BV_SECTORSIZE)
     @returns true
@@ -255,20 +183,4 @@ bool Adafruit_QSPI_Generic::eraseSector (uint32_t sectorNumber)
 	uint32_t address = sectorNumber * W25Q16BV_SECTORSIZE;
 	QSPI0.eraseSector(address);
 	return true;
-}
-
-
-/**************************************************************************/
-/*! 
-    @brief write a chunk of memory to the device
-    @param address the address to write to
-    @param buffer a pointer to the data to be written
-    @param len the number of bytes to write
-    @returns len
-*/
-/**************************************************************************/
-uint32_t Adafruit_QSPI_Generic::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
-{
-	writeMemory(address, buffer, len);
-	return len;
 }

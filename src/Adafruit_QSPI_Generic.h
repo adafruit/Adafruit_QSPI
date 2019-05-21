@@ -27,18 +27,9 @@ public:
 
 	bool setFlashType(spiflash_type_t t);
 
-	byte readStatus(void);
+	uint8_t readStatus(void);
 	void chipErase(void);
 	void eraseBlock(uint32_t blocknum);
-
-	uint8_t  read8(uint32_t addr);
-	uint16_t read16(uint32_t addr);
-	uint32_t read32(uint32_t addr);
-
-	bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
-	bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
-
-
 
 	/******** SPI FLASH CLASS METHODS *************/
 
@@ -47,6 +38,11 @@ public:
 	
 	/* These are needed for compatibility with Adafruit_SPIFlash_FatFs */
 	uint32_t readBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
+	uint32_t writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
+
+	uint8_t  read8(uint32_t addr);
+	uint16_t read16(uint32_t addr);
+	uint32_t read32(uint32_t addr);
 
 	/**************************************************************************/
 	/*! 
@@ -58,28 +54,8 @@ public:
 	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
 	bool     eraseSector (uint32_t sectorNumber);
 
-	// Write an arbitrary-sized buffer
-	uint32_t writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
 
 	/******** END SPI FLASH CLASS METHODS *************/
 };
-
-enum {
-	ADAFRUIT_QSPI_GENERIC_CMD_DEVID = 0,
-	ADAFRUIT_QSPI_GENERIC_CMD_MFGID,
-	ADAFRUIT_QSPI_GENERIC_READ_STATUS,
-	ADAFRUIT_QSPI_GENERIC_CMD_WRITE_STATUS,
-	ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE,
-	ADAFRUIT_QSPI_GENERIC_CMD_WRITE_DISABLE,
-	ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE,
-	ADAFRUIT_QSPI_GENERIC_CMD_SECTOR_ERASE,
-	ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE,
-	ADAFRUIT_QSPI_GENERIC_CMD_PAGE_PROGRAM,
-	ADAFRUIT_QSPI_GENERIC_CMD_QUAD_READ,
-	ADAFRUIT_QSPI_GENERIC_CMD_RDID,
-};
-
-extern const QSPIInstr cmdSetGeneric[];
-
 
 #endif /* ADAFRUIT_QSPI_GENERIC_H_ */
