@@ -30,15 +30,23 @@
 
 Adafruit_QSPI_SAMD QSPI0;
 
-// dummy: 0, ddren: 0, crmode: 0, tfrtype: 0
-// addrlen: 24 bit, optcodelen: 1 bit
-// dataen: 0, optcodeen: 0, addren: 0, instren: 1
-// wdith: single bit spi
-#define IFRAME_DEFAULT  (QSPI_INSTRFRAME_ADDRLEN_24BITS | QSPI_INSTRFRAME_OPTCODELEN_1BIT | QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI)
+// Turn off cache and invalidate all data in it.
+static void samd_peripherals_disable_and_clear_cache(void)
+{
+  CMCC->CTRL.bit.CEN = 0;
+  while ( CMCC->SR.bit.CSTS ) { }
+  CMCC->MAINT0.bit.INVALL = 1;
+}
+
+// Enable cache
+static void samd_peripherals_enable_cache (void)
+{
+  CMCC->CTRL.bit.CEN = 1;
+}
 
 Adafruit_QSPI_SAMD::Adafruit_QSPI_SAMD(void)
 {
-  _iframe = IFRAME_DEFAULT;
+
 }
 
 void Adafruit_QSPI_SAMD::begin(int sck, int cs, int io0, int io1, int io2, int io3)
@@ -77,51 +85,36 @@ void Adafruit_QSPI_SAMD::begin(int sck, int cs, int io0, int io1, int io2, int i
 	@param invalidateCache manual cache management. Only use this parameter if you know what you're doing. Defaults to true.
 */
 /**************************************************************************/
-void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
+//void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size)
+bool Adafruit_QSPI_SAMD::runInstruction(uint8_t command, uint32_t iframe, uint32_t addr, uint8_t *buffer, uint32_t size)
 {
-	bool needToEnableCache = false;
-	bool invalidateCache = true;
-	if(invalidateCache && CMCC->SR.bit.CSTS){
-		// clear the cache
-		CMCC->CTRL.bit.CEN = 0; // disable
-		while(CMCC->SR.bit.CSTS);
-		CMCC->MAINT0.bit.INVALL = 1; // invalidate all
-		needToEnableCache = true;
-	}
+  samd_peripherals_disable_and_clear_cache();
 
 	uint8_t *qspi_mem = (uint8_t *)QSPI_AHB;
 	if(addr)
 		qspi_mem += addr;
 
-	QSPI->INSTRCTRL.bit.INSTR = instr->instruction;
+	QSPI->INSTRCTRL.bit.INSTR = command;
 	QSPI->INSTRADDR.reg = addr;
-
-	//read to synchronize
-	uint32_t iframe = QSPI->INSTRFRAME.reg;
-
-	iframe = _iframe;
-	iframe |= QSPI_INSTRFRAME_DUMMYLEN(instr->dummylen) | QSPI_INSTRFRAME_INSTREN |
-	          (instr->has_addr ? QSPI_INSTRFRAME_ADDREN : 0 ) | (instr->has_data ? QSPI_INSTRFRAME_DATAEN : 0);
-
-	// Set to Write if not read/write memory but sending out data
-	if ( !(_iframe & QSPI_INSTRFRAME_TFRTYPE_Msk) && txData && size )
-	{
-	  iframe |= QSPI_INSTRFRAME_TFRTYPE_WRITE;
-	}
 
 	QSPI->INSTRFRAME.reg = iframe;
 
-	if(rxData != NULL){
-		while(size){
-			*rxData++ = *qspi_mem++;
-			size--;
-		}
-	}
-	else if(txData != NULL){
-		while(size){
-			*qspi_mem++ = *txData++;
-			size--;
-		}
+	// Dummy read of INSTRFRAME needed to synchronize.
+	// See Instruction Transmission Flow Diagram, figure 37.9, page 995
+	// and Example 4, page 998, section 37.6.8.5.
+	(volatile uint32_t) QSPI->INSTRFRAME.reg;
+
+	if ( buffer && size )
+	{
+	  uint32_t const tfr_type = iframe & QSPI_INSTRFRAME_TFRTYPE_Msk;
+
+	  if ( (tfr_type == QSPI_INSTRFRAME_TFRTYPE_READ) || (tfr_type == QSPI_INSTRFRAME_TFRTYPE_READMEMORY) )
+	  {
+	    memcpy(buffer, qspi_mem, size);
+	  }else
+	  {
+	    memcpy(qspi_mem, buffer, size);
+	  }
 	}
 
 	__asm__ volatile ("dsb");
@@ -129,23 +122,44 @@ void Adafruit_QSPI_SAMD::runInstruction(const QSPIInstr *instr, uint32_t addr, u
 
 	QSPI->CTRLA.reg = QSPI_CTRLA_ENABLE | QSPI_CTRLA_LASTXFER;
 
-	while( !QSPI->INTFLAG.bit.INSTREND );
-
+	while( !QSPI->INTFLAG.bit.INSTREND ) {}
 	QSPI->INTFLAG.bit.INSTREND = 1;
 
-	if(needToEnableCache) 
-		CMCC->CTRL.bit.CEN = 1; // re-enable
+	samd_peripherals_enable_cache();
+}
+
+bool Adafruit_QSPI_SAMD::runCommand(uint8_t command)
+{
+	uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+                    QSPI_INSTRFRAME_TFRTYPE_READ | QSPI_INSTRFRAME_INSTREN;
+
+	return runInstruction(command, iframe, 0, NULL, 0);
+}
+
+bool Adafruit_QSPI_SAMD::readCommand(uint8_t command, uint8_t* response, uint32_t len)
+{
+  uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+                    QSPI_INSTRFRAME_TFRTYPE_READ | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_DATAEN;
+
+  return runInstruction(command, iframe, 0, response, len);
+}
+
+bool Adafruit_QSPI_SAMD::writeCommand(uint8_t command, uint8_t const* data, uint32_t len)
+{
+	uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+	                  QSPI_INSTRFRAME_TFRTYPE_WRITE | QSPI_INSTRFRAME_INSTREN | (data != NULL ? QSPI_INSTRFRAME_DATAEN : 0);
+
+	return runInstruction(command, iframe, 0, (uint8_t*) data, len);
 }
 
 void Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
 {
-	//Write Enable
-  const QSPIInstr cmd_wren = { 0x06, 0, false, false };
-	runInstruction(&cmd_wren);
+	runCommand(QSPI_CMD_ENABLE_WRITE);
 
 	// Sector Erase
-  const QSPIInstr cmd_erase_sector = { 0x20, 0, true, false};
-	runInstruction(&cmd_erase_sector, sectorAddr, NULL, NULL, 0);
+	uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+                    QSPI_INSTRFRAME_TFRTYPE_WRITE | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN;
+	runInstruction(QSPI_CMD_ERASE_SECTOR, iframe, sectorAddr, NULL, 0);
 
 	//wait for busy
 	while(readStatus() & 0x01);
@@ -155,36 +169,29 @@ bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
   // Command 0x6B 1 line address, 4 line Data
   // with Continuous Read Mode and Quad output mode, read memory type
-  const QSPIInstr cmd_read = { 0x6B, 8, true, true };
+  uint32_t iframe = QSPI_INSTRFRAME_WIDTH_QUAD_OUTPUT | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+                    QSPI_INSTRFRAME_TFRTYPE_READMEMORY | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN | QSPI_INSTRFRAME_DATAEN |
+                    /*QSPI_INSTRFRAME_CRMODE |*/ QSPI_INSTRFRAME_DUMMYLEN(8);
 
-  _iframe = QSPI_INSTRFRAME_WIDTH_QUAD_OUTPUT | QSPI_INSTRFRAME_TFRTYPE_READMEMORY | QSPI_INSTRFRAME_CRMODE;
-  runInstruction(&cmd_read, addr, NULL, data, size);
-  _iframe = IFRAME_DEFAULT;
-
-  return true;
+  return runInstruction(QSPI_CMD_READ_4OUT, iframe, addr, data, size);
 }
 
 bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-  //Write Enable
-  const QSPIInstr cmd_wren = { 0x06, 0, false, false };
-
-  //Page Program
-	const QSPIInstr cmd_pageprog = { 0x02, 0, true, true };
-
 	uint16_t toWrite = 0;
 
 	//write one page at a time
 	while(size){
-	  runInstruction(&cmd_wren);
+	  runCommand(QSPI_CMD_ENABLE_WRITE);
 
 		if(size > 256) toWrite = 256;
 		else toWrite = size;
 		size -= toWrite;
 
-		_iframe = QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY;
-		runInstruction(&cmd_pageprog, addr, data, NULL, toWrite);
-		_iframe = IFRAME_DEFAULT;
+		uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+                      QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN | QSPI_INSTRFRAME_DATAEN;
+
+		runInstruction(QSPI_CMD_PAGE_PROGRAM, iframe, addr, data, toWrite);
 
 		data += toWrite;
 		addr += toWrite;
@@ -197,11 +204,8 @@ bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size
 
 byte Adafruit_QSPI_SAMD::readStatus()
 {
-  //read status register
-	const QSPIInstr cmd_read_status =	{ 0x05, 0, false, true };
-
 	byte r;
-	runInstruction(&cmd_read_status, 0, NULL, &r, 1);
+  readCommand(QSPI_CMD_READ_STATUS, &r, 1);
 	return r;
 }
 

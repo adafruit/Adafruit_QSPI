@@ -33,9 +33,6 @@ public:
 	void chipErase(void);
 	void eraseBlock(uint32_t blocknum);
 
-	bool writeEnable(void);
-
-
 	byte read8(uint32_t addr);
 	uint16_t read16(uint32_t addr);
 	uint32_t read32(uint32_t addr);

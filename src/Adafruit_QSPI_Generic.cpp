@@ -16,29 +16,29 @@
 /**************************************************************************/
 const QSPIInstr cmdSetGeneric[] = {
 		//Device ID
-		{ 0xAB, 0, true, true },
+		{ 0xAB, true, true },
 		//Manufacturer ID
-		{ 0x90, 0, true, true },
+		{ 0x90, true, true },
 		//read status register
-		{ 0x05, 0, false, true },
+		{ 0x05, false, true },
 		//write status
-		{ 0x01, 0, false, true },
+		{ 0x01, false, true },
 		//Write Enable
-		{ 0x06, 0, false, false },
+		{ 0x06, false, false },
 		//Write Disable
-		{ 0x04, 0, false, false },
+		{ 0x04, false, false },
 		//Chip Erase
-		{ 0xC7, 0, false, false},
+		{ 0xC7, false, false},
 		// Sector Erase
-		{ 0x20, 0, true, false },
+		{ 0x20, true, false },
 		// Block Erase 64KB
-		{ 0xD8, 0, true, false },
+		{ 0xD8, true, false },
 		//Page Program
-		{ 0x02, 0, true, true },
+		{ 0x02, true, true },
 		//Quad Read
-		{ 0x6B, 8, true, true },
+		{ 0x6B, true, true },
 		//Read ID
-		{ 0x9F, 0, false, true },
+		{ 0x9F, false, true },
 };
 
 /**************************************************************************/
@@ -108,7 +108,8 @@ bool Adafruit_QSPI_Generic::setFlashType(spiflash_type_t t){
 byte Adafruit_QSPI_Generic::readDeviceID(void)
 {
 	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_DEVID], 0, NULL, &r, 1);
+//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_DEVID], 0, NULL, &r, 1);
+	QSPI0.readCommand(0xAB, &r, 1);
 	return r;
 }
 
@@ -121,7 +122,8 @@ byte Adafruit_QSPI_Generic::readDeviceID(void)
 byte Adafruit_QSPI_Generic::readManufacturerID(void)
 {
 	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_MFGID], 0, NULL, &r, 1);
+//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_MFGID], 0, NULL, &r, 1);
+	QSPI0.readCommand(QSPI_CMD_READ_MANFACTURER_ID, &r, 1);
 	return r;
 }
 
@@ -147,7 +149,9 @@ void Adafruit_QSPI_Generic::GetManufacturerInfo (uint8_t *manufID, uint8_t *devi
 uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
 {
 	uint32_t id = 0;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_RDID], 0, NULL, (uint8_t *)&id, 3);
+//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_RDID], 0, NULL, (uint8_t *)&id, 3);
+	QSPI0.readCommand(QSPI_CMD_READ_JEDEC_ID, (uint8_t*) &id, 3);
+
 	return ((id >> 16) & 0xFF) | (id & 0x00FF00) | ((id & 0xFF) << 16);
 }
 
@@ -160,7 +164,7 @@ uint32_t Adafruit_QSPI_Generic::GetJEDECID (void)
 byte Adafruit_QSPI_Generic::readStatus(void)
 {
 	byte r;
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_READ_STATUS], 0, NULL, &r, 1);
+	QSPI0.readCommand(QSPI_CMD_READ_STATUS, &r, 1);
 	return r;
 }
 
@@ -171,20 +175,13 @@ byte Adafruit_QSPI_Generic::readStatus(void)
 /**************************************************************************/
 void Adafruit_QSPI_Generic::chipErase(void)
 {
-	writeEnable();
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE], 0, NULL, NULL, 0);
+	QSPI0.runCommand(QSPI_CMD_ENABLE_WRITE);
+
+//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_CHIP_ERASE], 0, NULL, NULL, 0);
+	QSPI0.runCommand(QSPI_CMD_ERASE_CHIP);
 
 	//wait for busy
 	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
-}
-
-
-bool Adafruit_QSPI_Generic::writeEnable(void)
-{
-  const QSPIInstr cmd_wren = { 0x06, 0, false, false };
-  QSPI0.runInstruction(&cmd_wren);
-
-  return true;
 }
 
 /**************************************************************************/
@@ -195,8 +192,11 @@ bool Adafruit_QSPI_Generic::writeEnable(void)
 /**************************************************************************/
 void Adafruit_QSPI_Generic::eraseBlock(uint32_t blocknum)
 {
-	writeEnable();
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, NULL, 0);
+	QSPI0.runCommand(QSPI_CMD_ENABLE_WRITE);
+
+//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, NULL, 0);
+//	QSPI0.
+	// TODO not implement
 
 	//wait for busy
 	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);

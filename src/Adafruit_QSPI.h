@@ -24,6 +24,17 @@ enum
 {
   QSPI_CMD_READ_4OUT  = 0x6B, // 1 line address, 4 line data
   QSPI_CMD_WRITE_4OUT = 0x32, // 1 line address, 4 line data
+
+  QSPI_CMD_READ_JEDEC_ID = 0x9f,
+//  QSPI_CMD_READ_DEVICE_ID = 0xAB,
+  QSPI_CMD_READ_MANFACTURER_ID = 0x90,
+
+  QSPI_CMD_PAGE_PROGRAM = 0x02,
+  QSPI_CMD_READ_STATUS = 0x05,
+  QSPI_CMD_WRITE_STATUS = 0x01,
+  QSPI_CMD_ENABLE_WRITE = 0x06,
+  QSPI_CMD_ERASE_SECTOR = 0x020,
+  QSPI_CMD_ERASE_CHIP   = 0xC7,
 };
 
 /**************************************************************************/
@@ -33,8 +44,6 @@ enum
 /**************************************************************************/
 typedef struct {
 	uint8_t instruction;       ///< the instruction byte
-	uint8_t dummylen;          ///< the number of dummy cycles that should preceed data transfer
-
 	bool has_addr;
 	bool has_data;
 } QSPIInstr;
@@ -49,24 +58,9 @@ class Adafruit_QSPI
     virtual void setClockDivider(uint8_t uc_div) = 0;
     virtual void setClockSpeed(uint32_t clock_hz) = 0;
 
-    virtual void runInstruction(const QSPIInstr *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size) = 0;
-
-    void runInstruction(const QSPIInstr *instr)
-    {
-      runInstruction(instr, 0, NULL, NULL, 0);
-    }
-
-    // Run simple single byte instruction e.g Reset
-    void runInstruction(uint8_t instrop)
-    {
-      const QSPIInstr instr = { .instruction = instrop };
-      runInstruction(&instr, 0, NULL, NULL, 0);
-    }
-
-    void begin(void)
-    {
-      begin(PIN_QSPI_SCK, PIN_QSPI_CS, PIN_QSPI_IO0, PIN_QSPI_IO1, PIN_QSPI_IO2, PIN_QSPI_IO3);
-    }
+    virtual bool runCommand(uint8_t command) = 0;
+    virtual bool readCommand(uint8_t comamnd, uint8_t* response, uint32_t len) = 0;
+    virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len) = 0;
 
     virtual void eraseSector(uint32_t sectorAddr);
     virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;

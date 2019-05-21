@@ -18,15 +18,15 @@ enum {
 
 static const QSPIInstr cmdSetGD25Q[] = {
 		//read status
-		{ 0x05, 0, false, true },
+		{ 0x05, false, true },
 		//read status2
-		{ 0x35, 0, false, true },
+		{ 0x35, false, true },
 		//write enable volatile status
-		{ 0x50, 0, false, false },
+		{ 0x50, false, false },
 		//read ids
-		{ 0x9F, 0, false, true },
+		{ 0x9F, false, true },
 		//write status2
-		{ 0x31, 0, false, true },
+		{ 0x31, false, true },
 };
 
 /**************************************************************************/
@@ -41,7 +41,8 @@ bool Adafruit_QSPI_GD25Q::begin()
 
 	// read device ids
 	uint8_t ids[3];
-	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_IDS], 0, NULL, ids, 3);
+//	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_IDS], 0, NULL, ids, 3);
+	QSPI0.readCommand(QSPI_CMD_READ_JEDEC_ID, ids, 3);
 	if (ids[0] != 0xC8)
 		 return false;
 
@@ -62,13 +63,17 @@ bool Adafruit_QSPI_GD25Q::begin()
 
 	writeStatus();
 
-	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS1], 0, NULL, ((uint8_t *)&_status.reg), 1);
+
+//	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS1], 0, NULL, ((uint8_t *)&_status.reg), 1);
+	*((uint8_t *)&_status.reg) = readStatus();
 	while(_status.bit.WIP){
 		delay(1);
-		QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS1], 0, NULL, ((uint8_t *)&_status.reg), 1);
+//		QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS1], 0, NULL, ((uint8_t *)&_status.reg), 1);
+		*((uint8_t *)&_status.reg) = readStatus();
 	}
 
-	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS2], 0, NULL, ((uint8_t *)&_status.reg) + 1, 1);
+//	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_READ_STATUS2], 0, NULL, ((uint8_t *)&_status.reg) + 1, 1);
+	QSPI0.readCommand(0x35, ((uint8_t *)&_status.reg) + 1, 1);
 	return (_status.bit.QE);
 }
 
@@ -76,8 +81,11 @@ void Adafruit_QSPI_GD25Q::writeStatus()
 {
 	uint8_t c = (uint8_t)((_status.reg >> 8) & 0xFF);
 
-	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE]);
+//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_WRITE_ENABLE]);
 
-	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_WRITE_STATUS2], 0, &c, NULL, 1);
+//	QSPI0.runInstruction(&cmdSetGD25Q[GD25Q_WRITE_STATUS2], 0, &c, NULL, 1);
+
+	QSPI0.runCommand(QSPI_CMD_ENABLE_WRITE);
+	QSPI0.writeCommand(0x31, &c, 1);
 }
 
