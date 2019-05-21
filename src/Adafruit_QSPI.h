@@ -45,18 +45,6 @@ enum
   QSPI_CMD_ERASE_CHIP    = 0xC7,
 };
 
-/**************************************************************************/
-/*!
-    @brief  QSPI instruction struct
-*/
-/**************************************************************************/
-typedef struct {
-	uint8_t instruction;       ///< the instruction byte
-	bool has_addr;
-	bool has_data;
-} QSPIInstr;
-
-
 // Adafruit_QSPI is abstract class provide common API for all ports
 class Adafruit_QSPI
 {
