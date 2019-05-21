@@ -51,12 +51,11 @@ void setup() {
   // Initialize flash library and check its chip ID.
   if (!flash.begin()) {
     Serial.println("Error, failed to initialize flash chip!");
-    while(1);
+    while(1) delay(1);
   }
   
-  //Serial.print("Flash chip JEDEC ID: 0x"); Serial.println(flash.GetJEDECID(), HEX);
+  Serial.print("Flash chip JEDEC ID: 0x"); Serial.println(flash.GetJEDECID(), HEX);
 
-#if 0
   // Wait for user to send OK to continue.
   Serial.setTimeout(30000);  // Increase timeout to print message less frequently.
   do {
@@ -66,7 +65,6 @@ void setup() {
     Serial.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   }
   while (!Serial.find("OK"));
-#endif  
 
   // Call fatfs activate to make it the active chip that receives low level fatfs
   // callbacks.  This is necessary before making any manual fatfs function calls
