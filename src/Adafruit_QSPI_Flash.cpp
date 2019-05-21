@@ -107,60 +107,12 @@ bool Adafruit_QSPI_Flash::begin(void){
   currentAddr = 0;
   totalsize = _flash_dev->total_size;
 
-//  type, addrsize'
+//  type, addrsize are ignored
   pagesize = 256;
   pages = totalsize/256;
 
 	return true;
 }
-
-#if 0
-/**************************************************************************/
-/*! 
-    @brief set the type of flash. Setting the type is necessary for use with a FAT filesystem.
-    @param t the type of flash to set.
-	@returns true if a valid flash type was passed in, false otherwise.
-*/
-/**************************************************************************/
-bool Adafruit_QSPI_Flash::setFlashType(spiflash_type_t t){
-  type = t;
-
-  if (type == SPIFLASHTYPE_W25Q16BV) {
-    pagesize = 256;
-    addrsize = 24;
-    pages = 8192;
-    totalsize = pages * pagesize; // 2 MBytes
-  } 
-  else if (type == SPIFLASHTYPE_25C02) {
-    pagesize = 32;
-    addrsize = 16;
-    pages = 8;
-    totalsize = pages * pagesize; // 256 bytes
-  } 
-  else if (type == SPIFLASHTYPE_W25X40CL) {
-    pagesize = 256;
-    addrsize = 24;
-    pages = 2048;
-    totalsize =  pages * pagesize; // 512 Kbytes
-  } else if (type == SPIFLASHTYPE_AT25SF041) {
-    pagesize = 256;
-    addrsize = 24;
-    pages = 4096;
-    totalsize = pages * pagesize;  // 1 MBytes
-  } else if (type == SPIFLASHTYPE_W25Q64) {
-	  pagesize = 256;
-	  addrsize = 24;
-	  pages = 32768;
-	  totalsize = pages * pagesize; // 8 MBytes
-  }
-  else {
-    pagesize = 0;
-    return false;
-  }
-
-  return true;
-}
-#endif
 
 /**************************************************************************/
 /*! 

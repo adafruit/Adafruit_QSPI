@@ -29,14 +29,14 @@
 #include <SPI.h>
 #include <Adafruit_SPIFlash.h>
 #include <Adafruit_SPIFlash_FatFs.h>
-#include "Adafruit_QSPI_GD25Q.h"
+#include "Adafruit_QSPI_Flash.h"
 
 // Include the FatFs library header to use its low level functions
 // directly.  Specifically the f_fdisk and f_mkfs functions are used
 // to partition and create the filesystem.
 #include "utility/ff.h"
 
-Adafruit_QSPI_GD25Q flash;
+Adafruit_QSPI_Flash flash;
 
 Adafruit_W25Q16BV_FatFs fatfs(flash);
 
@@ -53,10 +53,10 @@ void setup() {
     Serial.println("Error, failed to initialize flash chip!");
     while(1);
   }
-  flash.setFlashType(SPIFLASHTYPE_W25Q16BV);
   
   //Serial.print("Flash chip JEDEC ID: 0x"); Serial.println(flash.GetJEDECID(), HEX);
 
+#if 0
   // Wait for user to send OK to continue.
   Serial.setTimeout(30000);  // Increase timeout to print message less frequently.
   do {
@@ -66,6 +66,7 @@ void setup() {
     Serial.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   }
   while (!Serial.find("OK"));
+#endif  
 
   // Call fatfs activate to make it the active chip that receives low level fatfs
   // callbacks.  This is necessary before making any manual fatfs function calls
