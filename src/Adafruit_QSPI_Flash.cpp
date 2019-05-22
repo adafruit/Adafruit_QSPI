@@ -57,7 +57,7 @@ bool Adafruit_QSPI_Flash::begin(void){
   // We don't know what state the flash is in so wait for any remaining writes and then reset.
 
   // The write in progress bit should be low.
-  _wait_for_flash_ready();
+  while ( readStatus() & 0x01 ) {}
 
   // The suspended write/erase bit should be low.
   while ( readStatus2() & 0x80 ) {}

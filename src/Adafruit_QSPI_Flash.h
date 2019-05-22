@@ -59,7 +59,8 @@ private:
 
 	void _wait_for_flash_ready(void)
 	{
-	  while ( readStatus() & 0x01 ) {}
+	  // both WIP and WREN bit should be clear
+	  while ( readStatus() & 0x03 ) {}
 	}
 };
 

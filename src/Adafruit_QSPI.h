@@ -22,27 +22,27 @@
 // Default Read & Write command for read/write flash memory
 enum
 {
-  QSPI_CMD_READ_4OUT     = 0x6B, // 1 line address, 4 line data
-  QSPI_CMD_WRITE_4OUT    = 0x32, // 1 line address, 4 line data
+  QSPI_CMD_QUAD_READ         = 0x6B, // 1 line address, 4 line data
 
-  QSPI_CMD_READ_JEDEC_ID = 0x9f,
+  QSPI_CMD_READ_JEDEC_ID     = 0x9f,
 
-  QSPI_CMD_PAGE_PROGRAM  = 0x02,
+  QSPI_CMD_PAGE_PROGRAM      = 0x02,
+  QSPI_CMD_QUAD_PAGE_PROGRAM = 0x32, // 1 line address, 4 line data
 
-  QSPI_CMD_READ_STATUS   = 0x05,
-  QSPI_CMD_READ_STATUS2  = 0x35,
+  QSPI_CMD_READ_STATUS       = 0x05,
+  QSPI_CMD_READ_STATUS2      = 0x35,
 
-  QSPI_CMD_WRITE_STATUS  = 0x01,
-  QSPI_CMD_WRITE_STATUS2 = 0x31,
+  QSPI_CMD_WRITE_STATUS      = 0x01,
+  QSPI_CMD_WRITE_STATUS2     = 0x31,
 
-  QSPI_CMD_ENABLE_RESET  = 0x66,
-  QSPI_CMD_RESET         = 0x99,
+  QSPI_CMD_ENABLE_RESET      = 0x66,
+  QSPI_CMD_RESET             = 0x99,
 
-  QSPI_CMD_WRITE_ENABLE  = 0x06,
-  QSPI_CMD_WRITE_DISABLE = 0x04,
+  QSPI_CMD_WRITE_ENABLE      = 0x06,
+  QSPI_CMD_WRITE_DISABLE     = 0x04,
 
-  QSPI_CMD_ERASE_SECTOR  = 0x020,
-  QSPI_CMD_ERASE_CHIP    = 0xC7,
+  QSPI_CMD_ERASE_SECTOR      = 0x020,
+  QSPI_CMD_ERASE_CHIP        = 0xC7,
 };
 
 // Adafruit_QSPI is abstract class provide common API for all ports
