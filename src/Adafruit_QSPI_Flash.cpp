@@ -9,13 +9,14 @@
 
 #define ADAFRUIT_QSPI_GENERIC_STATUS_BUSY 0x01
 
-// Include all possible supported flash devices used by Adafruit boards
-const external_flash_device possible_devices[] =
+// Include all possible flash devices used by Adafruit boards
+static const external_flash_device possible_devices[] =
 {
-  GD25Q16C, GD25Q64C,
+  GD25Q16C, GD25Q64C,    // Main devices current Adafruit
   S25FL116K, S25FL216K,
-  W25Q16FW, W25Q32BV, W25Q64JV_IQ,
-  MX25R6435F,
+  W25Q16FW, W25Q64JV_IQ, // Only a handful of production run
+
+  MX25R6435F,            // Nordic PCA10056
 };
 
 enum
@@ -56,7 +57,7 @@ bool Adafruit_QSPI_Flash::begin(void){
   // We don't know what state the flash is in so wait for any remaining writes and then reset.
 
   // The write in progress bit should be low.
-  while ( readStatus() & 0x01 ) {}
+  _wait_for_flash_ready();
 
   // The suspended write/erase bit should be low.
   while ( readStatus2() & 0x80 ) {}
@@ -66,6 +67,8 @@ bool Adafruit_QSPI_Flash::begin(void){
 
   // Wait 30us for the reset
   delayMicroseconds(30);
+
+  // TODO Set max speed of flash device
 
   // Enable Quad Mode if available
   if (_flash_dev->quad_enable_bit_mask)
@@ -89,7 +92,8 @@ bool Adafruit_QSPI_Flash::begin(void){
     }
   }
 
-  if (_flash_dev->has_sector_protection)  {
+  if (_flash_dev->has_sector_protection)
+  {
     writeEnable();
 
     // Turn off sector protection
@@ -100,8 +104,7 @@ bool Adafruit_QSPI_Flash::begin(void){
   // Turn off writes in case this is a microcontroller only reset.
   QSPI0.runCommand(QSPI_CMD_WRITE_DISABLE);
 
-  // wait for flash ready
-  while ( readStatus() & 0x01 ) {}
+  _wait_for_flash_ready();
 
   // Adafruit_SPIFlash variables
   currentAddr = 0;
@@ -171,12 +174,21 @@ bool Adafruit_QSPI_Flash::writeEnable(void)
 // Read flash contents into buffer
 uint32_t Adafruit_QSPI_Flash::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
+  if (!_flash_dev) return 0;
+
+  _wait_for_flash_ready();
+
   return QSPI0.readMemory(address, buffer, len) ? len : 0;
 }
 
 // Write buffer into flash
 uint32_t Adafruit_QSPI_Flash::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
+  if (!_flash_dev) return 0;
+
+  // We need to wait for any writes to finish
+  _wait_for_flash_ready();
+
 	return QSPI0.writeMemory(address, buffer, len) ? len : 0;
 }
 
@@ -203,43 +215,33 @@ uint32_t Adafruit_QSPI_Flash::read32(uint32_t addr)
     @brief perform a chip erase. All data on the device will be erased.
 */
 /**************************************************************************/
-void Adafruit_QSPI_Flash::chipErase(void)
+bool Adafruit_QSPI_Flash::chipErase(void)
 {
-	writeEnable();
-	QSPI0.runCommand(QSPI_CMD_ERASE_CHIP);
+  if (!_flash_dev) return false;
 
-	//wait for busy
-	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
-}
+  // We need to wait for any writes to finish
+  _wait_for_flash_ready();
 
-/**************************************************************************/
-/*! 
-    @brief erase a block of data
-    @param blocknum the number of the block to erase.
-*/
-/**************************************************************************/
-void Adafruit_QSPI_Flash::eraseBlock(uint32_t blocknum)
-{
 	writeEnable();
 
-//	QSPI0.runInstruction(&cmdSetGeneric[ADAFRUIT_QSPI_GENERIC_CMD_BLOCK64K_ERASE], blocknum*W25Q16BV_BLOCKSIZE, NULL, NULL, 0);
-//	QSPI0.
-	// TODO not implement
-
-	//wait for busy
-	while(readStatus() & ADAFRUIT_QSPI_GENERIC_STATUS_BUSY);
+	return QSPI0.runCommand(QSPI_CMD_ERASE_CHIP);
 }
 
 /**************************************************************************/
 /*! 
     @brief erase a sector of flash
-    @param sectorNumber the sector number to erase. The address erased will be (sectorNumber * W25Q16BV_SECTORSIZE)
+    @param sectorNumber the sector number to erase. The address erased will be (sectorNumber * 4096)
     @returns true
 */
 /**************************************************************************/
 bool Adafruit_QSPI_Flash::eraseSector (uint32_t sectorNumber)
 {
-	uint32_t address = sectorNumber * W25Q16BV_SECTORSIZE;
-	QSPI0.eraseSector(address);
-	return true;
+  if (!_flash_dev) return false;
+
+  // Before we erase the sector we need to wait for any writes to finish
+  _wait_for_flash_ready();
+
+  writeEnable();
+
+	return QSPI0.eraseSector(sectorNumber * FLASH_SECTOR_SIZE);
 }

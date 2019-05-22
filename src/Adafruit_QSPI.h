@@ -58,7 +58,7 @@ class Adafruit_QSPI
     virtual bool readCommand(uint8_t comamnd, uint8_t* response, uint32_t len) = 0;
     virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len) = 0;
 
-    virtual void eraseSector(uint32_t sectorAddr);
+    virtual bool eraseSector(uint32_t sectorAddr);
     virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
     virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
 };

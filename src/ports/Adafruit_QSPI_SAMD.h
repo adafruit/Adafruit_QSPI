@@ -37,7 +37,7 @@ public:
 	  begin(PIN_QSPI_SCK, PIN_QSPI_CS, PIN_QSPI_IO0, PIN_QSPI_IO1, PIN_QSPI_IO2, PIN_QSPI_IO3);
 	}
 
-	void end(); ///< de-init the peripheral
+	void end(void);
 
 	virtual void setClockDivider(uint8_t uc_div);
 	virtual void setClockSpeed(uint32_t clock_hz);
@@ -46,14 +46,14 @@ public:
 	virtual bool readCommand(uint8_t command, uint8_t* response, uint32_t len);
 	virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len);
 
-	virtual void eraseSector(uint32_t sectorAddr);
+	virtual bool eraseSector(uint32_t sectorAddr);
 	virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
 	virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 
 	byte readStatus();
 
 private:
-	bool runInstruction(uint8_t command, uint32_t ifr, uint32_t addr, uint8_t *buffer, uint32_t size);
+	bool _run_instruction(uint8_t command, uint32_t ifr, uint32_t addr, uint8_t *buffer, uint32_t size);
 };
 
 extern Adafruit_QSPI_SAMD QSPI0; ///< default QSPI instance

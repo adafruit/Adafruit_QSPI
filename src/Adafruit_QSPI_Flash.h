@@ -21,6 +21,8 @@
 class Adafruit_QSPI_Flash : public Adafruit_SPIFlash {
 
 public:
+  enum { FLASH_SECTOR_SIZE = 4096 };
+
 	Adafruit_QSPI_Flash(void);
 	~Adafruit_QSPI_Flash() {}
 
@@ -32,39 +34,31 @@ public:
 	uint8_t readStatus2(void);
 
 	bool writeEnable(void);
-
-
-	void chipErase(void);
-	void eraseBlock(uint32_t blocknum);
+	bool chipErase(void);
 
 	/******** SPI FLASH CLASS METHODS *************/
 
 	void GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID);
 	uint32_t GetJEDECID (void);
 	
-	/* These are needed for compatibility with Adafruit_SPIFlash_FatFs */
 	uint32_t readBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
 	uint32_t writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
 
+	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
+	bool     eraseSector (uint32_t sectorNumber);
+
+	// Helper
 	uint8_t  read8(uint32_t addr);
 	uint16_t read16(uint32_t addr);
 	uint32_t read32(uint32_t addr);
 
-	/**************************************************************************/
-	/*! 
-		@brief erase a sector of flash
-		@param sectorNumber the sector number to erase. The address erased will be (sectorNumber * W25Q16BV_SECTORSIZE)
-		@returns true
-	*/
-	/**************************************************************************/
-	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
-	bool     eraseSector (uint32_t sectorNumber);
-
-
-	/******** END SPI FLASH CLASS METHODS *************/
-
 private:
 	external_flash_device const * _flash_dev;
+
+	void _wait_for_flash_ready(void)
+	{
+	  while ( readStatus() & 0x01 ) {}
+	}
 };
 
 #endif /* ADAFRUIT_QSPI_FLASH_H_ */

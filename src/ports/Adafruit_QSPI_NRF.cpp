@@ -126,9 +126,9 @@ bool Adafruit_QSPI_NRF::writeCommand(uint8_t command, uint8_t const* data, uint3
   return nrfx_qspi_cinstr_xfer(&cinstr_cfg, data, NULL) == NRFX_SUCCESS;
 }
 
-void Adafruit_QSPI_NRF::eraseSector (uint32_t sectorAddr)
+bool Adafruit_QSPI_NRF::eraseSector (uint32_t sectorAddr)
 {
-  nrfx_qspi_erase(NRF_QSPI_ERASE_LEN_4KB, sectorAddr);
+  return NRFX_SUCCESS == nrfx_qspi_erase(NRF_QSPI_ERASE_LEN_4KB, sectorAddr);
 }
 
 bool Adafruit_QSPI_NRF::readMemory (uint32_t addr, uint8_t *data, uint32_t size)
