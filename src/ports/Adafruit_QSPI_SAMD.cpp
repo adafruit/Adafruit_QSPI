@@ -172,38 +172,28 @@ bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
   return _run_instruction(QSPI_CMD_READ_4OUT, iframe, addr, data, size);
 }
 
+#if 1
+
+// Write memory using Quad write
 bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-  enum { PAGE_SIZE = 256 };
+  uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+                    QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN | QSPI_INSTRFRAME_DATAEN;
 
-	//write one page at a time
-	while(size){
-	  runCommand(QSPI_CMD_WRITE_ENABLE);
-
-		uint16_t toWrite = min(size, PAGE_SIZE);
-		size -= toWrite;
-
-		uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
-                      QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN | QSPI_INSTRFRAME_DATAEN;
-
-		_run_instruction(QSPI_CMD_PAGE_PROGRAM, iframe, addr, data, toWrite);
-
-		data += toWrite;
-		addr += toWrite;
-
-		while(readStatus() & 0x01) {}
-	}
-
-	return true;
+  return _run_instruction(QSPI_CMD_PAGE_PROGRAM, iframe, addr, data, size);
 }
 
-byte Adafruit_QSPI_SAMD::readStatus()
+#else
+
+// page program implementation
+bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
 {
-	byte r;
-  readCommand(QSPI_CMD_READ_STATUS, &r, 1);
-	return r;
-}
+  uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
+                    QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN | QSPI_INSTRFRAME_DATAEN;
 
+  return _run_instruction(QSPI_CMD_PAGE_PROGRAM, iframe, addr, data, size);
+}
+#endif
 
 /**************************************************************************/
 /*! 

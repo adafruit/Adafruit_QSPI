@@ -49,7 +49,7 @@ enum
 class Adafruit_QSPI
 {
   public:
-    virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3);
+    virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3) = 0;
 
     virtual void setClockDivider(uint8_t uc_div) = 0;
     virtual void setClockSpeed(uint32_t clock_hz) = 0;
@@ -59,7 +59,11 @@ class Adafruit_QSPI
     virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len) = 0;
 
     virtual bool eraseSector(uint32_t sectorAddr);
+
+    // Should be Quad Read 0x6B command
     virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
+
+    // Should be Quad Write 0x32 command
     virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
 };
 

@@ -182,14 +182,28 @@ uint32_t Adafruit_QSPI_Flash::readBuffer (uint32_t address, uint8_t *buffer, uin
 }
 
 // Write buffer into flash
-uint32_t Adafruit_QSPI_Flash::writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
+uint32_t Adafruit_QSPI_Flash::writeBuffer (uint32_t addr, uint8_t *data, uint32_t len)
 {
   if (!_flash_dev) return 0;
 
-  // We need to wait for any writes to finish
-  _wait_for_flash_ready();
+  uint32_t remain = len;
 
-	return QSPI0.writeMemory(address, buffer, len) ? len : 0;
+	//write one page at a time
+	while(remain)
+	{
+	  _wait_for_flash_ready();
+	  writeEnable();
+
+	  uint16_t const toWrite = min(remain, QSPI_FLASH_PAGE_SIZE);
+
+		QSPI0.writeMemory(addr, data, toWrite);
+
+		remain -= toWrite;
+		data += toWrite;
+		addr += toWrite;
+	}
+
+	return len - remain;
 }
 
 uint8_t Adafruit_QSPI_Flash::read8(uint32_t addr)
@@ -243,5 +257,5 @@ bool Adafruit_QSPI_Flash::eraseSector (uint32_t sectorNumber)
 
   writeEnable();
 
-	return QSPI0.eraseSector(sectorNumber * FLASH_SECTOR_SIZE);
+	return QSPI0.eraseSector(sectorNumber * QSPI_FLASH_SECTOR_SIZE);
 }

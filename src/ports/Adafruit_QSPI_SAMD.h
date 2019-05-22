@@ -50,8 +50,6 @@ public:
 	virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
 	virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
 
-	byte readStatus();
-
 private:
 	bool _run_instruction(uint8_t command, uint32_t ifr, uint32_t addr, uint8_t *buffer, uint32_t size);
 };

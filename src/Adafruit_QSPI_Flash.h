@@ -21,18 +21,20 @@
 class Adafruit_QSPI_Flash : public Adafruit_SPIFlash {
 
 public:
-  enum { FLASH_SECTOR_SIZE = 4096 };
+  // Constant that is (mostly) true to all external flash devices
+  enum {
+    QSPI_FLASH_SECTOR_SIZE = 4096,
+    QSPI_FLASH_PAGE_SIZE   = 256,
+  };
 
 	Adafruit_QSPI_Flash(void);
 	~Adafruit_QSPI_Flash() {}
 
 	bool begin(void);
-
-	bool setFlashType(spiflash_type_t t);
+	bool end(void);
 
 	uint8_t readStatus(void);
 	uint8_t readStatus2(void);
-
 	bool writeEnable(void);
 	bool chipErase(void);
 
