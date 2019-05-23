@@ -10,7 +10,7 @@
  *
  * Written by Dean Miller, Ha Thach for Adafruit Industries.
  *
- * BSD license, all text here must be included in any redistribution.
+ * MIT license, all text here must be included in any redistribution.
  *
  */
 
@@ -44,10 +44,12 @@ enum
   QSPI_CMD_ERASE_CHIP        = 0xC7,
 };
 
-// Adafruit_QSPI is abstract class provide common API for all ports
+/// Abstract class provide common API for all mcu ports (e.g samd51, nrf52 etc ..)
 class Adafruit_QSPI
 {
   public:
+
+    /// Enable necessary clocks and configure QSPI peripheral.
     virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3) = 0;
 
     virtual void setClockDivider(uint8_t uc_div) = 0;
