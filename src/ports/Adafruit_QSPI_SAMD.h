@@ -8,7 +8,7 @@
  * please support Adafruit and open-source hardware by purchasing
  * products from Adafruit!
  *
- * Written by Dean Miller for Adafruit Industries.
+ * Written by Ha Thach for Adafruit Industries.
  *
  * BSD license, all text here must be included in any redistribution.
  *

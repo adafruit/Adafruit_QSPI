@@ -2,7 +2,7 @@
  * @file Adafruit_QSPI.h
  *
  * This is part of Adafruit's QSPI Peripheral driver for the Arduino platform.  It is
- * designed specifically to work with the Adafruit M4 Express development boards.
+ * designed to work with the Adafruit development boards.
  *
  * Adafruit invests time and resources providing this open source code,
  * please support Adafruit and open-source hardware by purchasing
@@ -19,7 +19,6 @@
 
 #include <Arduino.h>
 
-// Default Read & Write command for read/write flash memory
 enum
 {
   QSPI_CMD_QUAD_READ         = 0x6B, // 1 line address, 4 line data
