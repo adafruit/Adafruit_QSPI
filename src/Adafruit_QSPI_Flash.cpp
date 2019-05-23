@@ -68,7 +68,8 @@ bool Adafruit_QSPI_Flash::begin(void){
   // Wait 30us for the reset
   delayMicroseconds(30);
 
-  // TODO Set max speed of flash device
+  // Speed up to max device frequency
+  QSPI0.setClockSpeed(_flash_dev->max_clock_speed_mhz*1000000UL);
 
   // Enable Quad Mode if available
   if (_flash_dev->quad_enable_bit_mask)
@@ -77,7 +78,8 @@ bool Adafruit_QSPI_Flash::begin(void){
     uint8_t status = _flash_dev->single_status_byte ? readStatus() : readStatus2();
 
     // Check the quad enable bit.
-    if ((status & _flash_dev->quad_enable_bit_mask) == 0) {
+    if ((status & _flash_dev->quad_enable_bit_mask) == 0)
+    {
         writeEnable();
 
         uint8_t full_status[2] = {0x00, _flash_dev->quad_enable_bit_mask};
@@ -92,14 +94,14 @@ bool Adafruit_QSPI_Flash::begin(void){
     }
   }
 
-  if (_flash_dev->has_sector_protection)
-  {
-    writeEnable();
-
-    // Turn off sector protection
-    uint8_t data[1] = {0x00};
-    QSPI0.writeCommand(QSPI_CMD_WRITE_STATUS, data, 1);
-  }
+  // Turn off sector protection if needed
+//  if (_flash_dev->has_sector_protection)
+//  {
+//    writeEnable();
+//
+//    uint8_t data[1] = {0x00};
+//    QSPI0.writeCommand(QSPI_CMD_WRITE_STATUS, data, 1);
+//  }
 
   // Turn off writes in case this is a microcontroller only reset.
   QSPI0.runCommand(QSPI_CMD_WRITE_DISABLE);
@@ -108,11 +110,12 @@ bool Adafruit_QSPI_Flash::begin(void){
 
   // Adafruit_SPIFlash variables
   currentAddr = 0;
+  addrsize = 24;
   totalsize = _flash_dev->total_size;
+  pagesize = QSPI_FLASH_PAGE_SIZE;
+  pages = totalsize/QSPI_FLASH_PAGE_SIZE;
 
-//  type, addrsize are ignored
-  pagesize = 256;
-  pages = totalsize/256;
+//  type is ignored
 
 	return true;
 }
@@ -196,7 +199,7 @@ uint32_t Adafruit_QSPI_Flash::writeBuffer (uint32_t addr, uint8_t *data, uint32_
 
 	  uint16_t const toWrite = min(remain, QSPI_FLASH_PAGE_SIZE);
 
-		QSPI0.writeMemory(addr, data, toWrite);
+		if ( !QSPI0.writeMemory(addr, data, toWrite) ) break;
 
 		remain -= toWrite;
 		data += toWrite;
