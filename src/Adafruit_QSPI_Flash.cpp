@@ -1,4 +1,26 @@
-/* The MIT License (MIT)
+/**
+ * @file Adafruit_QSPI_Flash.cpp
+ *
+ * @mainpage Adafruit QSPI library
+ *
+ * @section intro_sec Introduction
+ *
+ * This is documentation for Adafruit's library for interfacing with
+ * the QSPI peripheral and external flashes on SAMD51 and nRF52 microcontrollers.
+ * This is intended to be used with the Adafruit Bluefruit nRF52840, Adafruit Metro M4 Express,
+ * Adafruit Feather M4 Express, and other M4 Express development boards.
+ *
+ * Adafruit invests time and resources providing this open source code,
+ * please support Adafruit and open-source hardware by purchasing
+ * products from Adafruit!
+ *
+ * @section author Author
+ *
+ * Written by Ha Thach and Dean Miller for Adafruit Industries.
+ *
+ * @section license License
+ *
+ * The MIT License (MIT)
  *
  * Copyright (c) 2019 Ha Thach and Dean Miller for Adafruit Industries LLC
  *
@@ -23,9 +45,7 @@
 
 #include "Adafruit_QSPI_Flash.h"
 
-#define ADAFRUIT_QSPI_GENERIC_STATUS_BUSY 0x01
-
-// Include all possible flash devices used by Adafruit boards
+/// List of all possible flash devices used by Adafruit boards
 static const external_flash_device possible_devices[] =
 {
   GD25Q16C, GD25Q64C,    // Main devices current Adafruit
@@ -35,6 +55,7 @@ static const external_flash_device possible_devices[] =
   MX25R6435F,            // Nordic PCA10056
 };
 
+/// Flash device list count
 enum
 {
   EXTERNAL_FLASH_DEVICE_COUNT = sizeof(possible_devices)/sizeof(possible_devices[0])
