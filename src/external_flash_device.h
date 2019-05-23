@@ -29,7 +29,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/// External flash device data
 typedef struct {
     uint32_t total_size;
     uint16_t start_up_time_us;

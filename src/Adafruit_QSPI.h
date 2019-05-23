@@ -19,6 +19,7 @@
 
 #include <Arduino.h>
 
+/// QSPI command code
 enum
 {
   QSPI_CMD_QUAD_READ         = 0x6B, // 1 line address, 4 line data
@@ -49,27 +50,69 @@ class Adafruit_QSPI
 {
   public:
 
-    /// Enable necessary clocks and configure QSPI peripheral.
-    virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3) = 0;
+    /**
+     * Enable and configure QSPI peripheral clock and pins
+     * @param pinSCK  SCK pin
+     * @param pinCS   Chip select pin
+     * @param pinIO0  DATA0 pin
+     * @param pinIO1  DATA1 pin
+     * @param pinIO2  DATA2 pin
+     * @param pinIO3  DATA3 pin
+     */
+    virtual void begin(int pinSCK, int pinCS, int pinIO0, int pinIO1, int pinIO2, int pinIO3) = 0;
+
+    /// Enable QSPI with default pins in variant.h
     void begin(void)
     {
       begin(PIN_QSPI_SCK, PIN_QSPI_CS, PIN_QSPI_IO0, PIN_QSPI_IO1, PIN_QSPI_IO2, PIN_QSPI_IO3);
     }
 
-    virtual void setClockDivider(uint8_t uc_div) = 0;
+    /// Set clock speed in hertz
+    /// @param clock_hz clock speed in hertz
     virtual void setClockSpeed(uint32_t clock_hz) = 0;
 
+    /// Set clock  divider
+    /// @param uc_div clock divider
+    virtual void setClockDivider(uint8_t uc_div) = 0;
+
+    /// Execute a single byte command e.g Reset, Write Enable
+    /// @param command command code
+    /// @return true if success
     virtual bool runCommand(uint8_t command) = 0;
-    virtual bool readCommand(uint8_t comamnd, uint8_t* response, uint32_t len) = 0;
+
+    /// Execute a command with response data e.g Read Status, Read JEDEC
+    /// @param command    command code
+    /// @param response   buffer to hold data
+    /// @param len        number of bytes to read
+    /// @return true if success
+    virtual bool readCommand(uint8_t command, uint8_t* response, uint32_t len) = 0;
+
+    /// Execute a command with data e.g Write Status,
+    /// @param command    command code
+    /// @param data       writing data
+    /// @param len        number of bytes to read
+    /// @return true if success
     virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len) = 0;
 
-    virtual bool eraseSector(uint32_t sectorAddr);
+    /// Read data from external flash contents. Typically it is implemented by quad read command 0x6B
+    /// @param addr       address to read
+    /// @param buffer     buffer to hold data
+    /// @param len        number of byte to read
+    /// @return true if success
+    virtual bool readMemory(uint32_t addr, uint8_t *buffer, uint32_t len) = 0;
 
-    // Should be Quad Read 0x6B command
-    virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
+    /// Write data to external flash contents, flash sector must be previously erased by \ref eraseSector() first.
+    /// Typically it uses quad write command 0x32
+    /// @param addr       address to read
+    /// @param data       writing data
+    /// @param len        number of byte to read
+    /// @return true if success
+    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t len) = 0;
 
-    // Should be Quad Write 0x32 command
-    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size) = 0;
+    /// Erase external flash 4KB sector by address.
+    /// @param sectorAddr  adddress to be erased
+    /// @return true if success
+    virtual bool eraseSector(uint32_t sectorAddr) = 0;
 };
 
 #if defined __SAMD51__

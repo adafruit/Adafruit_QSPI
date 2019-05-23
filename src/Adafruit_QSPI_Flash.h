@@ -24,9 +24,9 @@
 #ifndef ADAFRUIT_QSPI_FLASH_H_
 #define ADAFRUIT_QSPI_FLASH_H_
 
-
 #include "Adafruit_QSPI.h"
 #include "Adafruit_SPIFlash.h"
+
 #include "external_flash_device.h"
 
 /**************************************************************************/
@@ -37,7 +37,8 @@
 class Adafruit_QSPI_Flash : public Adafruit_SPIFlash {
 
 public:
-  // Constant that is (mostly) true to all external flash devices
+
+  /// Constant that is (mostly) true to all external flash devices
   enum {
     QSPI_FLASH_SECTOR_SIZE = 4096,
     QSPI_FLASH_PAGE_SIZE   = 256,
@@ -62,8 +63,12 @@ public:
 	uint32_t readBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
 	uint32_t writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
 
-	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
 	bool     eraseSector (uint32_t sectorNumber);
+
+	/// @brief same as @ref eraseSector
+	/// @param sectorNumber the sector number to erase.
+	/// @return true if success
+	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
 
 	// Helper
 	uint8_t  read8(uint32_t addr);

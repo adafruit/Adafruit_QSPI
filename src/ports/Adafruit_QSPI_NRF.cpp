@@ -139,14 +139,14 @@ bool Adafruit_QSPI_NRF::eraseSector (uint32_t sectorAddr)
   return NRFX_SUCCESS == nrfx_qspi_erase(NRF_QSPI_ERASE_LEN_4KB, sectorAddr);
 }
 
-bool Adafruit_QSPI_NRF::readMemory (uint32_t addr, uint8_t *data, uint32_t size)
+bool Adafruit_QSPI_NRF::readMemory (uint32_t addr, uint8_t *data, uint32_t len)
 {
-  return NRFX_SUCCESS == nrfx_qspi_read(data, size, addr);
+  return NRFX_SUCCESS == nrfx_qspi_read(data, len, addr);
 }
 
-bool Adafruit_QSPI_NRF::writeMemory (uint32_t addr, uint8_t *data, uint32_t size)
+bool Adafruit_QSPI_NRF::writeMemory (uint32_t addr, uint8_t *data, uint32_t len)
 {
-  return NRFX_SUCCESS == nrfx_qspi_write(data, size, addr);
+  return NRFX_SUCCESS == nrfx_qspi_write(data, len, addr);
 }
 
 #endif

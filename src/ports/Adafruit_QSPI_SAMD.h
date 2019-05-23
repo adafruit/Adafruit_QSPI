@@ -44,8 +44,8 @@ public:
 	virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len);
 
 	virtual bool eraseSector(uint32_t sectorAddr);
-	virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
-	virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
+	virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t len);
+	virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t len);
 
 private:
 	bool _run_instruction(uint8_t command, uint32_t ifr, uint32_t addr, uint8_t *buffer, uint32_t size);

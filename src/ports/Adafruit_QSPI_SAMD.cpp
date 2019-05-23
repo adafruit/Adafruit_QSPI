@@ -161,7 +161,7 @@ bool Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
 	return _run_instruction(QSPI_CMD_ERASE_SECTOR, iframe, sectorAddr, NULL, 0);
 }
 
-bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
+bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t len)
 {
   // Command 0x6B 1 line address, 4 line Data
   // with Continuous Read Mode and Quad output mode, read memory type
@@ -169,15 +169,15 @@ bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t size)
                     QSPI_INSTRFRAME_TFRTYPE_READMEMORY | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN | QSPI_INSTRFRAME_DATAEN |
                     /*QSPI_INSTRFRAME_CRMODE |*/ QSPI_INSTRFRAME_DUMMYLEN(8);
 
-  return _run_instruction(QSPI_CMD_QUAD_READ, iframe, addr, data, size);
+  return _run_instruction(QSPI_CMD_QUAD_READ, iframe, addr, data, len);
 }
 
-bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t size)
+bool Adafruit_QSPI_SAMD::writeMemory(uint32_t addr, uint8_t *data, uint32_t len)
 {
   uint32_t iframe = QSPI_INSTRFRAME_WIDTH_QUAD_OUTPUT | QSPI_INSTRFRAME_ADDRLEN_24BITS |
                     QSPI_INSTRFRAME_TFRTYPE_WRITEMEMORY | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN | QSPI_INSTRFRAME_DATAEN;
 
-  return _run_instruction(QSPI_CMD_QUAD_PAGE_PROGRAM, iframe, addr, data, size);
+  return _run_instruction(QSPI_CMD_QUAD_PAGE_PROGRAM, iframe, addr, data, len);
 }
 
 /**************************************************************************/

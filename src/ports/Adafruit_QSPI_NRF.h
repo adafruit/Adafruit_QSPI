@@ -43,8 +43,8 @@ class Adafruit_QSPI_NRF : Adafruit_QSPI
     virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len);
 
     virtual bool eraseSector(uint32_t sectorAddr);
-    virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t size);
-    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t size);
+    virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t len);
+    virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t len);
 };
 
 extern Adafruit_QSPI_NRF QSPI0;

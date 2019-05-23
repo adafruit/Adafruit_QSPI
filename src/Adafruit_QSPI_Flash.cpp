@@ -40,6 +40,8 @@ enum
   EXTERNAL_FLASH_DEVICE_COUNT = sizeof(possible_devices)/sizeof(possible_devices[0])
 };
 
+
+/// Constructor
 Adafruit_QSPI_Flash::Adafruit_QSPI_Flash(void) : Adafruit_SPIFlash(0)
 {
   _flash_dev = NULL;
@@ -47,8 +49,11 @@ Adafruit_QSPI_Flash::Adafruit_QSPI_Flash(void) : Adafruit_SPIFlash(0)
 
 /**************************************************************************/
 /*! 
-    @brief begin the default QSPI peripheral
-    @returns true
+    @brief Initialize QSPI peripheral and external flash device. It will
+    also detect all known flash devices on the board and enable quad mode if
+    found. QSPI is also set to max possible speed with device.
+
+    @returns true if success
 */
 /**************************************************************************/
 bool Adafruit_QSPI_Flash::begin(void){
@@ -136,11 +141,21 @@ bool Adafruit_QSPI_Flash::begin(void){
 	return true;
 }
 
+/**
+ * Disable qspi peripheral clock
+ * @return true if success
+ */
+bool Adafruit_QSPI_Flash::end(void)
+{
+  // TODO implement later
+  return true;
+}
+
 /**************************************************************************/
 /*! 
-    @brief read the manufacturer ID and device ID
-    @param manufID pointer to where to put the manufacturer ID
-	@param deviceID pointer to where to put the device ID
+   @brief read the manufacturer ID and device ID
+   @param manufID pointer to where to put the manufacturer ID
+   @param deviceID pointer to where to put the device ID
 */
 /**************************************************************************/
 void Adafruit_QSPI_Flash::GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID)
@@ -153,8 +168,8 @@ void Adafruit_QSPI_Flash::GetManufacturerInfo (uint8_t *manufID, uint8_t *device
 
 /**************************************************************************/
 /*! 
-    @brief read JEDEC ID information from the device
-	@returns the read id as a uint32
+   @brief read JEDEC ID information from the device
+   @returns the read id as a uint32
 */
 /**************************************************************************/
 uint32_t Adafruit_QSPI_Flash::GetJEDECID (void)
@@ -167,8 +182,8 @@ uint32_t Adafruit_QSPI_Flash::GetJEDECID (void)
 
 /**************************************************************************/
 /*! 
-    @brief read the generic status register.
-    @returns the status register reading
+   @brief read the generic status register.
+   @returns the status register reading
 */
 /**************************************************************************/
 uint8_t Adafruit_QSPI_Flash::readStatus(void)
@@ -178,6 +193,10 @@ uint8_t Adafruit_QSPI_Flash::readStatus(void)
 	return r;
 }
 
+/**
+ * Read the second status register
+ * @return status2 register
+ */
 uint8_t Adafruit_QSPI_Flash::readStatus2(void)
 {
 	uint8_t r;
@@ -185,12 +204,22 @@ uint8_t Adafruit_QSPI_Flash::readStatus2(void)
 	return r;
 }
 
+/**
+ * Execute Write Enable command
+ * @return true if success
+ */
 bool Adafruit_QSPI_Flash::writeEnable(void)
 {
   return QSPI0.runCommand(QSPI_CMD_WRITE_ENABLE);
 }
 
-// Read flash contents into buffer
+/**
+ * Read data from external flash contents. Typically it is implemented by quad read command 0x6B
+ * @param address   address to read
+ * @param buffer    buffer to hold data
+ * @param len       number of byte to read
+ * @return true if success
+ */
 uint32_t Adafruit_QSPI_Flash::readBuffer (uint32_t address, uint8_t *buffer, uint32_t len)
 {
   if (!_flash_dev) return 0;
@@ -200,7 +229,14 @@ uint32_t Adafruit_QSPI_Flash::readBuffer (uint32_t address, uint8_t *buffer, uin
   return QSPI0.readMemory(address, buffer, len) ? len : 0;
 }
 
-// Write buffer into flash
+/**
+ * Write data to external flash contents, flash sector must be previously erased by \ref eraseSector() first.
+ * Typically it uses quad write command 0x32
+ * @param addr       address to read
+ * @param data       writing data
+ * @param len        number of byte to read
+ * @return true if success
+ */
 uint32_t Adafruit_QSPI_Flash::writeBuffer (uint32_t addr, uint8_t *data, uint32_t len)
 {
   if (!_flash_dev) return 0;
@@ -225,18 +261,33 @@ uint32_t Adafruit_QSPI_Flash::writeBuffer (uint32_t addr, uint8_t *data, uint32_
 	return len - remain;
 }
 
+/**
+ * Read one byte from flash device
+ * @param addr address to read
+ * @return the data byte read
+ */
 uint8_t Adafruit_QSPI_Flash::read8(uint32_t addr)
 {
 	uint8_t ret;
 	return readBuffer(addr, &ret, sizeof(ret)) ? 0xff : ret;
 }
 
+/**
+ * Read uint16_t from flash device
+ * @param addr address to read
+ * @return the data uint16_t read
+ */
 uint16_t Adafruit_QSPI_Flash::read16(uint32_t addr)
 {
 	uint16_t ret;
 	return readBuffer(addr, (uint8_t*) &ret, sizeof(ret)) ? 0xffff : ret;
 }
 
+/**
+ * Read uint32_t from flash device
+ * @param addr address to read
+ * @return the data uint32_t read
+ */
 uint32_t Adafruit_QSPI_Flash::read32(uint32_t addr)
 {
 	uint32_t ret;
@@ -246,6 +297,7 @@ uint32_t Adafruit_QSPI_Flash::read32(uint32_t addr)
 /**************************************************************************/
 /*! 
     @brief perform a chip erase. All data on the device will be erased.
+    @return true if success
 */
 /**************************************************************************/
 bool Adafruit_QSPI_Flash::chipErase(void)
@@ -264,7 +316,7 @@ bool Adafruit_QSPI_Flash::chipErase(void)
 /*! 
     @brief erase a sector of flash
     @param sectorNumber the sector number to erase. The address erased will be (sectorNumber * 4096)
-    @returns true
+    @return true if success
 */
 /**************************************************************************/
 bool Adafruit_QSPI_Flash::eraseSector (uint32_t sectorNumber)
