@@ -44,13 +44,17 @@ enum
   QSPI_CMD_ERASE_CHIP        = 0xC7,
 };
 
-/// Abstract class provide common API for all mcu ports (e.g samd51, nrf52 etc ..)
+/// Abstract class provide common APIs for all mcu ports (e.g samd51, nrf52 etc ..)
 class Adafruit_QSPI
 {
   public:
 
     /// Enable necessary clocks and configure QSPI peripheral.
     virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3) = 0;
+    void begin(void)
+    {
+      begin(PIN_QSPI_SCK, PIN_QSPI_CS, PIN_QSPI_IO0, PIN_QSPI_IO1, PIN_QSPI_IO2, PIN_QSPI_IO3);
+    }
 
     virtual void setClockDivider(uint8_t uc_div) = 0;
     virtual void setClockSpeed(uint32_t clock_hz) = 0;

@@ -32,10 +32,7 @@ public:
 	~Adafruit_QSPI_SAMD() {};
 
 	virtual void begin(int sck, int cs, int io0, int io1, int io2, int io3);
-	void begin(void)
-	{
-	  begin(PIN_QSPI_SCK, PIN_QSPI_CS, PIN_QSPI_IO0, PIN_QSPI_IO1, PIN_QSPI_IO2, PIN_QSPI_IO3);
-	}
+	using Adafruit_QSPI::begin;
 
 	void end(void);
 
