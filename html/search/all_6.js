@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['instruction',['instruction',['../struct_q_s_p_i_instr.html#a5ac2437dacb9c5a6d3bd8b0a7c5a70e4',1,'QSPIInstr']]],
-  ['ioformat',['ioFormat',['../struct_q_s_p_i_instr.html#ac43cbce012407f5e4874c828aeba1161',1,'QSPIInstr']]]
+  ['setclockdivider',['setClockDivider',['../class_adafruit___q_s_p_i.html#adfd29a7868d7b62a91d09851c937ef8e',1,'Adafruit_QSPI']]],
+  ['setclockspeed',['setClockSpeed',['../class_adafruit___q_s_p_i.html#aab4de8a8e47effc6d148b0931255fd06',1,'Adafruit_QSPI']]]
 ];

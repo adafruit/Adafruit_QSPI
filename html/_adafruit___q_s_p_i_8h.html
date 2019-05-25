@@ -5,10 +5,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Adafruit QSPI Library: Adafruit_QSPI.h File Reference</title>
+<title>Adafruit QSPI Library: src/Adafruit_QSPI.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -42,6 +49,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('_adafruit___q_s_p_i_8h.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -56,133 +78,66 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Adafruit_QSPI.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;SPI.h&quot;</code><br />
-<code>#include &lt;Arduino.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
 </div>
 <p><a href="_adafruit___q_s_p_i_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">QSPI instruction struct.  <a href="struct_q_s_p_i_instr.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html">Adafruit_QSPI</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for interfacing with QSPI hardware.  <a href="class_adafruit___q_s_p_i.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class provide common APIs for all mcu ports (e.g samd51, nrf52 etc ..)  <a href="class_adafruit___q_s_p_i.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ac9f1a9fa0220f00e483ed4c1ae75c521"><td class="memItemLeft" align="right" valign="top"><a id="ac9f1a9fa0220f00e483ed4c1ae75c521"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#ac9f1a9fa0220f00e483ed4c1ae75c521">QSPI_OPTION_NONE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ac9f1a9fa0220f00e483ed4c1ae75c521"><td class="mdescLeft">&#160;</td><td class="mdescRight">no option <br /></td></tr>
-<tr class="separator:ac9f1a9fa0220f00e483ed4c1ae75c521"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac64c08f9eacb34b23ea1c465daf64503"><td class="memItemLeft" align="right" valign="top"><a id="ac64c08f9eacb34b23ea1c465daf64503"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#ac64c08f9eacb34b23ea1c465daf64503">QSPI_OPTION_INSTREN</a>&#160;&#160;&#160;QSPI_INSTRFRAME_INSTREN</td></tr>
-<tr class="memdesc:ac64c08f9eacb34b23ea1c465daf64503"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable sending of instruction <br /></td></tr>
-<tr class="separator:ac64c08f9eacb34b23ea1c465daf64503"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff06248ec395b285d8378b55b219f18a"><td class="memItemLeft" align="right" valign="top"><a id="aff06248ec395b285d8378b55b219f18a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#aff06248ec395b285d8378b55b219f18a">QSPI_OPTION_ADDREN</a>&#160;&#160;&#160;QSPI_INSTRFRAME_ADDREN</td></tr>
-<tr class="memdesc:aff06248ec395b285d8378b55b219f18a"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable sending of address <br /></td></tr>
-<tr class="separator:aff06248ec395b285d8378b55b219f18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab53ea122f51655387b11d094c4a106ce"><td class="memItemLeft" align="right" valign="top"><a id="ab53ea122f51655387b11d094c4a106ce"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#ab53ea122f51655387b11d094c4a106ce">QSPI_OPTION_OPCODEEN</a>&#160;&#160;&#160;QSPI_INSTRFRAME_OPTCODEEN</td></tr>
-<tr class="memdesc:ab53ea122f51655387b11d094c4a106ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable sending of opcode <br /></td></tr>
-<tr class="separator:ab53ea122f51655387b11d094c4a106ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53c96112a320cb402f1c0434243f151d"><td class="memItemLeft" align="right" valign="top"><a id="a53c96112a320cb402f1c0434243f151d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#a53c96112a320cb402f1c0434243f151d">QSPI_OPTION_DATAEN</a>&#160;&#160;&#160;QSPI_INSTRFRAME_DATAEN</td></tr>
-<tr class="memdesc:a53c96112a320cb402f1c0434243f151d"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable sending of data <br /></td></tr>
-<tr class="separator:a53c96112a320cb402f1c0434243f151d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:acfbf4dff93e8e69f992d54371bcdcbe7"><td class="memItemLeft" align="right" valign="top"><a id="acfbf4dff93e8e69f992d54371bcdcbe7"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#acfbf4dff93e8e69f992d54371bcdcbe7">QSPIMode_t</a> { <b>QSPI_SPI_MODE</b> = 0, 
-<b>QSPI_MEMORY_MODE</b>
- }<tr class="memdesc:acfbf4dff93e8e69f992d54371bcdcbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer mode. <br /></td></tr>
+<tr class="memitem:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memItemLeft" align="right" valign="top"><a id="a06fc87d81c62e9abb8790b6e5713c55b"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
+&#160;&#160;<b>QSPI_CMD_QUAD_READ</b> = 0x6B, 
+<b>QSPI_CMD_READ_JEDEC_ID</b> = 0x9f, 
+<b>QSPI_CMD_PAGE_PROGRAM</b> = 0x02, 
+<b>QSPI_CMD_QUAD_PAGE_PROGRAM</b> = 0x32, 
+<br />
+&#160;&#160;<b>QSPI_CMD_READ_STATUS</b> = 0x05, 
+<b>QSPI_CMD_READ_STATUS2</b> = 0x35, 
+<b>QSPI_CMD_WRITE_STATUS</b> = 0x01, 
+<b>QSPI_CMD_WRITE_STATUS2</b> = 0x31, 
+<br />
+&#160;&#160;<b>QSPI_CMD_ENABLE_RESET</b> = 0x66, 
+<b>QSPI_CMD_RESET</b> = 0x99, 
+<b>QSPI_CMD_WRITE_ENABLE</b> = 0x06, 
+<b>QSPI_CMD_WRITE_DISABLE</b> = 0x04, 
+<br />
+&#160;&#160;<b>QSPI_CMD_ERASE_SECTOR</b> = 0x020, 
+<b>QSPI_CMD_ERASE_CHIP</b> = 0xC7
+<br />
+ }<tr class="memdesc:a06fc87d81c62e9abb8790b6e5713c55b"><td class="mdescLeft">&#160;</td><td class="mdescRight">QSPI command code. <br /></td></tr>
 </td></tr>
-<tr class="separator:acfbf4dff93e8e69f992d54371bcdcbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a556626a7ebac2d52b497f6616223cf7b"><td class="memItemLeft" align="right" valign="top"><a id="a556626a7ebac2d52b497f6616223cf7b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#a556626a7ebac2d52b497f6616223cf7b">QSPIDataWidth_t</a> { <br />
-&#160;&#160;<b>QSPI_DATAWIDTH_8_BITS</b> = QSPI_CTRLB_DATALEN_8BITS_Val, 
-<b>QSPI_DATAWIDTH_9_BITS</b>, 
-<b>QSPI_DATAWIDTH_10_BITS</b>, 
-<b>QSPI_DATAWIDTH_11_BITS</b>, 
-<br />
-&#160;&#160;<b>QSPI_DATAWIDTH_12_BITS</b>, 
-<b>QSPI_DATAWIDTH_13_BITS</b>, 
-<b>QSPI_DATAWIDTH_14_BITS</b>, 
-<b>QSPI_DATAWIDTH_15_BITS</b>, 
-<br />
-&#160;&#160;<b>QSPI_DATAWIDTH_16_BITS</b>
-<br />
- }<tr class="memdesc:a556626a7ebac2d52b497f6616223cf7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer data width. <br /></td></tr>
-</td></tr>
-<tr class="separator:a556626a7ebac2d52b497f6616223cf7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad575da805d5e5b750d07732647a6d141"><td class="memItemLeft" align="right" valign="top"><a id="ad575da805d5e5b750d07732647a6d141"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#ad575da805d5e5b750d07732647a6d141">QSPIAddrLen_t</a> { <b>QSPI_ADDRLEN_NONE</b> = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val, 
-<b>QSPI_ADDRLEN_24_BITS</b> = QSPI_INSTRFRAME_ADDRLEN_24BITS_Val, 
-<b>QSPI_ADDRLEN_32_BITS</b>
- }<tr class="memdesc:ad575da805d5e5b750d07732647a6d141"><td class="mdescLeft">&#160;</td><td class="mdescRight">The address length. Use QSPI_ADDRLEN_NONE if no address needed. <br /></td></tr>
-</td></tr>
-<tr class="separator:ad575da805d5e5b750d07732647a6d141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42e7d343aa55e2fe6b0a15d12f726d74"><td class="memItemLeft" align="right" valign="top"><a id="a42e7d343aa55e2fe6b0a15d12f726d74"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#a42e7d343aa55e2fe6b0a15d12f726d74">QSPIOpcodeLen_t</a> { <br />
-&#160;&#160;<b>QSPI_OPCODE_LEN_NONE</b> = QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val, 
-<b>QSPI_OPCODE_LEN_1_BITS</b> = QSPI_INSTRFRAME_OPTCODELEN_1BIT_Val, 
-<b>QSPI_OPCODE_LEN_2_BITS</b>, 
-<b>QSPI_OPCODE_LEN_4_BITS</b>, 
-<br />
-&#160;&#160;<b>QSPI_OPCODE_LEN_8_BITS</b>
-<br />
- }<tr class="memdesc:a42e7d343aa55e2fe6b0a15d12f726d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">The opcode length. Use QSPI_OPCODE_LEN_NONE if no opcode needed. <br /></td></tr>
-</td></tr>
-<tr class="separator:a42e7d343aa55e2fe6b0a15d12f726d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d856808bc7a24113a4bfeee2557914e"><td class="memItemLeft" align="right" valign="top"><a id="a9d856808bc7a24113a4bfeee2557914e"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#a9d856808bc7a24113a4bfeee2557914e">QSPIIOFormat_t</a> { <br />
-&#160;&#160;<b>QSPI_IO_FORMAT_SINGLE</b> = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI_Val, 
-<b>QSPI_IO_FORMAT_SINGLE_DUAL_DATA</b>, 
-<b>QSPI_IO_FORMAT_SINGLE_QUAD_DATA</b>, 
-<b>QSPI_IO_FORMAT_SINGLE_INSTR_DUAL_ADDR_DUAL_DATA</b>, 
-<br />
-&#160;&#160;<b>QSPI_IO_FORMAT_SINGLE_INSTR_QUAD_ADDR_QUAD_DATA</b>, 
-<b>QSPI_IO_FORMAT_DUAL</b>, 
-<b>QSPI_IO_FORMAT_QUAD</b>
-<br />
- }<tr class="memdesc:a9d856808bc7a24113a4bfeee2557914e"><td class="mdescLeft">&#160;</td><td class="mdescRight">the transfer format to use <br /></td></tr>
-</td></tr>
-<tr class="separator:a9d856808bc7a24113a4bfeee2557914e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3a58add885778b8edbf6bbc60e7008a"><td class="memItemLeft" align="right" valign="top"><a id="ab3a58add885778b8edbf6bbc60e7008a"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#ab3a58add885778b8edbf6bbc60e7008a">QSPITransferType_t</a> { <b>QSPI_READ</b> = QSPI_INSTRFRAME_TFRTYPE_READ_Val, 
-<b>QSPI_READ_MEMORY</b>, 
-<b>QSPI_WRITE</b>, 
-<b>QSPI_WRITE_MEMORY</b>
- }<tr class="memdesc:ab3a58add885778b8edbf6bbc60e7008a"><td class="mdescLeft">&#160;</td><td class="mdescRight">the type of transfer <br /></td></tr>
-</td></tr>
-<tr class="separator:ab3a58add885778b8edbf6bbc60e7008a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ac4bc8d9c3922a2ac52b96f3b52d242ea"><td class="memItemLeft" align="right" valign="top"><a id="ac4bc8d9c3922a2ac52b96f3b52d242ea"></a>
-<a class="el" href="class_adafruit___q_s_p_i.html">Adafruit_QSPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___q_s_p_i_8h.html#ac4bc8d9c3922a2ac52b96f3b52d242ea">QSPI0</a></td></tr>
-<tr class="memdesc:ac4bc8d9c3922a2ac52b96f3b52d242ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">default QSPI instance <br /></td></tr>
-<tr class="separator:ac4bc8d9c3922a2ac52b96f3b52d242ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This is part of Adafruit's QSPI Peripheral driver for the Arduino platform. It is designed specifically to work with the Adafruit M4 Express development boards.</p>
+<div class="textblock"><p>This is part of Adafruit's QSPI Peripheral driver for the Arduino platform. It is designed to work with the Adafruit development boards.</p>
 <p>Adafruit invests time and resources providing this open source code, please support Adafruit and open-source hardware by purchasing products from Adafruit!</p>
-<p>Written by Dean Miller for Adafruit Industries.</p>
-<p>BSD license, all text here must be included in any redistribution. </p>
+<p>Written by Dean Miller, Ha Thach for Adafruit Industries.</p>
+<p>MIT license, all text here must be included in any redistribution. </p>
+
+<p class="definition">Definition in file <a class="el" href="_adafruit___q_s_p_i_8h_source.html">Adafruit_QSPI.h</a>.</p>
 </div></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.13
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_adafruit___q_s_p_i_8h.html">Adafruit_QSPI.h</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
 </body>
 </html>

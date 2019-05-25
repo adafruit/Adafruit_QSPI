@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -42,6 +49,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('class_adafruit___q_s_p_i.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -56,118 +78,94 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="class_adafruit___q_s_p_i-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Adafruit_QSPI Class Reference</div>  </div>
+<div class="title">Adafruit_QSPI Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class for interfacing with QSPI hardware.  
+<p>Abstract class provide common APIs for all mcu ports (e.g samd51, nrf52 etc ..)  
  <a href="class_adafruit___q_s_p_i.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_adafruit___q_s_p_i_8h_source.html">Adafruit_QSPI.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab5634b437b81a866c9167d64fa40a3d1"><td class="memItemLeft" align="right" valign="top">byte&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#ab5634b437b81a866c9167d64fa40a3d1">transfer</a> (uint16_t data)</td></tr>
-<tr class="memdesc:ab5634b437b81a866c9167d64fa40a3d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">transfer data via QSPI  <a href="#ab5634b437b81a866c9167d64fa40a3d1">More...</a><br /></td></tr>
-<tr class="separator:ab5634b437b81a866c9167d64fa40a3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ff079767265f83e7551829f3346f553"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a0ff079767265f83e7551829f3346f553">transfer</a> (void *buf, size_t count)</td></tr>
-<tr class="memdesc:a0ff079767265f83e7551829f3346f553"><td class="mdescLeft">&#160;</td><td class="mdescRight">transfer multiple bytes via QSPI  <a href="#a0ff079767265f83e7551829f3346f553">More...</a><br /></td></tr>
-<tr class="separator:a0ff079767265f83e7551829f3346f553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad618dbd95e230979fb149daf7ba1955b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#ad618dbd95e230979fb149daf7ba1955b">usingInterrupt</a> (int interruptNumber)</td></tr>
-<tr class="memdesc:ad618dbd95e230979fb149daf7ba1955b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the interrupt number to use.  <a href="#ad618dbd95e230979fb149daf7ba1955b">More...</a><br /></td></tr>
-<tr class="separator:ad618dbd95e230979fb149daf7ba1955b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc24febd7d8d05e38d8905f32057430a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#adc24febd7d8d05e38d8905f32057430a">beginTransaction</a> (SPISettings settings)</td></tr>
-<tr class="memdesc:adc24febd7d8d05e38d8905f32057430a"><td class="mdescLeft">&#160;</td><td class="mdescRight">begin an SPI transaction using the passed settings  <a href="#adc24febd7d8d05e38d8905f32057430a">More...</a><br /></td></tr>
-<tr class="separator:adc24febd7d8d05e38d8905f32057430a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcc029662fc981b2dfec872c42ec502e"><td class="memItemLeft" align="right" valign="top"><a id="abcc029662fc981b2dfec872c42ec502e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#abcc029662fc981b2dfec872c42ec502e">endTransaction</a> (void)</td></tr>
-<tr class="memdesc:abcc029662fc981b2dfec872c42ec502e"><td class="mdescLeft">&#160;</td><td class="mdescRight">end the SPI transaction <br /></td></tr>
-<tr class="separator:abcc029662fc981b2dfec872c42ec502e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31c0087fa61f41eb5b83fa80e322689f"><td class="memItemLeft" align="right" valign="top"><a id="a31c0087fa61f41eb5b83fa80e322689f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a31c0087fa61f41eb5b83fa80e322689f">attachInterrupt</a> ()</td></tr>
-<tr class="memdesc:a31c0087fa61f41eb5b83fa80e322689f"><td class="mdescLeft">&#160;</td><td class="mdescRight">attach the SPI interrupt <br /></td></tr>
-<tr class="separator:a31c0087fa61f41eb5b83fa80e322689f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1eabddf5e7ca9d2f380eea20be20c52f"><td class="memItemLeft" align="right" valign="top"><a id="a1eabddf5e7ca9d2f380eea20be20c52f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a1eabddf5e7ca9d2f380eea20be20c52f">detachInterrupt</a> ()</td></tr>
-<tr class="memdesc:a1eabddf5e7ca9d2f380eea20be20c52f"><td class="mdescLeft">&#160;</td><td class="mdescRight">detach the SPI interrupt <br /></td></tr>
-<tr class="separator:a1eabddf5e7ca9d2f380eea20be20c52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e8a86dcbceca8245eba863c0c043663"><td class="memItemLeft" align="right" valign="top"><a id="a0e8a86dcbceca8245eba863c0c043663"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a0e8a86dcbceca8245eba863c0c043663">begin</a> ()</td></tr>
-<tr class="memdesc:a0e8a86dcbceca8245eba863c0c043663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable necessary clocks and configure QSPI peripheral. <br /></td></tr>
-<tr class="separator:a0e8a86dcbceca8245eba863c0c043663"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e7b41069b690b0ebce18071149839fa"><td class="memItemLeft" align="right" valign="top"><a id="a2e7b41069b690b0ebce18071149839fa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a2e7b41069b690b0ebce18071149839fa">end</a> ()</td></tr>
-<tr class="memdesc:a2e7b41069b690b0ebce18071149839fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">de-init the peripheral <br /></td></tr>
-<tr class="separator:a2e7b41069b690b0ebce18071149839fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8507d550552dd791a9eda6eca9a454ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a8507d550552dd791a9eda6eca9a454ad">runInstruction</a> (const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *instr)</td></tr>
-<tr class="memdesc:a8507d550552dd791a9eda6eca9a454ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a single QSPI instruction. This should only be used for single byte instructions that do not read or write data or require an address.  <a href="#a8507d550552dd791a9eda6eca9a454ad">More...</a><br /></td></tr>
-<tr class="separator:a8507d550552dd791a9eda6eca9a454ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf4e036d8d54efa3835bbba0fdc5e239"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#acf4e036d8d54efa3835bbba0fdc5e239">runInstruction</a> (const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *instr, uint32_t addr, uint8_t *txData, uint8_t *rxData, uint32_t size, bool invalidateCache=true)</td></tr>
-<tr class="memdesc:acf4e036d8d54efa3835bbba0fdc5e239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a single QSPI instruction.  <a href="#acf4e036d8d54efa3835bbba0fdc5e239">More...</a><br /></td></tr>
-<tr class="separator:acf4e036d8d54efa3835bbba0fdc5e239"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef37580513c99504c2d837c2e2fcf409"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#aef37580513c99504c2d837c2e2fcf409">setMemoryMode</a> (<a class="el" href="_adafruit___q_s_p_i_8h.html#acfbf4dff93e8e69f992d54371bcdcbe7">QSPIMode_t</a> mode)</td></tr>
-<tr class="memdesc:aef37580513c99504c2d837c2e2fcf409"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the memory mode of the QSPI peripheral  <a href="#aef37580513c99504c2d837c2e2fcf409">More...</a><br /></td></tr>
-<tr class="separator:aef37580513c99504c2d837c2e2fcf409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5e8f63b5a18e322ab1d41aa83b29976"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#ae5e8f63b5a18e322ab1d41aa83b29976">setClockDivider</a> (uint8_t uc_div)</td></tr>
-<tr class="memdesc:ae5e8f63b5a18e322ab1d41aa83b29976"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the clock divider  <a href="#ae5e8f63b5a18e322ab1d41aa83b29976">More...</a><br /></td></tr>
-<tr class="separator:ae5e8f63b5a18e322ab1d41aa83b29976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0da2ab722328baa91ca252a539fd488"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#ac0da2ab722328baa91ca252a539fd488">setDataWidth</a> (<a class="el" href="_adafruit___q_s_p_i_8h.html#a556626a7ebac2d52b497f6616223cf7b">QSPIDataWidth_t</a> width)</td></tr>
-<tr class="memdesc:ac0da2ab722328baa91ca252a539fd488"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the data width  <a href="#ac0da2ab722328baa91ca252a539fd488">More...</a><br /></td></tr>
-<tr class="separator:ac0da2ab722328baa91ca252a539fd488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a3f131575fbc856070b4aa9eb3fa2ab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a3a3f131575fbc856070b4aa9eb3fa2ab">begin</a> (int pinSCK, int pinCS, int pinIO0, int pinIO1, int pinIO2, int pinIO3)=0</td></tr>
+<tr class="separator:a3a3f131575fbc856070b4aa9eb3fa2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1abfcfa95ea387518b671130843b345d"><td class="memItemLeft" align="right" valign="top"><a id="a1abfcfa95ea387518b671130843b345d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a1abfcfa95ea387518b671130843b345d">begin</a> (void)</td></tr>
+<tr class="memdesc:a1abfcfa95ea387518b671130843b345d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable QSPI with default pins in variant.h. <br /></td></tr>
+<tr class="separator:a1abfcfa95ea387518b671130843b345d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4de8a8e47effc6d148b0931255fd06"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#aab4de8a8e47effc6d148b0931255fd06">setClockSpeed</a> (uint32_t clock_hz)=0</td></tr>
+<tr class="separator:aab4de8a8e47effc6d148b0931255fd06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfd29a7868d7b62a91d09851c937ef8e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#adfd29a7868d7b62a91d09851c937ef8e">setClockDivider</a> (uint8_t uc_div)=0</td></tr>
+<tr class="separator:adfd29a7868d7b62a91d09851c937ef8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accea641831419b2c1c18311c15167763"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#accea641831419b2c1c18311c15167763">runCommand</a> (uint8_t command)=0</td></tr>
+<tr class="separator:accea641831419b2c1c18311c15167763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab00771983d3e26f0cc5fe2ca8c6e0aac"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#ab00771983d3e26f0cc5fe2ca8c6e0aac">readCommand</a> (uint8_t command, uint8_t *response, uint32_t len)=0</td></tr>
+<tr class="separator:ab00771983d3e26f0cc5fe2ca8c6e0aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc2cd1cb322c1459bbf98e89ebdb92bd"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#acc2cd1cb322c1459bbf98e89ebdb92bd">writeCommand</a> (uint8_t command, uint8_t const *data, uint32_t len)=0</td></tr>
+<tr class="separator:acc2cd1cb322c1459bbf98e89ebdb92bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b6f8b4354856686d07b78018ba31b29"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a8b6f8b4354856686d07b78018ba31b29">readMemory</a> (uint32_t addr, uint8_t *buffer, uint32_t len)=0</td></tr>
+<tr class="separator:a8b6f8b4354856686d07b78018ba31b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa247fa67bd5dbc9f08b3f2b8b92a5ce5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#aa247fa67bd5dbc9f08b3f2b8b92a5ce5">writeMemory</a> (uint32_t addr, uint8_t *data, uint32_t len)=0</td></tr>
+<tr class="separator:aa247fa67bd5dbc9f08b3f2b8b92a5ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6035596d93765185d29f1e4da2939eed"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a6035596d93765185d29f1e4da2939eed">eraseSector</a> (uint32_t sectorAddr)=0</td></tr>
+<tr class="separator:a6035596d93765185d29f1e4da2939eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class for interfacing with QSPI hardware. </p>
+<div class="textblock"><p>Abstract class provide common APIs for all mcu ports (e.g samd51, nrf52 etc ..) </p>
+
+<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i_8h_source.html#l00049">49</a> of file <a class="el" href="_adafruit___q_s_p_i_8h_source.html">Adafruit_QSPI.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab5634b437b81a866c9167d64fa40a3d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5634b437b81a866c9167d64fa40a3d1">&#9670;&nbsp;</a></span>transfer() <span class="overload">[1/2]</span></h2>
+<a id="a3a3f131575fbc856070b4aa9eb3fa2ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a3f131575fbc856070b4aa9eb3fa2ab">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">byte Adafruit_QSPI::transfer </td>
+          <td class="memname">virtual void Adafruit_QSPI::begin </td>
           <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>transfer data via QSPI </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>the data to be sent </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the data that was read </dd></dl>
-
-</div>
-</div>
-<a id="a0ff079767265f83e7551829f3346f553"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ff079767265f83e7551829f3346f553">&#9670;&nbsp;</a></span>transfer() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Adafruit_QSPI::transfer </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>buf</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pinSCK</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pinCS</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pinIO0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pinIO1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pinIO2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pinIO3</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -175,112 +173,237 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>transfer multiple bytes via QSPI </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Enable and configure QSPI peripheral clock and pins </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buf</td><td>the bufer to read from and write to. This buffer will be modified by the function. </td></tr>
-    <tr><td class="paramname">count</td><td>the number of bytes to transfer. </td></tr>
+    <tr><td class="paramname">pinSCK</td><td>SCK pin </td></tr>
+    <tr><td class="paramname">pinCS</td><td>Chip select pin </td></tr>
+    <tr><td class="paramname">pinIO0</td><td>DATA0 pin </td></tr>
+    <tr><td class="paramname">pinIO1</td><td>DATA1 pin </td></tr>
+    <tr><td class="paramname">pinIO2</td><td>DATA2 pin </td></tr>
+    <tr><td class="paramname">pinIO3</td><td>DATA3 pin </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ad618dbd95e230979fb149daf7ba1955b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad618dbd95e230979fb149daf7ba1955b">&#9670;&nbsp;</a></span>usingInterrupt()</h2>
+<a id="aab4de8a8e47effc6d148b0931255fd06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab4de8a8e47effc6d148b0931255fd06">&#9670;&nbsp;</a></span>setClockSpeed()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Adafruit_QSPI::usingInterrupt </td>
+          <td class="memname">virtual void Adafruit_QSPI::setClockSpeed </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>interruptNumber</em></td><td>)</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>clock_hz</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>Set the interrupt number to use. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Set clock speed in hertz </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">interruptNumber</td><td>the interrupt number to set </td></tr>
+    <tr><td class="paramname">clock_hz</td><td>clock speed in hertz </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="adc24febd7d8d05e38d8905f32057430a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc24febd7d8d05e38d8905f32057430a">&#9670;&nbsp;</a></span>beginTransaction()</h2>
+<a id="adfd29a7868d7b62a91d09851c937ef8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfd29a7868d7b62a91d09851c937ef8e">&#9670;&nbsp;</a></span>setClockDivider()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Adafruit_QSPI::beginTransaction </td>
+          <td class="memname">virtual void Adafruit_QSPI::setClockDivider </td>
           <td>(</td>
-          <td class="paramtype">SPISettings&#160;</td>
-          <td class="paramname"><em>settings</em></td><td>)</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>uc_div</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>begin an SPI transaction using the passed settings </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Set clock divider </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">settings</td><td>the settings to use </td></tr>
+    <tr><td class="paramname">uc_div</td><td>clock divider </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a8507d550552dd791a9eda6eca9a454ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8507d550552dd791a9eda6eca9a454ad">&#9670;&nbsp;</a></span>runInstruction() <span class="overload">[1/2]</span></h2>
+<a id="accea641831419b2c1c18311c15167763"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accea641831419b2c1c18311c15167763">&#9670;&nbsp;</a></span>runCommand()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Adafruit_QSPI::runInstruction </td>
+          <td class="memname">virtual bool Adafruit_QSPI::runCommand </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *&#160;</td>
-          <td class="paramname"><em>instr</em></td><td>)</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>command</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>Run a single QSPI instruction. This should only be used for single byte instructions that do not read or write data or require an address. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Execute a single byte command e.g Reset, Write Enable </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">instr</td><td>pointer to the struct containing instruction settings </td></tr>
+    <tr><td class="paramname">command</td><td>command code </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
 
 </div>
 </div>
-<a id="acf4e036d8d54efa3835bbba0fdc5e239"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf4e036d8d54efa3835bbba0fdc5e239">&#9670;&nbsp;</a></span>runInstruction() <span class="overload">[2/2]</span></h2>
+<a id="ab00771983d3e26f0cc5fe2ca8c6e0aac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab00771983d3e26f0cc5fe2ca8c6e0aac">&#9670;&nbsp;</a></span>readCommand()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Adafruit_QSPI::runInstruction </td>
+          <td class="memname">virtual bool Adafruit_QSPI::readCommand </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="struct_q_s_p_i_instr.html">QSPIInstr</a> *&#160;</td>
-          <td class="paramname"><em>instr</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>response</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Execute a command with response data e.g Read Status, Read JEDEC </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>command code </td></tr>
+    <tr><td class="paramname">response</td><td>buffer to hold data </td></tr>
+    <tr><td class="paramname">len</td><td>number of bytes to read </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
+
+</div>
+</div>
+<a id="acc2cd1cb322c1459bbf98e89ebdb92bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc2cd1cb322c1459bbf98e89ebdb92bd">&#9670;&nbsp;</a></span>writeCommand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool Adafruit_QSPI::writeCommand </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Execute a command with data e.g Write Status, </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>command code </td></tr>
+    <tr><td class="paramname">data</td><td>writing data </td></tr>
+    <tr><td class="paramname">len</td><td>number of bytes to read </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
+
+</div>
+</div>
+<a id="a8b6f8b4354856686d07b78018ba31b29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b6f8b4354856686d07b78018ba31b29">&#9670;&nbsp;</a></span>readMemory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool Adafruit_QSPI::readMemory </td>
+          <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>addr</em>, </td>
         </tr>
@@ -288,25 +411,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>txData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>rxData</em>, </td>
+          <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>invalidateCache</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -314,111 +425,121 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>Run a single QSPI instruction. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Read data from external flash contents. Typically it is implemented by quad read command 0x6B </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">instr</td><td>pointer to the struct containing instruction settings </td></tr>
-    <tr><td class="paramname">addr</td><td>the address to read or write from. If the instruction doesn't require an address, this parameter is meaningless. </td></tr>
-    <tr><td class="paramname">txData</td><td>pointer to the data to be written. </td></tr>
-    <tr><td class="paramname">rxData</td><td>pointer to where read data should be stored. </td></tr>
-    <tr><td class="paramname">size</td><td>the number of bytes to read. </td></tr>
-    <tr><td class="paramname">invalidateCache</td><td>manual cache management. Only use this parameter if you know what you're doing. Defaults to true. </td></tr>
+    <tr><td class="paramname">addr</td><td>address to read </td></tr>
+    <tr><td class="paramname">buffer</td><td>buffer to hold data </td></tr>
+    <tr><td class="paramname">len</td><td>number of byte to read </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
 
 </div>
 </div>
-<a id="aef37580513c99504c2d837c2e2fcf409"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef37580513c99504c2d837c2e2fcf409">&#9670;&nbsp;</a></span>setMemoryMode()</h2>
+<a id="aa247fa67bd5dbc9f08b3f2b8b92a5ce5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa247fa67bd5dbc9f08b3f2b8b92a5ce5">&#9670;&nbsp;</a></span>writeMemory()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Adafruit_QSPI::setMemoryMode </td>
+          <td class="memname">virtual bool Adafruit_QSPI::writeMemory </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_adafruit___q_s_p_i_8h.html#acfbf4dff93e8e69f992d54371bcdcbe7">QSPIMode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em></td><td>)</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>set the memory mode of the QSPI peripheral </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Write data to external flash contents, flash sector must be previously erased by <a class="el" href="class_adafruit___q_s_p_i.html#a6035596d93765185d29f1e4da2939eed">eraseSector()</a> first. Typically it uses quad write command 0x32 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mode</td><td>the mode to set to </td></tr>
+    <tr><td class="paramname">addr</td><td>address to read </td></tr>
+    <tr><td class="paramname">data</td><td>writing data </td></tr>
+    <tr><td class="paramname">len</td><td>number of byte to read </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
 
 </div>
 </div>
-<a id="ae5e8f63b5a18e322ab1d41aa83b29976"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5e8f63b5a18e322ab1d41aa83b29976">&#9670;&nbsp;</a></span>setClockDivider()</h2>
+<a id="a6035596d93765185d29f1e4da2939eed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6035596d93765185d29f1e4da2939eed">&#9670;&nbsp;</a></span>eraseSector()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Adafruit_QSPI::setClockDivider </td>
+          <td class="memname">virtual bool Adafruit_QSPI::eraseSector </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>uc_div</em></td><td>)</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sectorAddr</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-
-<p>set the clock divider </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Erase external flash 4KB sector by address. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">uc_div</td><td>the divider to set. Must be a value between 0 and 255. Note that QSPI uses GCLK0. </td></tr>
+    <tr><td class="paramname">sectorAddr</td><td>adddress to be erased </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
 
 </div>
 </div>
-<a id="ac0da2ab722328baa91ca252a539fd488"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0da2ab722328baa91ca252a539fd488">&#9670;&nbsp;</a></span>setDataWidth()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Adafruit_QSPI::setDataWidth </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="_adafruit___q_s_p_i_8h.html#a556626a7ebac2d52b497f6616223cf7b">QSPIDataWidth_t</a>&#160;</td>
-          <td class="paramname"><em>width</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>set the data width </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">width</td><td>the data width to set. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="_adafruit___q_s_p_i_8h_source.html">Adafruit_QSPI.h</a></li>
-<li><a class="el" href="_adafruit___q_s_p_i_8cpp.html">Adafruit_QSPI.cpp</a></li>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>src/<a class="el" href="_adafruit___q_s_p_i_8h_source.html">Adafruit_QSPI.h</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.13
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_adafruit___q_s_p_i.html">Adafruit_QSPI</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
 </body>
 </html>

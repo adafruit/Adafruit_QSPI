@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -43,6 +50,20 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('functions.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,175 +79,88 @@ $(function() {
 </div>
 
 <div class="contents">
-<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
-
-<h3><a id="index_a"></a>- a -</h3><ul>
-<li>addrLen
-: <a class="el" href="struct_q_s_p_i_instr.html#aaa9969b9f273ba7b83e6f3b9b48ae351">QSPIInstr</a>
+<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div><ul>
+<li>Adafruit_QSPI_Flash()
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#ae8db68a1f1583987c3f988424a4577ba">Adafruit_QSPI_Flash</a>
 </li>
-<li>attachInterrupt()
-: <a class="el" href="class_adafruit___q_s_p_i.html#a31c0087fa61f41eb5b83fa80e322689f">Adafruit_QSPI</a>
-</li>
-</ul>
-
-
-<h3><a id="index_b"></a>- b -</h3><ul>
 <li>begin()
-: <a class="el" href="class_adafruit___q_s_p_i.html#a0e8a86dcbceca8245eba863c0c043663">Adafruit_QSPI</a>
-, <a class="el" href="class_adafruit___q_s_p_i___g_d25_q.html#a59b9da79e5f623ff50e29297bc48a512">Adafruit_QSPI_GD25Q</a>
-, <a class="el" href="class_adafruit___q_s_p_i___generic.html#ab930510e5383fffeee77940bf148c594">Adafruit_QSPI_Generic</a>
-, <a class="el" href="class_adafruit___q_s_p_i___s25_f_l1.html#a8fd34e7abe69e005cd38f0ad69c2b677">Adafruit_QSPI_S25FL1</a>
+: <a class="el" href="class_adafruit___q_s_p_i.html#a3a3f131575fbc856070b4aa9eb3fa2ab">Adafruit_QSPI</a>
+, <a class="el" href="class_adafruit___q_s_p_i___flash.html#ac504fb5ba1bde94b83ba5f20d9139396">Adafruit_QSPI_Flash</a>
 </li>
-<li>beginTransaction()
-: <a class="el" href="class_adafruit___q_s_p_i.html#adc24febd7d8d05e38d8905f32057430a">Adafruit_QSPI</a>
-</li>
-</ul>
-
-
-<h3><a id="index_c"></a>- c -</h3><ul>
 <li>chipErase()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a112d25e3de2bd52dced205d01172123d">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#a5688c9c10bbe513aea98b307f5b206a6">Adafruit_QSPI_Flash</a>
 </li>
-<li>continuousRead
-: <a class="el" href="struct_q_s_p_i_instr.html#a9a3687efb327499699f41d482cbb0c43">QSPIInstr</a>
-</li>
-</ul>
-
-
-<h3><a id="index_d"></a>- d -</h3><ul>
-<li>detachInterrupt()
-: <a class="el" href="class_adafruit___q_s_p_i.html#a1eabddf5e7ca9d2f380eea20be20c52f">Adafruit_QSPI</a>
-</li>
-<li>dummylen
-: <a class="el" href="struct_q_s_p_i_instr.html#a8ff84da5f8df64b9b0ab98cb89d76def">QSPIInstr</a>
-</li>
-</ul>
-
-
-<h3><a id="index_e"></a>- e -</h3><ul>
 <li>end()
-: <a class="el" href="class_adafruit___q_s_p_i.html#a2e7b41069b690b0ebce18071149839fa">Adafruit_QSPI</a>
-</li>
-<li>endTransaction()
-: <a class="el" href="class_adafruit___q_s_p_i.html#abcc029662fc981b2dfec872c42ec502e">Adafruit_QSPI</a>
-</li>
-<li>eraseBlock()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#ac5f47e55c3d9e8ee2da424cb9275ad27">Adafruit_QSPI_Generic</a>
-</li>
-<li>EraseSector()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#ad66972dcd821c48dec71ec901a76f765">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#abd8612130f3bb5a67b6c60ebd8d9fb7f">Adafruit_QSPI_Flash</a>
 </li>
 <li>eraseSector()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#acacc84132d3741cd1a9360e9facef64e">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i.html#a6035596d93765185d29f1e4da2939eed">Adafruit_QSPI</a>
+, <a class="el" href="class_adafruit___q_s_p_i___flash.html#a8413e550e9268b0c37520885946a59e2">Adafruit_QSPI_Flash</a>
 </li>
-</ul>
-
-
-<h3><a id="index_g"></a>- g -</h3><ul>
+<li>EraseSector()
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#a549890e202a4e2db25ec8be63fe2e975">Adafruit_QSPI_Flash</a>
+</li>
 <li>GetJEDECID()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a372587bc6e4d26494fd260f63f853afb">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#a07e7c000aca9416ed8219509c94dcfe3">Adafruit_QSPI_Flash</a>
 </li>
 <li>GetManufacturerInfo()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a5d914cabc393369e1db98e52911dba10">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#a695ad23ba624633f572e0b3fa6e410ce">Adafruit_QSPI_Flash</a>
 </li>
-</ul>
-
-
-<h3><a id="index_i"></a>- i -</h3><ul>
-<li>instruction
-: <a class="el" href="struct_q_s_p_i_instr.html#a5ac2437dacb9c5a6d3bd8b0a7c5a70e4">QSPIInstr</a>
+<li>read16()
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#ad4814e0a184c4a6ecb27b203e22a5df9">Adafruit_QSPI_Flash</a>
 </li>
-<li>ioFormat
-: <a class="el" href="struct_q_s_p_i_instr.html#ac43cbce012407f5e4874c828aeba1161">QSPIInstr</a>
+<li>read32()
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#acf5d1a8357178add705c90e05371da3a">Adafruit_QSPI_Flash</a>
 </li>
-</ul>
-
-
-<h3><a id="index_o"></a>- o -</h3><ul>
-<li>opcodeLen
-: <a class="el" href="struct_q_s_p_i_instr.html#affb6fe03ef9ba8052c9731ef15b60359">QSPIInstr</a>
-</li>
-<li>options
-: <a class="el" href="struct_q_s_p_i_instr.html#a82409055c28bab1e81cf81dd8b09f9d6">QSPIInstr</a>
-</li>
-</ul>
-
-
-<h3><a id="index_r"></a>- r -</h3><ul>
 <li>read8()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a6ae58af00a3cf22d00c6fc48771cf2ae">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#ae7d8376936d60628de089fcdca99ed59">Adafruit_QSPI_Flash</a>
 </li>
 <li>readBuffer()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#ab37ff52f29f6fa5c2a65d60349e8e8d9">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#a841b6a18268a343d51181cdf1519c998">Adafruit_QSPI_Flash</a>
 </li>
-<li>readDeviceID()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#afbe5055b8f55595bbb16972f130ff3b1">Adafruit_QSPI_Generic</a>
-</li>
-<li>readManufacturerID()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a39db0a227e4c976e94267c3c065796cf">Adafruit_QSPI_Generic</a>
+<li>readCommand()
+: <a class="el" href="class_adafruit___q_s_p_i.html#ab00771983d3e26f0cc5fe2ca8c6e0aac">Adafruit_QSPI</a>
 </li>
 <li>readMemory()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a59ec43b1c81287767e8cda94a62a0baa">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i.html#a8b6f8b4354856686d07b78018ba31b29">Adafruit_QSPI</a>
 </li>
 <li>readStatus()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a74b6bf76166a6fa1d01dcd4cc91c8b57">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#aeb41fedc077689868dbd0836a585ab8b">Adafruit_QSPI_Flash</a>
 </li>
-<li>runInstruction()
-: <a class="el" href="class_adafruit___q_s_p_i.html#acf4e036d8d54efa3835bbba0fdc5e239">Adafruit_QSPI</a>
+<li>readStatus2()
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#adb48867e0652dc96bd20397004d4118a">Adafruit_QSPI_Flash</a>
 </li>
-</ul>
-
-
-<h3><a id="index_s"></a>- s -</h3><ul>
+<li>runCommand()
+: <a class="el" href="class_adafruit___q_s_p_i.html#accea641831419b2c1c18311c15167763">Adafruit_QSPI</a>
+</li>
 <li>setClockDivider()
-: <a class="el" href="class_adafruit___q_s_p_i.html#ae5e8f63b5a18e322ab1d41aa83b29976">Adafruit_QSPI</a>
+: <a class="el" href="class_adafruit___q_s_p_i.html#adfd29a7868d7b62a91d09851c937ef8e">Adafruit_QSPI</a>
 </li>
-<li>setDataWidth()
-: <a class="el" href="class_adafruit___q_s_p_i.html#ac0da2ab722328baa91ca252a539fd488">Adafruit_QSPI</a>
+<li>setClockSpeed()
+: <a class="el" href="class_adafruit___q_s_p_i.html#aab4de8a8e47effc6d148b0931255fd06">Adafruit_QSPI</a>
 </li>
-<li>setFlashType()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a1387be92c49993754d6d0e70e5e04528">Adafruit_QSPI_Generic</a>
-</li>
-<li>setMemoryMode()
-: <a class="el" href="class_adafruit___q_s_p_i.html#aef37580513c99504c2d837c2e2fcf409">Adafruit_QSPI</a>
-</li>
-</ul>
-
-
-<h3><a id="index_t"></a>- t -</h3><ul>
-<li>transfer()
-: <a class="el" href="class_adafruit___q_s_p_i.html#ab5634b437b81a866c9167d64fa40a3d1">Adafruit_QSPI</a>
-</li>
-<li>type
-: <a class="el" href="struct_q_s_p_i_instr.html#afbbfef3a49c7164f8fdd5431f7c9c687">QSPIInstr</a>
-</li>
-</ul>
-
-
-<h3><a id="index_u"></a>- u -</h3><ul>
-<li>usingInterrupt()
-: <a class="el" href="class_adafruit___q_s_p_i.html#ad618dbd95e230979fb149daf7ba1955b">Adafruit_QSPI</a>
-</li>
-</ul>
-
-
-<h3><a id="index_w"></a>- w -</h3><ul>
 <li>writeBuffer()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#a163e9fc450cbf9dd35fdd5c97231e891">Adafruit_QSPI_Generic</a>
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#acd2509182e57ca2c1aa36966f4132eba">Adafruit_QSPI_Flash</a>
+</li>
+<li>writeCommand()
+: <a class="el" href="class_adafruit___q_s_p_i.html#acc2cd1cb322c1459bbf98e89ebdb92bd">Adafruit_QSPI</a>
+</li>
+<li>writeEnable()
+: <a class="el" href="class_adafruit___q_s_p_i___flash.html#aa2ae83841a25b801e4126b981abf40bb">Adafruit_QSPI_Flash</a>
 </li>
 <li>writeMemory()
-: <a class="el" href="class_adafruit___q_s_p_i___generic.html#aaaa2a6e711ad73be8cee22b16dca35e3">Adafruit_QSPI_Generic</a>
-</li>
-<li>writeStatus()
-: <a class="el" href="class_adafruit___q_s_p_i___s25_f_l1.html#a57708f4536f924fb7d04158aa47cf53f">Adafruit_QSPI_S25FL1</a>
+: <a class="el" href="class_adafruit___q_s_p_i.html#aa247fa67bd5dbc9f08b3f2b8b92a5ce5">Adafruit_QSPI</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.13
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
 </body>
 </html>
