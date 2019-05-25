@@ -26,11 +26,9 @@
 #include <SPI.h>
 #include <Adafruit_SPIFlash.h>
 #include <Adafruit_SPIFlash_FatFs.h>
-#include "Adafruit_QSPI_GD25Q.h"
+#include "Adafruit_QSPI_Flash.h"
 
-#define FLASH_TYPE     SPIFLASHTYPE_W25Q64 // Flash chip type.
-
-Adafruit_QSPI_GD25Q flash;
+Adafruit_QSPI_Flash flash;
 
 // Finally create an Adafruit_M0_Express_CircuitPython object which gives
 // an SD card-like interface to interacting with files stored in CircuitPython's
@@ -51,7 +49,6 @@ void setup() {
     Serial.println("Error, failed to initialize flash chip!");
     while(1);
   }
-  flash.setFlashType(FLASH_TYPE);
 
   // First call begin to mount the filesystem.  Check that it returns true
   // to make sure the filesystem was mounted.

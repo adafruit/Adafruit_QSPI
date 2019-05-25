@@ -10,6 +10,7 @@ git:
 env:
   global:
      - PRETTYNAME="Adafruit QSPI Library"
+     - DOXYFILE=$TRAVIS_BUILD_DIR/.doxyfile
 
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)

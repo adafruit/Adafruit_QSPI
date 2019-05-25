@@ -29,14 +29,14 @@
 #include <SPI.h>
 #include <Adafruit_SPIFlash.h>
 #include <Adafruit_SPIFlash_FatFs.h>
-#include "Adafruit_QSPI_GD25Q.h"
+#include "Adafruit_QSPI_Flash.h"
 
 // Include the FatFs library header to use its low level functions
 // directly.  Specifically the f_fdisk and f_mkfs functions are used
 // to partition and create the filesystem.
 #include "utility/ff.h"
 
-Adafruit_QSPI_GD25Q flash;
+Adafruit_QSPI_Flash flash;
 
 Adafruit_W25Q16BV_FatFs fatfs(flash);
 
@@ -51,11 +51,10 @@ void setup() {
   // Initialize flash library and check its chip ID.
   if (!flash.begin()) {
     Serial.println("Error, failed to initialize flash chip!");
-    while(1);
+    while(1) delay(1);
   }
-  flash.setFlashType(SPIFLASHTYPE_W25Q16BV);
   
-  //Serial.print("Flash chip JEDEC ID: 0x"); Serial.println(flash.GetJEDECID(), HEX);
+  Serial.print("Flash chip JEDEC ID: 0x"); Serial.println(flash.GetJEDECID(), HEX);
 
   // Wait for user to send OK to continue.
   Serial.setTimeout(30000);  // Increase timeout to print message less frequently.
