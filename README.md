@@ -1,4 +1,4 @@
-# Adafruit QSPI Library [![Build Status](https://travis-ci.org/adafruit/Adafruit_QSPI.svg?branch=master)](https://travis-ci.org/adafruit/Adafruit_QSPI)
+# Adafruit QSPI Library [![Build Status](https://travis-ci.com/adafruit/Adafruit_QSPI.svg?branch=master)](https://travis-ci.com/adafruit/Adafruit_QSPI)
 
 This is a library for interfacing with the QSPI peripheral and external flasheds on SAMD51 and nRF52 microcontrollers.
 
