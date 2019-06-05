@@ -43,7 +43,8 @@ public:
 
   /// Constant that is (mostly) true to all external flash devices
   enum {
-    QSPI_FLASH_SECTOR_SIZE = 4096,
+    QSPI_FLASH_BLOCK_SIZE  = 64*1024,
+    QSPI_FLASH_SECTOR_SIZE = 4*1024,
     QSPI_FLASH_PAGE_SIZE   = 256,
   };
 
@@ -56,27 +57,28 @@ public:
 	uint8_t readStatus(void);
 	uint8_t readStatus2(void);
 	bool writeEnable(void);
-	bool chipErase(void);
 
 	/******** SPI FLASH CLASS METHODS *************/
 
 	void GetManufacturerInfo (uint8_t *manufID, uint8_t *deviceID);
 	uint32_t GetJEDECID (void);
 	
-	uint32_t readBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
+	uint32_t readBuffer  (uint32_t address, uint8_t *buffer, uint32_t len);
 	uint32_t writeBuffer (uint32_t address, uint8_t *buffer, uint32_t len);
 
-	bool     eraseSector (uint32_t sectorNumber);
-
-	/// @brief same as @ref eraseSector
-	/// @param sectorNumber the sector number to erase.
-	/// @return true if success
-	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
+	bool eraseSector(uint32_t sectorNumber);
+	bool eraseBlock (uint32_t blockNumber);
+	bool chipErase  (void);
 
 	// Helper
 	uint8_t  read8(uint32_t addr);
 	uint16_t read16(uint32_t addr);
 	uint32_t read32(uint32_t addr);
+
+	/// @brief same as @ref eraseSector
+	/// @param sectorNumber the sector number to erase.
+	/// @return true if success
+	bool     EraseSector (uint32_t sectorNumber) { return eraseSector(sectorNumber); }
 
 private:
 	external_flash_device const * _flash_dev;
