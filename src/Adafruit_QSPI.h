@@ -108,7 +108,7 @@ class Adafruit_QSPI
     /// @return true if success
     virtual bool readMemory(uint32_t addr, uint8_t *buffer, uint32_t len) = 0;
 
-    /// Write data to external flash contents, flash sector must be previously erased by \ref eraseSector() first.
+    /// Write data to external flash contents, flash sector must be previously erased first.
     /// Typically it uses quad write command 0x32
     /// @param addr       address to read
     /// @param data       writing data
