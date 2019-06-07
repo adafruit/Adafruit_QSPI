@@ -14,5 +14,6 @@ var _adafruit___q_s_p_i_8h =
     [ "QSPI_CMD_WRITE_ENABLE", "_adafruit___q_s_p_i_8h.html#a06fc87d81c62e9abb8790b6e5713c55baacf9d269d4b87c8efce813154c0e5ec9", null ],
     [ "QSPI_CMD_WRITE_DISABLE", "_adafruit___q_s_p_i_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba376b9600a1d340d55e0b9c6df8437976", null ],
     [ "QSPI_CMD_ERASE_SECTOR", "_adafruit___q_s_p_i_8h.html#a06fc87d81c62e9abb8790b6e5713c55bacf5707697e5e238b9a899a3d28934757", null ],
+    [ "QSPI_CMD_ERASE_BLOCK", "_adafruit___q_s_p_i_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba064f646c686839cb55888d4253c022a6", null ],
     [ "QSPI_CMD_ERASE_CHIP", "_adafruit___q_s_p_i_8h.html#a06fc87d81c62e9abb8790b6e5713c55ba3a4ede44fab47a6a551778be3ab240bf", null ]
 ];

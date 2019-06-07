@@ -103,7 +103,8 @@ Inheritance diagram for Adafruit_QSPI_Flash:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a06e8126047eb8c0c66ac938475b5eea2"><td class="memItemLeft" align="right" valign="top"><a id="a06e8126047eb8c0c66ac938475b5eea2"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>QSPI_FLASH_SECTOR_SIZE</b> = 4096, 
+<tr class="memitem:a06e8126047eb8c0c66ac938475b5eea2"><td class="memItemLeft" align="right" valign="top"><a id="a06e8126047eb8c0c66ac938475b5eea2"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>QSPI_FLASH_BLOCK_SIZE</b> = 64*1024, 
+<b>QSPI_FLASH_SECTOR_SIZE</b> = 4*1024, 
 <b>QSPI_FLASH_PAGE_SIZE</b> = 256
  }<tr class="memdesc:a06e8126047eb8c0c66ac938475b5eea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant that is (mostly) true to all external flash devices. <br /></td></tr>
 </td></tr>
@@ -127,9 +128,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adb48867e0652dc96bd20397004d4118a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2ae83841a25b801e4126b981abf40bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#aa2ae83841a25b801e4126b981abf40bb">writeEnable</a> (void)</td></tr>
 <tr class="separator:aa2ae83841a25b801e4126b981abf40bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5688c9c10bbe513aea98b307f5b206a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#a5688c9c10bbe513aea98b307f5b206a6">chipErase</a> (void)</td></tr>
-<tr class="memdesc:a5688c9c10bbe513aea98b307f5b206a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform a chip erase. All data on the device will be erased.  <a href="#a5688c9c10bbe513aea98b307f5b206a6">More...</a><br /></td></tr>
-<tr class="separator:a5688c9c10bbe513aea98b307f5b206a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a695ad23ba624633f572e0b3fa6e410ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#a695ad23ba624633f572e0b3fa6e410ce">GetManufacturerInfo</a> (uint8_t *manufID, uint8_t *deviceID)</td></tr>
 <tr class="memdesc:a695ad23ba624633f572e0b3fa6e410ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the manufacturer ID and device ID  <a href="#a695ad23ba624633f572e0b3fa6e410ce">More...</a><br /></td></tr>
 <tr class="separator:a695ad23ba624633f572e0b3fa6e410ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,15 +141,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8413e550e9268b0c37520885946a59e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#a8413e550e9268b0c37520885946a59e2">eraseSector</a> (uint32_t sectorNumber)</td></tr>
 <tr class="memdesc:a8413e550e9268b0c37520885946a59e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">erase a sector of flash  <a href="#a8413e550e9268b0c37520885946a59e2">More...</a><br /></td></tr>
 <tr class="separator:a8413e550e9268b0c37520885946a59e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a549890e202a4e2db25ec8be63fe2e975"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#a549890e202a4e2db25ec8be63fe2e975">EraseSector</a> (uint32_t sectorNumber)</td></tr>
-<tr class="memdesc:a549890e202a4e2db25ec8be63fe2e975"><td class="mdescLeft">&#160;</td><td class="mdescRight">same as <a class="el" href="class_adafruit___q_s_p_i___flash.html#a8413e550e9268b0c37520885946a59e2">eraseSector</a>  <a href="#a549890e202a4e2db25ec8be63fe2e975">More...</a><br /></td></tr>
-<tr class="separator:a549890e202a4e2db25ec8be63fe2e975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab560e2a881dbdff9ca34a78de00de8c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#ab560e2a881dbdff9ca34a78de00de8c9">eraseBlock</a> (uint32_t blockNumber)</td></tr>
+<tr class="separator:ab560e2a881dbdff9ca34a78de00de8c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5688c9c10bbe513aea98b307f5b206a6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#a5688c9c10bbe513aea98b307f5b206a6">chipErase</a> (void)</td></tr>
+<tr class="memdesc:a5688c9c10bbe513aea98b307f5b206a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform a chip erase. All data on the device will be erased.  <a href="#a5688c9c10bbe513aea98b307f5b206a6">More...</a><br /></td></tr>
+<tr class="separator:a5688c9c10bbe513aea98b307f5b206a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7d8376936d60628de089fcdca99ed59"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#ae7d8376936d60628de089fcdca99ed59">read8</a> (uint32_t addr)</td></tr>
 <tr class="separator:ae7d8376936d60628de089fcdca99ed59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4814e0a184c4a6ecb27b203e22a5df9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#ad4814e0a184c4a6ecb27b203e22a5df9">read16</a> (uint32_t addr)</td></tr>
 <tr class="separator:ad4814e0a184c4a6ecb27b203e22a5df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf5d1a8357178add705c90e05371da3a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#acf5d1a8357178add705c90e05371da3a">read32</a> (uint32_t addr)</td></tr>
 <tr class="separator:acf5d1a8357178add705c90e05371da3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549890e202a4e2db25ec8be63fe2e975"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i___flash.html#a549890e202a4e2db25ec8be63fe2e975">EraseSector</a> (uint32_t sectorNumber)</td></tr>
+<tr class="memdesc:a549890e202a4e2db25ec8be63fe2e975"><td class="mdescLeft">&#160;</td><td class="mdescRight">same as <a class="el" href="class_adafruit___q_s_p_i___flash.html#a8413e550e9268b0c37520885946a59e2">eraseSector</a>  <a href="#a549890e202a4e2db25ec8be63fe2e975">More...</a><br /></td></tr>
+<tr class="separator:a549890e202a4e2db25ec8be63fe2e975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>a class for interfacing with a generic QSPI flash device. </p>
@@ -264,29 +267,6 @@ Public Member Functions</h2></td></tr>
 <p>Execute Write Enable command </p><dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html#l00232">232</a> of file <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html">Adafruit_QSPI_Flash.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a5688c9c10bbe513aea98b307f5b206a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5688c9c10bbe513aea98b307f5b206a6">&#9670;&nbsp;</a></span>chipErase()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Adafruit_QSPI_Flash::chipErase </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>perform a chip erase. All data on the device will be erased. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html#l00324">324</a> of file <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html">Adafruit_QSPI_Flash.cpp</a>.</p>
 
 </div>
 </div>
@@ -471,40 +451,53 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a549890e202a4e2db25ec8be63fe2e975"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a549890e202a4e2db25ec8be63fe2e975">&#9670;&nbsp;</a></span>EraseSector()</h2>
+<a id="ab560e2a881dbdff9ca34a78de00de8c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab560e2a881dbdff9ca34a78de00de8c9">&#9670;&nbsp;</a></span>eraseBlock()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Adafruit_QSPI_Flash::EraseSector </td>
+          <td class="memname">bool Adafruit_QSPI_Flash::eraseBlock </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sectorNumber</em></td><td>)</td>
+          <td class="paramname"><em>blockNumber</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>same as <a class="el" href="class_adafruit___q_s_p_i___flash.html#a8413e550e9268b0c37520885946a59e2">eraseSector</a> </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Erase a 64KB block of flash </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sectorNumber</td><td>the sector number to erase. </td></tr>
+    <tr><td class="paramname">blockNumber</td><td>Address to be erased </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i___flash_8h_source.html#l00074">74</a> of file <a class="el" href="_adafruit___q_s_p_i___flash_8h_source.html">Adafruit_QSPI_Flash.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html#l00360">360</a> of file <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html">Adafruit_QSPI_Flash.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5688c9c10bbe513aea98b307f5b206a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5688c9c10bbe513aea98b307f5b206a6">&#9670;&nbsp;</a></span>chipErase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_QSPI_Flash::chipErase </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>perform a chip erase. All data on the device will be erased. </p>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html#l00324">324</a> of file <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html">Adafruit_QSPI_Flash.cpp</a>.</p>
 
 </div>
 </div>
@@ -586,6 +579,43 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the data uint32_t read </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html#l00312">312</a> of file <a class="el" href="_adafruit___q_s_p_i___flash_8cpp_source.html">Adafruit_QSPI_Flash.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a549890e202a4e2db25ec8be63fe2e975"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a549890e202a4e2db25ec8be63fe2e975">&#9670;&nbsp;</a></span>EraseSector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Adafruit_QSPI_Flash::EraseSector </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sectorNumber</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>same as <a class="el" href="class_adafruit___q_s_p_i___flash.html#a8413e550e9268b0c37520885946a59e2">eraseSector</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sectorNumber</td><td>the sector number to erase. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i___flash_8h_source.html#l00081">81</a> of file <a class="el" href="_adafruit___q_s_p_i___flash_8h_source.html">Adafruit_QSPI_Flash.h</a>.</p>
 
 </div>
 </div>

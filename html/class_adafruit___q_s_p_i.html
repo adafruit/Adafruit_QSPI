@@ -110,17 +110,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:ab00771983d3e26f0cc5fe2ca8c6e0aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc2cd1cb322c1459bbf98e89ebdb92bd"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#acc2cd1cb322c1459bbf98e89ebdb92bd">writeCommand</a> (uint8_t command, uint8_t const *data, uint32_t len)=0</td></tr>
 <tr class="separator:acc2cd1cb322c1459bbf98e89ebdb92bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab48b67c3ab0d31efb4466ed4fb99564"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#aab48b67c3ab0d31efb4466ed4fb99564">eraseCommand</a> (uint8_t command, uint32_t address)=0</td></tr>
+<tr class="separator:aab48b67c3ab0d31efb4466ed4fb99564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b6f8b4354856686d07b78018ba31b29"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a8b6f8b4354856686d07b78018ba31b29">readMemory</a> (uint32_t addr, uint8_t *buffer, uint32_t len)=0</td></tr>
 <tr class="separator:a8b6f8b4354856686d07b78018ba31b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa247fa67bd5dbc9f08b3f2b8b92a5ce5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#aa247fa67bd5dbc9f08b3f2b8b92a5ce5">writeMemory</a> (uint32_t addr, uint8_t *data, uint32_t len)=0</td></tr>
 <tr class="separator:aa247fa67bd5dbc9f08b3f2b8b92a5ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6035596d93765185d29f1e4da2939eed"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___q_s_p_i.html#a6035596d93765185d29f1e4da2939eed">eraseSector</a> (uint32_t sectorAddr)=0</td></tr>
-<tr class="separator:a6035596d93765185d29f1e4da2939eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class provide common APIs for all mcu ports (e.g samd51, nrf52 etc ..) </p>
 
-<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i_8h_source.html#l00049">49</a> of file <a class="el" href="_adafruit___q_s_p_i_8h_source.html">Adafruit_QSPI.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_adafruit___q_s_p_i_8h_source.html#l00050">50</a> of file <a class="el" href="_adafruit___q_s_p_i_8h_source.html">Adafruit_QSPI.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3a3f131575fbc856070b4aa9eb3fa2ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3a3f131575fbc856070b4aa9eb3fa2ab">&#9670;&nbsp;</a></span>begin()</h2>
@@ -392,6 +392,50 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="aab48b67c3ab0d31efb4466ed4fb99564"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab48b67c3ab0d31efb4466ed4fb99564">&#9670;&nbsp;</a></span>eraseCommand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool Adafruit_QSPI::eraseCommand </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Erase external flash by address </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>can be sector erase (0x20) or block erase 0xD8 </td></tr>
+    <tr><td class="paramname">address</td><td>adddress to be erased </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
+
+</div>
+</div>
 <a id="a8b6f8b4354856686d07b78018ba31b29"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8b6f8b4354856686d07b78018ba31b29">&#9670;&nbsp;</a></span>readMemory()</h2>
 
@@ -482,44 +526,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Write data to external flash contents, flash sector must be previously erased by <a class="el" href="class_adafruit___q_s_p_i.html#a6035596d93765185d29f1e4da2939eed">eraseSector()</a> first. Typically it uses quad write command 0x32 </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Write data to external flash contents, flash sector must be previously erased first. Typically it uses quad write command 0x32 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">addr</td><td>address to read </td></tr>
     <tr><td class="paramname">data</td><td>writing data </td></tr>
     <tr><td class="paramname">len</td><td>number of byte to read </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if success </dd></dl>
-
-</div>
-</div>
-<a id="a6035596d93765185d29f1e4da2939eed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6035596d93765185d29f1e4da2939eed">&#9670;&nbsp;</a></span>eraseSector()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool Adafruit_QSPI::eraseSector </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sectorAddr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Erase external flash 4KB sector by address. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sectorAddr</td><td>adddress to be erased </td></tr>
   </table>
   </dd>
 </dl>

@@ -7,7 +7,7 @@ var class_adafruit___q_s_p_i =
     [ "runCommand", "class_adafruit___q_s_p_i.html#accea641831419b2c1c18311c15167763", null ],
     [ "readCommand", "class_adafruit___q_s_p_i.html#ab00771983d3e26f0cc5fe2ca8c6e0aac", null ],
     [ "writeCommand", "class_adafruit___q_s_p_i.html#acc2cd1cb322c1459bbf98e89ebdb92bd", null ],
+    [ "eraseCommand", "class_adafruit___q_s_p_i.html#aab48b67c3ab0d31efb4466ed4fb99564", null ],
     [ "readMemory", "class_adafruit___q_s_p_i.html#a8b6f8b4354856686d07b78018ba31b29", null ],
-    [ "writeMemory", "class_adafruit___q_s_p_i.html#aa247fa67bd5dbc9f08b3f2b8b92a5ce5", null ],
-    [ "eraseSector", "class_adafruit___q_s_p_i.html#a6035596d93765185d29f1e4da2939eed", null ]
+    [ "writeMemory", "class_adafruit___q_s_p_i.html#aa247fa67bd5dbc9f08b3f2b8b92a5ce5", null ]
 ];
