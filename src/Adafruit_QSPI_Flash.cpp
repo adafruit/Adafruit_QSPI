@@ -349,5 +349,22 @@ bool Adafruit_QSPI_Flash::eraseSector (uint32_t sectorNumber)
 
   writeEnable();
 
-	return QSPI0.eraseSector(sectorNumber * QSPI_FLASH_SECTOR_SIZE);
+	return QSPI0.eraseCommand(QSPI_CMD_ERASE_SECTOR, sectorNumber * QSPI_FLASH_SECTOR_SIZE);
+}
+
+/**
+ * Erase a 64KB block of flash
+ * @param blockNumber Address to be erased
+ * @return true if success
+ */
+bool Adafruit_QSPI_Flash::eraseBlock  (uint32_t blockNumber)
+{
+  if (!_flash_dev) return false;
+
+  // Before we erase the sector we need to wait for any writes to finish
+  _wait_for_flash_ready();
+
+  writeEnable();
+
+  return QSPI0.eraseCommand(QSPI_CMD_ERASE_BLOCK, blockNumber * QSPI_FLASH_BLOCK_SIZE);
 }

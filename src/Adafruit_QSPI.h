@@ -41,7 +41,8 @@ enum
   QSPI_CMD_WRITE_ENABLE      = 0x06,
   QSPI_CMD_WRITE_DISABLE     = 0x04,
 
-  QSPI_CMD_ERASE_SECTOR      = 0x020,
+  QSPI_CMD_ERASE_SECTOR      = 0x20,
+  QSPI_CMD_ERASE_BLOCK       = 0xD8,
   QSPI_CMD_ERASE_CHIP        = 0xC7,
 };
 
@@ -94,6 +95,12 @@ class Adafruit_QSPI
     /// @return true if success
     virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len) = 0;
 
+    /// Erase external flash by address
+    /// @param command  can be sector erase (0x20) or block erase 0xD8
+    /// @param address  adddress to be erased
+    /// @return true if success
+    virtual bool eraseCommand(uint8_t command, uint32_t address) = 0;
+
     /// Read data from external flash contents. Typically it is implemented by quad read command 0x6B
     /// @param addr       address to read
     /// @param buffer     buffer to hold data
@@ -101,18 +108,13 @@ class Adafruit_QSPI
     /// @return true if success
     virtual bool readMemory(uint32_t addr, uint8_t *buffer, uint32_t len) = 0;
 
-    /// Write data to external flash contents, flash sector must be previously erased by \ref eraseSector() first.
+    /// Write data to external flash contents, flash sector must be previously erased first.
     /// Typically it uses quad write command 0x32
     /// @param addr       address to read
     /// @param data       writing data
     /// @param len        number of byte to read
     /// @return true if success
     virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t len) = 0;
-
-    /// Erase external flash 4KB sector by address.
-    /// @param sectorAddr  adddress to be erased
-    /// @return true if success
-    virtual bool eraseSector(uint32_t sectorAddr) = 0;
 };
 
 #if defined __SAMD51__

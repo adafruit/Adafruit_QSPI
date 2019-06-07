@@ -152,13 +152,13 @@ bool Adafruit_QSPI_SAMD::writeCommand(uint8_t command, uint8_t const* data, uint
 	return _run_instruction(command, iframe, 0, (uint8_t*) data, len);
 }
 
-bool Adafruit_QSPI_SAMD::eraseSector(uint32_t sectorAddr)
+bool Adafruit_QSPI_SAMD::eraseCommand(uint8_t command, uint32_t address)
 {
 	// Sector Erase
 	uint32_t iframe = QSPI_INSTRFRAME_WIDTH_SINGLE_BIT_SPI | QSPI_INSTRFRAME_ADDRLEN_24BITS |
                     QSPI_INSTRFRAME_TFRTYPE_WRITE | QSPI_INSTRFRAME_INSTREN | QSPI_INSTRFRAME_ADDREN;
 
-	return _run_instruction(QSPI_CMD_ERASE_SECTOR, iframe, sectorAddr, NULL, 0);
+	return _run_instruction(command, iframe, address, NULL, 0);
 }
 
 bool Adafruit_QSPI_SAMD::readMemory(uint32_t addr, uint8_t *data, uint32_t len)

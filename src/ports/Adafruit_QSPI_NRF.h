@@ -44,7 +44,7 @@ class Adafruit_QSPI_NRF : Adafruit_QSPI
     virtual bool readCommand(uint8_t command, uint8_t* response, uint32_t len);
     virtual bool writeCommand(uint8_t command, uint8_t const* data, uint32_t len);
 
-    virtual bool eraseSector(uint32_t sectorAddr);
+    virtual bool eraseCommand(uint8_t command, uint32_t address);
     virtual bool readMemory(uint32_t addr, uint8_t *data, uint32_t len);
     virtual bool writeMemory(uint32_t addr, uint8_t *data, uint32_t len);
 };
